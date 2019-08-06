@@ -1,5 +1,5 @@
 <script>
-  import { formatterUSD } from "../utils";
+  import { formatter } from "../utils";
   export let index, description, units, unitFormat, unitPrice;
 </script>
 
@@ -7,8 +7,6 @@
   <td>{index + 1}</td>
   <td>{description}</td>
   <td class="align-right">{units} {unitFormat}</td>
-  <td class="align-right">{formatterUSD.format(unitPrice)}</td>
-  <td class="align-right">
-    {formatterUSD.format(units * unitPrice)}
-  </td>
+  <td class="align-right">{formatter('USD').format(unitPrice)}</td>
+  <td class="align-right">{formatter('USD').format(units * unitPrice)}</td>
 </tr>

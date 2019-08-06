@@ -1,7 +1,7 @@
 <script>
   import { rates, invoiceItems, ratesDate } from "../store";
   import InvoiceItem from "./InvoiceItem.svelte";
-  import { formatterUSD, formatterEUR } from "../utils";
+  import { formatter } from "../utils";
   import { DATA } from "../config";
 
   const invoiceTotal = $invoiceItems.reduce((acc, item) => {
@@ -28,18 +28,22 @@
 
   <tr class="footer footer-total">
     <th colspan="4">Total:</th>
-    <td class="align-right">{formatterUSD.format(invoiceTotal)}</td>
+    <td class="align-right">{formatter('USD').format(invoiceTotal)}</td>
   </tr>
   <tr class="footer">
     <th colspan="4">VAT:</th>
-    <td class="align-right">{formatterUSD.format(invoiceVAT)}</td>
+    <td class="align-right">{formatter('USD').format(invoiceVAT)}</td>
   </tr>
   <tr class="footer">
     <th colspan="4">Total in USD:</th>
-    <td class="align-right">{formatterUSD.format(invoiceTotalWithVATUSD)}</td>
+    <td class="align-right">
+      {formatter('USD').format(invoiceTotalWithVATUSD)}
+    </td>
   </tr>
   <tr class="footer">
     <th colspan="4">Total in EUR:</th>
-    <td class="align-right">{formatterEUR.format(invoiceTotalWithVATEUR)}</td>
+    <td class="align-right">
+      {formatter('EUR').format(invoiceTotalWithVATEUR)}
+    </td>
   </tr>
 </table>
