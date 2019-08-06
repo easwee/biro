@@ -1,4 +1,4 @@
-export const CONFIG = {
+export const DATA = {
   BANK_ACCOUNT_NUMBER: "SI56 1234 1234 1234 123",
   TERMS: 20,
   HOURLY_RATE: 100,
