@@ -3,16 +3,7 @@
   import { format, addDays } from "date-fns";
   import { fetchRates } from "./api";
   import { CONFIG } from "./config";
-
-  const formatterUSD = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
-  });
-
-  const formatterEUR = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EUR"
-  });
+  import { formatterUSD, formatterEUR } from "./utils";
 
   let rates;
   let ratesDate = new Date(CONFIG.INVOICE_ISSUE_DATE);
@@ -59,7 +50,7 @@
     </tr>
     <tr>
       <td>Date:</td>
-      <td>{CONFIG.CITY}, {format(ratesDate , "D.M.YYYY")}</td>
+      <td>{CONFIG.INVOICE_ISSUE_CITY}, {format(ratesDate , "D.M.YYYY")}</td>
     </tr>
     <tr>
       <td>Terms:</td>
@@ -113,7 +104,7 @@
 
   <p>Exchange rate for the USD / EUR on the day {format(ratesDate , "D.M.YYYY")}: <strong>{rates.EUR}</strong></p>
   <p>
-    <small>Source: <a href="https://api.exchangeratesapi.io/2019-08-06?base=USD">https://api.exchangeratesapi.io/2019-08-06?base=USD</a></small>
+    <small>Source: <a href="https://api.exchangeratesapi.io/{format(ratesDate, "YYYY-MM-DD")}?base=USD">https://api.exchangeratesapi.io/{format(ratesDate, "YYYY-MM-DD")}?base=USD</a></small>
   </p>
   <p>
     VAT exempt under article 287 of VAT Directive

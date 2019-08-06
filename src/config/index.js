@@ -4,7 +4,7 @@ export const CONFIG = {
   HOURLY_RATE: 100,
   MONTHLY_HOURS: 160,
   VAT: 0,
-  INVOICE_ISSUE_DATE: "2019-08-31",
+  INVOICE_ISSUE_DATE: "2019-07-30",
   BASE_CURRENCY: "USD",
   INVOICE_ISSUE_CITY: "Ljubljana",
   INVOICE_COMPANY_NAME: "EXAMPLE COMPANY, računalniško programiranje, Jože Novak s.p.",
