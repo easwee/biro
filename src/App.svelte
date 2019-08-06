@@ -3,7 +3,7 @@
   import { format, addDays } from "date-fns";
   import { fetchRates } from "./api";
   import { CONFIG } from "./config";
-  import { formatterUSD, formatterEUR } from "./utils";
+  import { formatter } from "./utils";
 
   let rates = {};
   let ratesDate = new Date(CONFIG.INVOICE_ISSUE_DATE);
@@ -85,6 +85,7 @@
         <th />
         <th>Description</th>
         <th class="align-right">Hours</th>
+        <th class="align-right">Period</th>
         <th class="align-right">Hourly rate</th>
         <th class="align-right">Total</th>
       </tr>
@@ -93,35 +94,38 @@
         <td>1</td>
         <td>Consultancy & Frontend development</td>
         <td class="align-right">{CONFIG.MONTHLY_HOURS}</td>
-        <td class="align-right">{formatterUSD.format(CONFIG.HOURLY_RATE)}</td>
-        <td class="align-right">{formatterUSD.format(rowTotal)}</td>
+        <td class="align-right">{CONFIG.PERIOD}</td>
+        <td class="align-right">
+          {formatter('USD').format(CONFIG.HOURLY_RATE)}
+        </td>
+        <td class="align-right">{formatter('USD').format(rowTotal)}</td>
       </tr>
 
       <tr class="footer footer-total">
-        <th colspan="4">Total:</th>
-        <td class="align-right">{formatterUSD.format(invoiceTotal)}</td>
+        <th colspan="5">Total:</th>
+        <td class="align-right">{formatter('USD').format(invoiceTotal)}</td>
       </tr>
       <tr class="footer">
-        <th colspan="4">VAT:</th>
-        <td class="align-right">{formatterUSD.format(invoiceVAT)}</td>
+        <th colspan="5">VAT:</th>
+        <td class="align-right">{formatter('EUR').format(invoiceVAT)}</td>
       </tr>
       <tr class="footer">
-        <th colspan="4">Total in USD:</th>
+        <th colspan="5">Total in USD:</th>
         <td class="align-right">
-          {formatterUSD.format(invoiceTotalWithVATUSD)}
+          {formatter('USD').format(invoiceTotalWithVATUSD)}
         </td>
       </tr>
       <tr class="footer">
-        <th colspan="4">Total in EUR:</th>
+        <th colspan="5">Total in EUR:</th>
         <td class="align-right">
-          {formatterEUR.format(invoiceTotalWithVATEUR)}
+          {formatter('EUR').format(invoiceTotalWithVATEUR)}
         </td>
       </tr>
     </table>
 
     <p>
       Exchange rate for the USD / EUR on the day {format(ratesDate, 'D.M.YYYY')}:
-      <strong>{rates.EUR}</strong>
+      <strong>{formatter('EUR', 4).format(rates.EUR)}</strong>
     </p>
     <p>
       <small>
