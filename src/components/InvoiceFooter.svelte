@@ -2,11 +2,12 @@
   import { format } from "date-fns";
   import { DATA } from "../config";
   import { rates, ratesDate } from "../store";
+  import { formatter } from "../utils";
 </script>
 
 <p>
   Exchange rate for the USD / EUR on the day {format($ratesDate, 'D.M.YYYY')}:
-  <strong>{$rates.EUR}</strong>
+  <strong>{formatter('EUR', 4).format($rates.EUR)}</strong>
 </p>
 <p>
   <small>
