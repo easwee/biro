@@ -4,6 +4,7 @@
   import { fetchRates } from "./api";
   import { DATA } from "./config";
   import { rates, ratesDate } from "./store";
+  import Exporter from "./components/Exporter.svelte";
   import InvoiceIssuer from "./components/InvoiceIssuer.svelte";
   import InvoiceReceiver from "./components/InvoiceReceiver.svelte";
   import InvoiceMeta from "./components/InvoiceMeta.svelte";
@@ -19,7 +20,9 @@
   });
 </script>
 
-<div class="sheet">
+<Exporter />
+
+<div id="invoice" class="sheet">
   {#if $rates.EUR}
     <InvoiceIssuer />
     <InvoiceReceiver />
