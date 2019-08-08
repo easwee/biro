@@ -25,13 +25,17 @@ address {
   clear: left;
 }
 
-.sheet {
+.container {
   overflow: hidden;
   max-width: 800px;
   margin: 0 auto;
-  padding: 30px;
+}
+
+.sheet {
   background: white;
+  padding: 30px;
   border: 1px solid #ccc;
+  overflow: hidden;
 }
 
 table {
