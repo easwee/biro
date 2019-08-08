@@ -7,7 +7,7 @@
 
 <p>
   Exchange rate for the USD / EUR on the day {format($ratesDate, 'D.M.YYYY')}:
-  <strong>{formatter('EUR', 4).format($rates.EUR)}</strong>
+  <strong>{$rates.EUR.toFixed(4)}</strong>
 </p>
 <p>
   <small>
