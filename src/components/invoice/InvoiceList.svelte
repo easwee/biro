@@ -55,7 +55,4 @@
       {formatter('EUR').format(invoiceTotalWithVATEUR)}
     </td>
   </tr>
-  {#if $properties.units.show}
-    <div>Show unitz</div>
-  {/if}
 </table>
