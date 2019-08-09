@@ -52,6 +52,7 @@
   </svg>
 </a>
 <div class="container">
+  <Exporter />
   <div id="invoice" class="sheet">
     {#if $rates.EUR}
       <InvoiceIssuer />
@@ -63,7 +64,6 @@
       <p>Loading...</p>
     {/if}
   </div>
-  <Exporter />
 </div>
 
 <Sidebar />
