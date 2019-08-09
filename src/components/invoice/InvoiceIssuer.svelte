@@ -1,5 +1,5 @@
 <script>
-  import { DATA } from "../config";
+  import { DATA } from "../../config";
 </script>
 
 <address>

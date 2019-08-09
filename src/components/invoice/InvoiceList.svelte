@@ -1,8 +1,14 @@
 <script>
-  import { rates, invoiceItems, ratesDate } from "../store";
+  import {
+    rates,
+    invoiceItems,
+    ratesDate,
+    properties,
+    shownPropertiesCount
+  } from "../../store";
   import InvoiceItem from "./InvoiceItem.svelte";
-  import { formatter } from "../utils";
-  import { DATA } from "../config";
+  import { formatter } from "../../utils";
+  import { DATA } from "../../config";
 
   const invoiceTotal = $invoiceItems.reduce((acc, item) => {
     return acc + item.units * item.unitPrice;
@@ -16,10 +22,13 @@
 <table class="invoice">
   <tr class="header">
     <th />
-    <th>Description</th>
-    <th class="align-right">Units</th>
-    <th class="align-right">Price per unit</th>
-    <th class="align-right">Total</th>
+    {#each Object.values($properties) as property, index}
+      {#if property.show}
+        <th class={property.alignRight ? 'align-right' : ''}>
+          {property.name}
+        </th>
+      {/if}
+    {/each}
   </tr>
 
   {#each $invoiceItems as item, index}
@@ -27,21 +36,21 @@
   {/each}
 
   <tr class="footer footer-total">
-    <th colspan="4">Total:</th>
+    <th colspan={$shownPropertiesCount}>Total:</th>
     <td class="align-right">{formatter('USD').format(invoiceTotal)}</td>
   </tr>
   <tr class="footer">
-    <th colspan="4">VAT:</th>
+    <th colspan={$shownPropertiesCount}>VAT:</th>
     <td class="align-right">{formatter('USD').format(invoiceVAT)}</td>
   </tr>
   <tr class="footer">
-    <th colspan="4">Total in USD:</th>
+    <th colspan={$shownPropertiesCount}>Total in USD:</th>
     <td class="align-right">
       {formatter('USD').format(invoiceTotalWithVATUSD)}
     </td>
   </tr>
   <tr class="footer">
-    <th colspan="4">Total in EUR:</th>
+    <th colspan={$shownPropertiesCount}>Total in EUR:</th>
     <td class="align-right">
       {formatter('EUR').format(invoiceTotalWithVATEUR)}
     </td>
