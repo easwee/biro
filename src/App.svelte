@@ -10,6 +10,7 @@
   import InvoiceMeta from "./components/invoice/InvoiceMeta.svelte";
   import InvoiceList from "./components/invoice/InvoiceList.svelte";
   import InvoiceFooter from "./components/invoice/InvoiceFooter.svelte";
+  import Exporter from "./components/Exporter.svelte";
 
   onMount(async () => {
     const response = await fetchRates(
@@ -51,7 +52,7 @@
   </svg>
 </a>
 <div class="container">
-  <div class="sheet">
+  <div id="invoice" class="sheet">
     {#if $rates.EUR}
       <InvoiceIssuer />
       <InvoiceReceiver />
@@ -62,5 +63,7 @@
       <p>Loading...</p>
     {/if}
   </div>
+  <Exporter />
 </div>
+
 <Sidebar />
