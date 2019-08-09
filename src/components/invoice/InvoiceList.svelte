@@ -5,10 +5,10 @@
     ratesDate,
     properties,
     shownPropertiesCount
-  } from "../../store";
+  } from "store";
   import InvoiceItem from "./InvoiceItem.svelte";
-  import { formatter } from "../../utils";
-  import { DATA } from "../../config";
+  import { formatter } from "utils";
+  import { DATA } from "config";
 
   const invoiceTotal = $invoiceItems.reduce((acc, item) => {
     return acc + item.units * item.unitPrice;

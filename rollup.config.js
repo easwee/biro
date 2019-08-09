@@ -5,6 +5,8 @@ import commonjs from "rollup-plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 
+const path = require("path");
+
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
@@ -18,10 +20,11 @@ export default {
   plugins: [
     alias({
       resolve: [".svelte", ".js"], // add any aditional extensions needed
-      components: "./components/",
-      utils: "./utils/index.js",
-      store: "./store/index.js",
-      api: "./api/index.js"
+      components: path.resolve("src/components"),
+      utils: path.resolve("src/utils/index.js"),
+      api: path.resolve("src/api/index.js"),
+      store: path.resolve("src/store/index.js"),
+      config: path.resolve("src/config/index.js")
     }),
     svelte({
       // enable run-time checks when not in production
@@ -40,7 +43,8 @@ export default {
     // https://github.com/rollup/rollup-plugin-commonjs
     resolve({
       browser: true,
-      dedupe: importee => importee === "svelte" || importee.startsWith("svelte/")
+      dedupe: importee =>
+        importee === "svelte" || importee.startsWith("svelte/")
     }),
     commonjs(),
 

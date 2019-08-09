@@ -1,6 +1,6 @@
 <script>
-  import { properties } from "../../store";
-  import { formatter } from "../../utils";
+  import { properties } from "store";
+  import { formatter } from "utils";
   export let index, period, description, units, unitFormat, unitPrice;
 </script>
 

@@ -2,15 +2,15 @@
   import { onMount } from "svelte";
   import { format, addDays } from "date-fns";
   import { fetchRates } from "./api";
-  import { DATA } from "./config";
-  import { rates, ratesDate, isSidebarOpened } from "./store";
-  import Sidebar from "./components/sidebar/Sidebar.svelte";
-  import InvoiceIssuer from "./components/invoice/InvoiceIssuer.svelte";
-  import InvoiceReceiver from "./components/invoice/InvoiceReceiver.svelte";
-  import InvoiceMeta from "./components/invoice/InvoiceMeta.svelte";
-  import InvoiceList from "./components/invoice/InvoiceList.svelte";
-  import InvoiceFooter from "./components/invoice/InvoiceFooter.svelte";
-  import Exporter from "./components/Exporter.svelte";
+  import { DATA } from "config";
+  import { rates, ratesDate, isSidebarOpened } from "store";
+  import Sidebar from "components/sidebar/Sidebar.svelte";
+  import InvoiceIssuer from "components/invoice/InvoiceIssuer.svelte";
+  import InvoiceReceiver from "components/invoice/InvoiceReceiver.svelte";
+  import InvoiceMeta from "components/invoice/InvoiceMeta.svelte";
+  import InvoiceList from "components/invoice/InvoiceList.svelte";
+  import InvoiceFooter from "components/invoice/InvoiceFooter.svelte";
+  import Exporter from "components/Exporter.svelte";
 
   onMount(async () => {
     const response = await fetchRates(

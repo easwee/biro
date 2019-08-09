@@ -1,7 +1,7 @@
 <script>
   import { format, addDays } from "date-fns";
-  import { DATA } from "../../config";
-  import { ratesDate } from "../../store";
+  import { DATA } from "config";
+  import { ratesDate } from "store";
 </script>
 
 <table class="invoice-meta">

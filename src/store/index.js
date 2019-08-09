@@ -1,5 +1,5 @@
 import { writable, derived } from "svelte/store";
-import { DATA } from "../config";
+import { DATA } from "config";
 
 export const ratesDate = writable(new Date(DATA.INVOICE_ISSUE_DATE));
 export const rates = writable({});

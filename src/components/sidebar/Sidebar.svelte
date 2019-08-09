@@ -1,6 +1,6 @@
 <script>
   import Editor from "./Editor.svelte";
-  import { isSidebarOpened } from "../../store";
+  import { isSidebarOpened } from "store";
 
   function setSidebarOpened() {
     isSidebarOpened.update(state => {
