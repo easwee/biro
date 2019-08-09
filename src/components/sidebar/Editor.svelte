@@ -1,5 +1,5 @@
 <script>
-  import { properties } from "../../store";
+  import { properties } from "store";
 
   function handleSetPropertyVisible(key, value) {
     properties.update(object => {

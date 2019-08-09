@@ -25,11 +25,14 @@ address {
   clear: left;
 }
 
-#invoice {
-  overflow: hidden;
-  max-width: 655px;
+.container {
   height: 902px;
   margin: 0 auto;
+  max-width: 655px;
+}
+
+#invoice {
+  overflow: hidden;
 }
 
 .sheet {
