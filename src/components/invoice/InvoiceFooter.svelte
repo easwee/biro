@@ -1,8 +1,8 @@
 <script>
   import { format } from "date-fns";
-  import { DATA } from "../config";
-  import { rates, ratesDate } from "../store";
-  import { formatter } from "../utils";
+  import { DATA } from "../../config";
+  import { rates, ratesDate } from "../../store";
+  import { formatter } from "../../utils";
 </script>
 
 <p>
