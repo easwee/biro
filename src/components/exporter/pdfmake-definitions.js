@@ -2,7 +2,13 @@ import { format, addDays } from "date-fns";
 import { INVOICE } from "constants";
 import { formatter } from "utils";
 
-const generateItemList = invoiceItems => {
+const generateItemList = ({
+  invoiceTotal,
+  invoiceVAT,
+  invoiceTotalWithVATUSD,
+  invoiceTotalWithVATEUR,
+  invoiceItems
+}) => {
   let list = [];
 
   list.push([
@@ -40,28 +46,42 @@ const generateItemList = invoiceItems => {
     "",
     "",
     { text: "Total", bold: true, alignment: "right" },
-    { text: "$16.000,00" }
+    { text: formatter("USD").format(invoiceTotal), alignment: "right" }
   ]);
-  list.push(["", "", "", { text: "VAT", bold: true, alignment: "right" }, { text: "$16.000,00" }]);
+  list.push([
+    "",
+    "",
+    "",
+    { text: "VAT", bold: true, alignment: "right" },
+    { text: formatter("USD").format(invoiceVAT), alignment: "right" }
+  ]);
   list.push([
     "",
     "",
     "",
     { text: "Total in USD", bold: true, alignment: "right" },
-    { text: "$16.000,00" }
+    { text: formatter("USD").format(invoiceTotalWithVATUSD), alignment: "right" }
   ]);
   list.push([
     "",
     "",
     "",
     { text: "Total in EUR", bold: true, alignment: "right" },
-    { text: "$16.000,00" }
+    { text: formatter("EUR").format(invoiceTotalWithVATEUR), alignment: "right" }
   ]);
 
   return list;
 };
 
-export const pdfMakeInvoiceDefinition = ({ invoiceItems, rates, ratesDate }) => {
+export const pdfMakeInvoiceDefinition = ({
+  invoiceTotal,
+  invoiceVAT,
+  invoiceTotalWithVATUSD,
+  invoiceTotalWithVATEUR,
+  invoiceItems,
+  rates,
+  ratesDate
+}) => {
   return {
     content: [
       {
@@ -141,7 +161,13 @@ export const pdfMakeInvoiceDefinition = ({ invoiceItems, rates, ratesDate }) => 
         table: {
           widths: ["auto", 270, "auto", "auto", "auto"],
           headerRows: 1,
-          body: generateItemList(invoiceItems)
+          body: generateItemList({
+            invoiceTotal,
+            invoiceVAT,
+            invoiceTotalWithVATUSD,
+            invoiceTotalWithVATEUR,
+            invoiceItems
+          })
         },
         layout: {
           defaultBorder: false

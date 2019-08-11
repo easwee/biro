@@ -2,7 +2,15 @@
   import pdfMake from "pdfmake/build/pdfmake";
   import { format, addDays } from "date-fns";
   import { INVOICE } from "constants";
-  import { invoiceItems, rates, ratesDate } from "store";
+  import {
+    invoiceTotal,
+    invoiceVAT,
+    invoiceTotalWithVATUSD,
+    invoiceTotalWithVATEUR,
+    invoiceItems,
+    rates,
+    ratesDate
+  } from "store";
   import { pdfMakeFont } from "constants";
   import { pdfMakeInvoiceDefinition } from "./pdfmake-definitions";
 
@@ -11,6 +19,10 @@
     pdfMake
       .createPdf(
         pdfMakeInvoiceDefinition({
+          invoiceTotal: $invoiceTotal,
+          invoiceVAT: $invoiceVAT,
+          invoiceTotalWithVATUSD: $invoiceTotalWithVATUSD,
+          invoiceTotalWithVATEUR: $invoiceTotalWithVATEUR,
           invoiceItems: $invoiceItems,
           rates: $rates,
           ratesDate: $ratesDate

@@ -3,6 +3,12 @@ import { INVOICE } from "constants";
 
 export const ratesDate = writable(new Date(INVOICE.ISSUE_DATE));
 export const rates = writable({});
+
+export const invoiceTotal = writable(0);
+export const invoiceVAT = writable(0);
+export const invoiceTotalWithVATUSD = writable(0);
+export const invoiceTotalWithVATEUR = writable(0);
+
 export const invoiceItems = writable([
   {
     description: `Consultancy & development (1.6.2019 - 15.6.2019)`,

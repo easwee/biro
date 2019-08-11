@@ -17,7 +17,7 @@
       format($ratesDate, "YYYY-MM-DD"),
       INVOICE.BASE_CURRENCY
     );
-    $rates = response.data.rates;
+    rates.set(response.data.rates);
   });
 
   function setSidebarOpened() {
