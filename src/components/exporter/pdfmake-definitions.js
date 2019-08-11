@@ -2,7 +2,66 @@ import { format, addDays } from "date-fns";
 import { INVOICE } from "constants";
 import { formatter } from "utils";
 
-export const pdfMakeInvoiceDefinition = ({ rates, ratesDate }) => {
+const generateItemList = invoiceItems => {
+  let list = [];
+
+  list.push([
+    { text: "" },
+    { text: "Description", style: "tableHeader", bold: true },
+    { text: "Units", style: "tableHeader", bold: true },
+    { text: "Price per unit", style: "tableHeader", alignment: "right", bold: true },
+    { text: "Total", style: "tableHeader", alignment: "right", bold: true }
+  ]);
+
+  invoiceItems.map((item, index) => {
+    const { description, units, unitFormat, unitPrice } = item;
+    list.push([
+      { text: index + 1, border: [false, true, false, true] },
+      {
+        text: description,
+        border: [false, true, false, true]
+      },
+      { text: `${units} ${unitFormat}`, alignment: "right", border: [false, true, false, true] },
+      {
+        text: formatter("USD").format(unitPrice),
+        alignment: "right",
+        border: [false, true, false, true]
+      },
+      {
+        text: formatter("USD").format(units * unitPrice),
+        alignment: "right",
+        border: [false, true, false, true]
+      }
+    ]);
+  });
+
+  list.push([
+    "",
+    "",
+    "",
+    { text: "Total", bold: true, alignment: "right" },
+    { text: "$16.000,00" }
+  ]);
+  list.push(["", "", "", { text: "VAT", bold: true, alignment: "right" }, { text: "$16.000,00" }]);
+  list.push([
+    "",
+    "",
+    "",
+    { text: "Total in USD", bold: true, alignment: "right" },
+    { text: "$16.000,00" }
+  ]);
+  list.push([
+    "",
+    "",
+    "",
+    { text: "Total in EUR", bold: true, alignment: "right" },
+    { text: "$16.000,00" }
+  ]);
+
+  return list;
+};
+
+export const pdfMakeInvoiceDefinition = ({ invoiceItems, rates, ratesDate }) => {
   return {
     content: [
       {
@@ -16,7 +75,8 @@ export const pdfMakeInvoiceDefinition = ({ rates, ratesDate }) => {
               Tax reg. no.: ${INVOICE.COMPANY_TAX_REGISTRATION_NUMBER}
               Business reg. no.: ${INVOICE.COMPANY_BUSINESS_REGISTRATION_NUMBER}`
             ],
-            style: "address"
+            fontSize: 11,
+            margin: [0, 0, 0, 15]
           }
         ]
       },
@@ -30,7 +90,8 @@ export const pdfMakeInvoiceDefinition = ({ rates, ratesDate }) => {
               "San Francisco, CA 94127\n",
               "USA"
             ],
-            style: "address",
+            fontSize: 11,
+            italics: true,
             margin: [0, 15, 0, 0]
           },
           {
@@ -78,39 +139,9 @@ export const pdfMakeInvoiceDefinition = ({ rates, ratesDate }) => {
       },
       {
         table: {
-          widths: [280, "auto", "auto", "auto"],
+          widths: ["auto", 270, "auto", "auto", "auto"],
           headerRows: 1,
-          body: [
-            [
-              { text: "Description", style: "tableHeader", bold: true },
-              { text: "Units", style: "tableHeader", bold: true },
-              { text: "Price per unit", style: "tableHeader", alignment: "right", bold: true },
-              { text: "Total", style: "tableHeader", alignment: "right", bold: true }
-            ],
-            [
-              {
-                text: "Development & consultancy - 1.5.2019 - 15.5.2019",
-                border: [false, true, false, true]
-              },
-              { text: "160 hours", alignment: "right", border: [false, true, false, true] },
-              { text: "$100.00", alignment: "right", border: [false, true, false, true] },
-              { text: "$16.000,00", alignment: "right", border: [false, true, false, true] }
-            ],
-            ["", "", { text: "Total", bold: true, alignment: "right" }, { text: "$16.000,00" }],
-            ["", "", { text: "VAT", bold: true, alignment: "right" }, { text: "$16.000,00" }],
-            [
-              "",
-              "",
-              { text: "Total in USD", bold: true, alignment: "right" },
-              { text: "$16.000,00" }
-            ],
-            [
-              "",
-              "",
-              { text: "Total in EUR", bold: true, alignment: "right" },
-              { text: "$16.000,00" }
-            ]
-          ]
+          body: generateItemList(invoiceItems)
         },
         layout: {
           defaultBorder: false
@@ -183,11 +214,6 @@ export const pdfMakeInvoiceDefinition = ({ rates, ratesDate }) => {
       }
     ],
     styles: {
-      address: {
-        fontSize: 11,
-        italics: true,
-        margin: [0, 0, 0, 30]
-      },
       metaCell: {
         fontSize: 11,
         fillColor: "#f2f2f2"

@@ -4,6 +4,25 @@
   import { ratesDate } from "store";
 </script>
 
+<style>
+  table.invoice-meta {
+    float: right;
+    background: #f2f2f2;
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+
+  table.invoice-meta th,
+  table.invoice-meta td {
+    padding: 3px 10px;
+  }
+
+  table.invoice-meta {
+    width: 50%;
+    margin-bottom: 30px;
+  }
+</style>
+
 <table class="invoice-meta">
   <tr>
     <th>INVOICE No.</th>

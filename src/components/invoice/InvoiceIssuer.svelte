@@ -2,6 +2,16 @@
   import { INVOICE } from "constants";
 </script>
 
+<style>
+  address {
+    width: 50%;
+    float: right;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    font-style: normal;
+  }
+</style>
+
 <address>
   {INVOICE.COMPANY_NAME}
   <br />

@@ -1,3 +1,13 @@
+<style>
+  address {
+    float: left;
+    width: 50%;
+    clear: both;
+    padding-top: 15px;
+    margin-bottom: 30px;
+  }
+</style>
+
 <address>
   Povio Inc.
   <br />

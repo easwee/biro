@@ -19,12 +19,6 @@ body {
   background: #f2f2f2;
 }
 
-address {
-  float: left;
-  margin-bottom: 30px;
-  clear: left;
-}
-
 .container {
   height: 902px;
   margin: 0 auto;
@@ -54,41 +48,12 @@ table th {
 
 table th,
 table td {
-  padding: 5px 10px;
+  padding: 5px;
 }
 
 table th:last-child,
 table td:last-child {
   padding-right: 0;
-}
-
-table.invoice-meta {
-  float: right;
-  background: #f2f2f2;
-  font-size: 12px;
-}
-
-table.invoice-meta th,
-table.invoice-meta td {
-  padding: 3px 10px;
-}
-
-table.invoice-meta {
-  max-width: 300px;
-  margin-bottom: 30px;
-}
-
-table.invoice tr.header th {
-  border-bottom: 1px solid #ccc;
-}
-
-table.invoice tr.footer-total th,
-table.invoice tr.footer-total td {
-  border-top: 1px solid #ccc;
-}
-
-table.invoice tr.footer th {
-  text-align: right;
 }
 
 .align-right {

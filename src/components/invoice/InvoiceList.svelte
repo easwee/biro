@@ -19,6 +19,26 @@
   const invoiceTotalWithVATEUR = invoiceTotalWithVATUSD * $rates.EUR;
 </script>
 
+<style>
+  table.invoice {
+    margin-bottom: 30px;
+  }
+
+  table.invoice tr.header th {
+    border-bottom: 0;
+  }
+
+  table.invoice tr.footer-total th,
+  table.invoice tr.footer-total td {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  table.invoice tr.footer th {
+    text-align: right;
+  }
+</style>
+
 <table class="invoice">
   <tr class="header">
     <th />
