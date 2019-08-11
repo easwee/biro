@@ -38,7 +38,6 @@ address {
 .sheet {
   background: white;
   padding: 30px;
-  border: 1px solid #ccc;
   overflow: hidden;
 }
 
@@ -50,6 +49,7 @@ table {
 
 table th {
   text-align: left;
+  white-space: nowrap;
 }
 
 table th,
@@ -93,6 +93,10 @@ table.invoice tr.footer th {
 
 .align-right {
   text-align: right;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
 
 .signature {

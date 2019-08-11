@@ -10,15 +10,17 @@
     <td>{description}</td>
   {/if}
   {#if $properties.units.show}
-    <td class="align-right">{units} {unitFormat}</td>
+    <td class="align-right no-wrap">{units} {unitFormat}</td>
   {/if}
   {#if $properties.period.show}
-    <td class="align-right">{period}</td>
+    <td class="align-right no-wrap">{period}</td>
   {/if}
   {#if $properties.pricePerUnit.show}
-    <td class="align-right">{formatter('USD').format(unitPrice)}</td>
+    <td class="align-right no-wrap">{formatter('USD').format(unitPrice)}</td>
   {/if}
   {#if $properties.total.show}
-    <td class="align-right">{formatter('USD').format(units * unitPrice)}</td>
+    <td class="align-right no-wrap">
+      {formatter('USD').format(units * unitPrice)}
+    </td>
   {/if}
 </tr>

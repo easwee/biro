@@ -8,13 +8,13 @@
   } from "store";
   import InvoiceItem from "./InvoiceItem.svelte";
   import { formatter } from "utils";
-  import { DATA } from "config";
+  import { INVOICE } from "constants";
 
   const invoiceTotal = $invoiceItems.reduce((acc, item) => {
     return acc + item.units * item.unitPrice;
   }, 0);
 
-  const invoiceVAT = (invoiceTotal * DATA.VAT) / 100;
+  const invoiceVAT = (invoiceTotal * INVOICE.VAT) / 100;
   const invoiceTotalWithVATUSD = invoiceTotal + invoiceVAT;
   const invoiceTotalWithVATEUR = invoiceTotalWithVATUSD * $rates.EUR;
 </script>
@@ -24,7 +24,8 @@
     <th />
     {#each Object.values($properties) as property, index}
       {#if property.show}
-        <th class={property.alignRight ? 'align-right' : ''}>
+        <th
+          class={`${property.alignRight ? 'align-right' : ''} ${property.alignRight ? 'no-wrap' : ''}`}>
           {property.name}
         </th>
       {/if}
