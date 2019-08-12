@@ -7,7 +7,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 30px;
+  padding: 0;
 }
 
 body {
@@ -19,20 +19,36 @@ body {
   background: #f2f2f2;
 }
 
-.container {
-  height: 902px;
-  margin: 0 auto;
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.controls {
+  position: relative;
+  flex: 0 0 350px;
+  padding: 30px 30px 100px 30px;
+  background: #676778;
+}
+
+.preview {
+  flex: auto;
+  display: flex;
+  padding: 30px;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.a4-paper {
   max-width: 655px;
-}
-
-#invoice {
+  height: 902px;
   overflow: hidden;
-}
-
-.sheet {
   background: white;
   padding: 30px;
   overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -62,9 +78,4 @@ table td:last-child {
 
 .no-wrap {
   white-space: nowrap;
-}
-
-.signature {
-  float: right;
-  text-align: center;
 }

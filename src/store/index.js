@@ -1,9 +1,9 @@
 import { writable, derived } from "svelte/store";
 import { INVOICE } from "constants";
 
+export const isSidebarOpened = writable(true);
 export const ratesDate = writable(new Date(INVOICE.ISSUE_DATE));
 export const rates = writable({});
-
 export const invoiceTotal = writable(0);
 export const invoiceVAT = writable(0);
 export const invoiceTotalWithVATUSD = writable(0);
@@ -25,6 +25,7 @@ export const invoiceItems = writable([
     period: "1.6.2019 - 15.6.2019"
   }
 ]);
+
 export const properties = writable({
   description: {
     id: "description",
@@ -62,8 +63,8 @@ export const properties = writable({
     noWrap: true
   }
 });
+
 export const shownPropertiesCount = derived(
   properties,
   $properties => Object.values($properties).filter(property => property.show).length
 );
-export const isSidebarOpened = writable(false);

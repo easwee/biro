@@ -6,6 +6,10 @@
 </script>
 
 <style>
+  .signature {
+    float: right;
+    text-align: center;
+  }
   .rate {
     margin-bottom: 0;
   }

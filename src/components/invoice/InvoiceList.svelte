@@ -1,49 +1,19 @@
 <script>
   import {
     rates,
-    invoiceItems,
-    invoiceTotal,
-    invoiceVAT,
-    invoiceTotalWithVATUSD,
-    invoiceTotalWithVATEUR,
     ratesDate,
+    invoiceItems,
     properties,
     shownPropertiesCount
   } from "store";
   import InvoiceItem from "./InvoiceItem.svelte";
-  import { formatter } from "utils";
+  import { formatter, calculateTotalPrice } from "utils";
   import { INVOICE } from "constants";
 
-  function addRow() {
-    invoiceItems.update(items => {
-      return [
-        ...items,
-        {
-          description: `Consultancy & development (1.6.2019 - 15.6.2019)`,
-          units: 160,
-          unitFormat: "hours",
-          unitPrice: 100,
-          period: "1.6.2019 - 15.6.2019"
-        }
-      ];
-    });
-    calculateTotals($invoiceItems);
-  }
-
-  function calculateTotals(items) {
-    const total = items.reduce((acc, item) => {
-      return acc + item.units * item.unitPrice;
-    }, 0);
-
-    invoiceTotal.update(value => total);
-    invoiceVAT.update(value => (total * INVOICE.VAT) / 100);
-    invoiceTotalWithVATUSD.update(value => $invoiceTotal + $invoiceVAT);
-    invoiceTotalWithVATEUR.update(
-      value => $invoiceTotalWithVATUSD * $rates.EUR
-    );
-  }
-
-  calculateTotals($invoiceItems);
+  $: total = calculateTotalPrice($invoiceItems);
+  $: VAT = (total * INVOICE.VAT) / 100;
+  $: totalWithVATUSD = total + VAT;
+  $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
 </script>
 
 <style>
@@ -85,23 +55,19 @@
 
   <tr class="footer footer-total">
     <th colspan={$shownPropertiesCount}>Total:</th>
-    <td class="align-right">{formatter('USD').format($invoiceTotal)}</td>
+    <td class="align-right">{formatter('USD').format(total)}</td>
   </tr>
   <tr class="footer">
     <th colspan={$shownPropertiesCount}>VAT:</th>
-    <td class="align-right">{formatter('USD').format($invoiceVAT)}</td>
+    <td class="align-right">{formatter('USD').format(VAT)}</td>
   </tr>
   <tr class="footer">
     <th colspan={$shownPropertiesCount}>Total in USD:</th>
-    <td class="align-right">
-      {formatter('USD').format($invoiceTotalWithVATUSD)}
-    </td>
+    <td class="align-right">{formatter('USD').format(totalWithVATUSD)}</td>
   </tr>
   <tr class="footer">
     <th colspan={$shownPropertiesCount}>Total in EUR:</th>
-    <td class="align-right">
-      {formatter('EUR').format($invoiceTotalWithVATEUR)}
-    </td>
+    <td class="align-right">{formatter('EUR').format(totalWithVATEUR)}</td>
   </tr>
 </table>
-<button on:click={() => addRow()}>Add one</button>
+
