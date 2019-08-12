@@ -1,15 +1,25 @@
 <script>
-  import { DATA } from "config";
+  import { INVOICE } from "constants";
 </script>
 
+<style>
+  address {
+    width: 50%;
+    float: right;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    font-style: normal;
+  }
+</style>
+
 <address>
-  {DATA.INVOICE_COMPANY_NAME}
+  {INVOICE.COMPANY_NAME}
   <br />
-  {DATA.INVOICE_COMPANY_ADDRESS}
+  {INVOICE.COMPANY_ADDRESS}
   <br />
-  {DATA.INVOICE_COMPANY_POSTAL_NUMBER} {DATA.INVOICE_COMPANY_CITY},
+  {INVOICE.COMPANY_POSTAL_NUMBER} {INVOICE.COMPANY_CITY},
   <br />
-  Tax reg. no.: {DATA.INVOICE_COMPANY_TAX_REGISTRATION_NUMBER}
+  Tax reg. no.: {INVOICE.COMPANY_TAX_REGISTRATION_NUMBER}
   <br />
-  Business reg. no.: {DATA.INVOICE_COMPANY_BUSINESS_REGISTRATION_NUMBER}
+  Business reg. no.: {INVOICE.COMPANY_BUSINESS_REGISTRATION_NUMBER}
 </address>

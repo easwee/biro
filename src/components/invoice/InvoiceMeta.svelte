@@ -1,8 +1,27 @@
 <script>
   import { format, addDays } from "date-fns";
-  import { DATA } from "config";
+  import { INVOICE } from "constants";
   import { ratesDate } from "store";
 </script>
+
+<style>
+  table.invoice-meta {
+    float: right;
+    background: #f2f2f2;
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+
+  table.invoice-meta th,
+  table.invoice-meta td {
+    padding: 3px 10px;
+  }
+
+  table.invoice-meta {
+    width: 50%;
+    margin-bottom: 30px;
+  }
+</style>
 
 <table class="invoice-meta">
   <tr>
@@ -11,18 +30,18 @@
   </tr>
   <tr>
     <td>Date:</td>
-    <td>{DATA.INVOICE_ISSUE_CITY}, {format($ratesDate, 'D.M.YYYY')}</td>
+    <td>{INVOICE.ISSUE_CITY}, {format($ratesDate, 'D.M.YYYY')}</td>
   </tr>
   <tr>
     <td>Terms:</td>
-    <td>{DATA.TERMS} days</td>
+    <td>{INVOICE.TERMS} days</td>
   </tr>
   <tr>
     <td>Due date:</td>
-    <td>{format(addDays($ratesDate, DATA.TERMS), 'D.M.YYYY')}</td>
+    <td>{format(addDays($ratesDate, INVOICE.TERMS), 'D.M.YYYY')}</td>
   </tr>
   <tr>
     <td>Bank account:</td>
-    <td>{DATA.BANK_ACCOUNT_NUMBER}</td>
+    <td>{INVOICE.BANK_ACCOUNT_NUMBER}</td>
   </tr>
 </table>

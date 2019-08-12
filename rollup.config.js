@@ -24,7 +24,7 @@ export default {
       utils: path.resolve("src/utils/index.js"),
       api: path.resolve("src/api/index.js"),
       store: path.resolve("src/store/index.js"),
-      config: path.resolve("src/config/index.js")
+      constants: path.resolve("src/constants/index.js")
     }),
     svelte({
       // enable run-time checks when not in production
@@ -43,8 +43,7 @@ export default {
     // https://github.com/rollup/rollup-plugin-commonjs
     resolve({
       browser: true,
-      dedupe: importee =>
-        importee === "svelte" || importee.startsWith("svelte/")
+      dedupe: importee => importee === "svelte" || importee.startsWith("svelte/")
     }),
     commonjs(),
 

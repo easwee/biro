@@ -1,15 +1,23 @@
 <script>
   import { format } from "date-fns";
-  import { DATA } from "config";
+  import { INVOICE } from "constants";
   import { rates, ratesDate } from "store";
   import { formatter } from "utils";
 </script>
 
-<p>
+<style>
+  .rate {
+    margin-bottom: 0;
+  }
+  .rate a {
+    color: black;
+  }
+</style>
+
+<p class="rate">
   Exchange rate for the USD / EUR on the day {format($ratesDate, 'D.M.YYYY')}:
   <strong>{$rates.EUR.toFixed(4)}</strong>
-</p>
-<p>
+  <br />
   <small>
     Source:
     <a
@@ -18,13 +26,14 @@
     </a>
   </small>
 </p>
+
 <p>VAT exempt under article 287 of VAT Directive</p>
 <p class="signature">
   Invoice issued by:
   <br />
-  {DATA.INVOICE_ISSUER}
+  {INVOICE.ISSUER}
   <br />
-  <img src={DATA.INVOICE_ISSUER_SIGNATURE} alt={DATA.INVOICE_ISSUER} />
+  <img src={INVOICE.ISSUER_SIGNATURE} alt={INVOICE.ISSUER} />
   <br />
   <small>
     <em>No company seal is used</em>

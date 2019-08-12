@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { format, addDays } from "date-fns";
   import { fetchRates } from "./api";
-  import { DATA } from "config";
+  import { INVOICE } from "constants";
   import { rates, ratesDate, isSidebarOpened } from "store";
   import Sidebar from "components/sidebar/Sidebar.svelte";
   import InvoiceIssuer from "components/invoice/InvoiceIssuer.svelte";
@@ -10,14 +10,14 @@
   import InvoiceMeta from "components/invoice/InvoiceMeta.svelte";
   import InvoiceList from "components/invoice/InvoiceList.svelte";
   import InvoiceFooter from "components/invoice/InvoiceFooter.svelte";
-  import Exporter from "components/Exporter.svelte";
+  import Exporter from "components/exporter/Exporter.svelte";
 
   onMount(async () => {
     const response = await fetchRates(
       format($ratesDate, "YYYY-MM-DD"),
-      DATA.BASE_CURRENCY
+      INVOICE.BASE_CURRENCY
     );
-    $rates = response.data.rates;
+    rates.set(response.data.rates);
   });
 
   function setSidebarOpened() {
