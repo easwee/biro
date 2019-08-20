@@ -1,7 +1,6 @@
 <script>
   import { format } from "date-fns";
-  import { INVOICE } from "constants";
-  import { rates, ratesDate } from "store";
+  import { rates, ratesDate, ownerData } from "store";
   import { formatter } from "utils";
 </script>
 
@@ -35,9 +34,9 @@
 <p class="signature">
   Invoice issued by:
   <br />
-  {INVOICE.ISSUER}
+  {$ownerData.issuer}
   <br />
-  <img src={INVOICE.ISSUER_SIGNATURE} alt={INVOICE.ISSUER} />
+  <img src={$ownerData.issuer_signature} alt={$ownerData.issuer} />
   <br />
   <small>
     <em>No company seal is used</em>

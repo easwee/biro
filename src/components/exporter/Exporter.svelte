@@ -1,14 +1,13 @@
 <script>
   import pdfMake from "pdfmake/build/pdfmake";
-  import { format, addDays } from "date-fns";
-  import { INVOICE } from "constants";
-  import { invoiceItems, rates, ratesDate } from "store";
+  import { format } from "date-fns";
+  import { invoiceItems, rates, ratesDate, clientData, ownerData } from "store";
   import { pdfMakeFont } from "constants";
   import { pdfMakeInvoiceDefinition } from "./pdfmake-definitions";
   import { calculateTotalPrice } from "utils";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * INVOICE.VAT) / 100;
+  $: VAT = (total * ownerData.vat) / 100;
   $: totalWithVATUSD = total + VAT;
   $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
 
@@ -23,11 +22,13 @@
           invoiceTotalWithVATEUR: totalWithVATEUR,
           invoiceItems: $invoiceItems,
           rates: $rates,
-          ratesDate: $ratesDate
+          ratesDate: $ratesDate,
+          clientData: $clientData,
+          ownerData: $ownerData
         })
       )
       .download(
-        `${INVOICE.PDF_FILE_NAME_PREFIX}-${format($ratesDate, "YYYY-MM")}`
+        `${$ownerData.pdf_file_name_prefix}-${format($ratesDate, "YYYY-MM")}`
       );
   }
 </script>

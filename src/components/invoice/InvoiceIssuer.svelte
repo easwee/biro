@@ -1,5 +1,5 @@
 <script>
-  import { INVOICE } from "constants";
+  import { ownerData } from "store";
 </script>
 
 <style>
@@ -13,13 +13,13 @@
 </style>
 
 <address>
-  {INVOICE.COMPANY_NAME}
+  {$ownerData.company_name}
   <br />
-  {INVOICE.COMPANY_ADDRESS}
+  {$ownerData.company_address}
   <br />
-  {INVOICE.COMPANY_POSTAL_NUMBER} {INVOICE.COMPANY_CITY},
+  {$ownerData.company_postal_number} {$ownerData.company_city}
   <br />
-  Tax reg. no.: {INVOICE.COMPANY_TAX_REGISTRATION_NUMBER}
+  Tax reg. no.: {$ownerData.company_tax_registration_number}
   <br />
-  Business reg. no.: {INVOICE.COMPANY_BUSINESS_REGISTRATION_NUMBER}
+  Business reg. no.: {$ownerData.company_business_registration_number}
 </address>

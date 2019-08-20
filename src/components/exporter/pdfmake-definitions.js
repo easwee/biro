@@ -1,5 +1,4 @@
 import { format, addDays } from "date-fns";
-import { INVOICE } from "constants";
 import { formatter } from "utils";
 
 const generateItemList = ({
@@ -80,7 +79,9 @@ export const pdfMakeInvoiceDefinition = ({
   invoiceTotalWithVATEUR,
   invoiceItems,
   rates,
-  ratesDate
+  ratesDate,
+  clientData,
+  ownerData
 }) => {
   return {
     content: [
@@ -89,26 +90,26 @@ export const pdfMakeInvoiceDefinition = ({
           { text: "" },
           {
             text: [
-              `${INVOICE.COMPANY_NAME}
-              ${INVOICE.COMPANY_ADDRESS}
-              ${INVOICE.COMPANY_POSTAL_NUMBER} ${INVOICE.ISSUE_CITY}
-              Tax reg. no.: ${INVOICE.COMPANY_TAX_REGISTRATION_NUMBER}
-              Business reg. no.: ${INVOICE.COMPANY_BUSINESS_REGISTRATION_NUMBER}`
+              `${ownerData.company_name}
+              ${ownerData.company_address}
+              ${ownerData.company_postal_number} ${ownerData.company_city}
+              Tax reg. no.: ${ownerData.company_tax_registration_number}
+              Business reg. no.: ${ownerData.company_business_registration_number}`
             ],
             fontSize: 11,
             margin: [0, 0, 0, 15]
           }
         ]
       },
+
       {
         columns: [
           {
             text: [
-              "Povio Inc.\n",
-              '"16 Merced Avenue\n',
-              '94127 California"\n',
-              "San Francisco, CA 94127\n",
-              "USA"
+              `${clientData.client_company_name}
+              ${clientData.client_company_address}
+              ${clientData.client_company_city}, ${clientData.client_company_zip}
+              ${clientData.client_company_country}`
             ],
             fontSize: 11,
             italics: true,
@@ -126,26 +127,26 @@ export const pdfMakeInvoiceDefinition = ({
                 [
                   { text: "Date:", style: "metaCell", bold: true },
                   {
-                    text: `${INVOICE.ISSUE_CITY}, ${format(ratesDate, "D.M.YYYY")}`,
+                    text: `${ownerData.issue_city}, ${format(ratesDate, "D.M.YYYY")}`,
                     style: "metaCell",
                     bold: true
                   }
                 ],
                 [
                   { text: "Terms:", style: "metaCell", bold: true },
-                  { text: `${INVOICE.TERMS} days`, style: "metaCell", bold: true }
+                  { text: `${ownerData.terms} days`, style: "metaCell", bold: true }
                 ],
                 [
                   { text: "Due date:", style: "metaCell", bold: true },
                   {
-                    text: format(addDays(ratesDate, INVOICE.TERMS), "D.M.YYYY"),
+                    text: format(addDays(ratesDate, ownerData.terms), "D.M.YYYY"),
                     style: "metaCell",
                     bold: true
                   }
                 ],
                 [
                   { text: "Bank account:", style: "metaCell", bold: true },
-                  { text: INVOICE.BANK_ACCOUNT_NUMBER, style: "metaCell", bold: true }
+                  { text: ownerData.bank_account_number, style: "metaCell", bold: true }
                 ]
               ]
             },
@@ -205,7 +206,7 @@ export const pdfMakeInvoiceDefinition = ({
           {
             text: [
               {
-                text: ["Invoice issued by:\n", INVOICE.ISSUER]
+                text: ["Invoice issued by:\n", ownerData.issuer]
               }
             ],
             alignment: "center"
@@ -217,7 +218,7 @@ export const pdfMakeInvoiceDefinition = ({
           { text: "" },
           { text: "" },
           {
-            image: INVOICE.ISSUER_SIGNATURE,
+            image: ownerData.issuer_signature,
             width: 60,
             alignment: "center",
             margin: [10, 0, 40, 0]

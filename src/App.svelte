@@ -2,8 +2,9 @@
   import { onMount } from "svelte";
   import { format, addDays } from "date-fns";
   import { fetchRates } from "./api";
-  import { INVOICE } from "constants";
-  import { rates, ratesDate, isSidebarOpened } from "store";
+  import { BIRO_SCHEME } from "constants";
+  import { rates, ratesDate, ownerData } from "store";
+
   import InvoiceIssuer from "components/invoice/InvoiceIssuer.svelte";
   import InvoiceReceiver from "components/invoice/InvoiceReceiver.svelte";
   import InvoiceMeta from "components/invoice/InvoiceMeta.svelte";
@@ -14,7 +15,7 @@
   onMount(async () => {
     const response = await fetchRates(
       format($ratesDate, "YYYY-MM-DD"),
-      INVOICE.BASE_CURRENCY
+      $ownerData.base_currency
     );
     rates.set(response.data.rates);
   });

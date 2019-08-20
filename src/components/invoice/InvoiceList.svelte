@@ -4,14 +4,14 @@
     ratesDate,
     invoiceItems,
     properties,
-    shownPropertiesCount
+    shownPropertiesCount,
+    ownerData
   } from "store";
   import InvoiceItem from "./InvoiceItem.svelte";
   import { formatter, calculateTotalPrice } from "utils";
-  import { INVOICE } from "constants";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * INVOICE.VAT) / 100;
+  $: VAT = (total * ownerData.vat) / 100;
   $: totalWithVATUSD = total + VAT;
   $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
 </script>
@@ -70,4 +70,3 @@
     <td class="align-right">{formatter('EUR').format(totalWithVATEUR)}</td>
   </tr>
 </table>
-
