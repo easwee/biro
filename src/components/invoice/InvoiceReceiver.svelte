@@ -1,3 +1,7 @@
+<script>
+  import { clientData } from "store";
+</script>
+
 <style>
   address {
     float: left;
@@ -9,13 +13,11 @@
 </style>
 
 <address>
-  Povio Inc.
+  {$clientData.client_company_name}
   <br />
-  "16 Merced Avenue
+  {$clientData.client_company_address}
   <br />
-  94127 California"
+  {$clientData.client_company_city}, {$clientData.client_company_zip}
   <br />
-  San Francisco, CA 94127
-  <br />
-  USA
+  {$clientData.client_company_country}
 </address>

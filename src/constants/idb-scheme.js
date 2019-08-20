@@ -1,0 +1,104 @@
+export const BIRO_SCHEME = [
+  {
+    name: "owner",
+    keyPath: "id",
+    autoIncrement: true,
+    fields: [
+      {
+        name: "id",
+        unique: true
+      },
+      {
+        name: "bank_account_number",
+        unique: false
+      },
+      {
+        name: "terms",
+        unique: false
+      },
+      {
+        name: "period",
+        unique: false
+      },
+      {
+        name: "vat",
+        unique: false
+      },
+      {
+        name: "base_currency",
+        unique: false
+      },
+      {
+        name: "issue_date",
+        unique: false
+      },
+      {
+        name: "issue_city",
+        unique: false
+      },
+      {
+        name: "company_name",
+        unique: false
+      },
+      {
+        name: "company_address",
+        unique: false
+      },
+      {
+        name: "company_city",
+        unique: false
+      },
+      {
+        name: "company_postal_number",
+        unique: false
+      },
+      {
+        name: "company_tax_registration_number",
+        unique: false
+      },
+      {
+        name: "company_business_registration_number",
+        unique: false
+      },
+      {
+        name: "issuer",
+        unique: false
+      },
+      {
+        name: "issuer_signature",
+        unique: false
+      }
+    ]
+  },
+  {
+    name: "clients",
+    keyPath: "id",
+    autoIncrement: true,
+    fields: [
+      {
+        name: "id",
+        unique: true
+      },
+      {
+        name: "client_company_name",
+        unique: true
+      },
+      {
+        name: "client_company_address",
+        unique: true
+      },
+      {
+        name: "client_company_city",
+        unique: true
+      },
+      {
+        name: "client_company_zip",
+        unique: true
+      },
+      {
+        name: "client_company_country",
+        unique: true
+      }
+    ]
+  }
+];
