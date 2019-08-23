@@ -40,35 +40,53 @@
       bind:value={$ownerData.company_address}
       placeholder="Address" />
   </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$ownerData.company_postal_number}
-      placeholder="Postal number" />
+  <div class="g-r">
+    <div class="g-r-c g-r-c-30">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$ownerData.company_postal_number}
+          placeholder="Postal number" />
+      </div>
+    </div>
+    <div class="g-r-c g-r-c-70">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$ownerData.company_city}
+          placeholder="City" />
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$ownerData.company_city}
-      placeholder="City" />
+  <div class="g-r">
+    <div class="g-r-c g-r-c-50">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$ownerData.company_tax_registration_number}
+          placeholder="Tax reg. no." />
+      </div>
+    </div>
+    <div class="g-r-c g-r-c-50">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$ownerData.company_business_registration_number}
+          placeholder="Business reg.no." />
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$ownerData.company_tax_registration_number}
-      placeholder="Tax reg. no." />
-  </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$ownerData.company_business_registration_number}
-      placeholder="Business reg.no." />
-  </div>
-  <div class="field">
-    <input type="text" bind:value={$ownerData.vat} placeholder="VAT" />
-  </div>
-  <div class="field">
-    <input type="text" bind:value={$ownerData.terms} placeholder="Terms" />
+  <div class="g-r">
+    <div class="g-r-c g-r-c-50">
+      <div class="field">
+        <input type="text" bind:value={$ownerData.vat} placeholder="VAT" />
+      </div>
+    </div>
+    <div class="g-r-c g-r-c-50">
+      <div class="field">
+        <input type="text" bind:value={$ownerData.terms} placeholder="Terms" />
+      </div>
+    </div>
   </div>
   <div class="field">
     <input

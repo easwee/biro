@@ -9,15 +9,6 @@
     invoice_row_unit_format,
     invoice_row_unit_price,
     invoice_row_period;
-
-  console.log(
-    "LOG",
-    invoice_row_description,
-    invoice_row_units,
-    invoice_row_unit_format,
-    invoice_row_unit_price,
-    invoice_row_period
-  );
 </script>
 
 <style>

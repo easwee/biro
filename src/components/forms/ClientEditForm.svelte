@@ -45,17 +45,24 @@
       bind:value={$clientData.client_company_city}
       placeholder="Client company city" />
   </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$clientData.client_company_zip}
-      placeholder="Client company zip" />
-  </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$clientData.client_company_country}
-      placeholder="Client company country" />
+
+  <div class="g-r">
+    <div class="g-r-c g-r-c-30">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$clientData.client_company_zip}
+          placeholder="Client company zip" />
+      </div>
+    </div>
+    <div class="g-r-c g-r-c-70">
+      <div class="field">
+        <input
+          type="text"
+          bind:value={$clientData.client_company_country}
+          placeholder="Client company country" />
+      </div>
+    </div>
   </div>
   <div class="actions">
     <button type="submit" class="button save">Save</button>

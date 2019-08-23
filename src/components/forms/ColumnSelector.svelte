@@ -11,7 +11,7 @@
   }
 </script>
 
-<h2>Show</h2>
+<h2>Invoice row columns</h2>
 {#each Object.values($properties) as property, index}
   <div>
     <label>

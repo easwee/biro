@@ -68,68 +68,85 @@
 
 <style>
   .invoice-row {
-    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 10px 0;
   }
 </style>
 
 <form>
   {#each $invoiceItems as item, index}
     <div class="invoice-row">
-      <div class="field">
-        <input
-          type="text"
-          bind:value={item.invoice_row_description}
-          on:keyup={() => {
-            window.clearTimeout(typeTimeout);
-            $invoiceItems = $invoiceItems;
-            typeTimeout = window.setTimeout(function() {
-              handleSubmit(index, item.id);
-            }, 500);
-          }}
-          placeholder="Description" />
+      <div class="g-r">
+        <div class="g-r-c g-r-c-100">
+          <div class="field">
+            <input
+              type="text"
+              bind:value={item.invoice_row_description}
+              on:keyup={() => {
+                window.clearTimeout(typeTimeout);
+                $invoiceItems = $invoiceItems;
+                typeTimeout = window.setTimeout(function() {
+                  handleSubmit(index, item.id);
+                }, 500);
+              }}
+              placeholder="Description" />
+          </div>
+        </div>
       </div>
-      <div class="field">
-        <input
-          type="text"
-          bind:value={item.invoice_row_units}
-          on:keyup={() => {
-            window.clearTimeout(typeTimeout);
-            $invoiceItems = $invoiceItems;
-            typeTimeout = window.setTimeout(function() {
-              handleSubmit(index, item.id);
-            }, 500);
-          }}
-          placeholder="Units" />
+
+      <div class="g-r">
+        <div class="g-r-c g-r-c-33">
+          <div class="field">
+            <input
+              type="text"
+              bind:value={item.invoice_row_units}
+              on:keyup={() => {
+                window.clearTimeout(typeTimeout);
+                $invoiceItems = $invoiceItems;
+                typeTimeout = window.setTimeout(function() {
+                  handleSubmit(index, item.id);
+                }, 500);
+              }}
+              placeholder="Units" />
+          </div>
+        </div>
+        <div class="g-r-c g-r-c-33">
+          <div class="field">
+            <input
+              type="text"
+              bind:value={item.invoice_row_unit_format}
+              on:keyup={() => {
+                window.clearTimeout(typeTimeout);
+                $invoiceItems = $invoiceItems;
+                typeTimeout = window.setTimeout(function() {
+                  handleSubmit(index, item.id);
+                }, 500);
+              }}
+              placeholder="Unit format" />
+          </div>
+        </div>
+        <div class="g-r-c g-r-c-33">
+          <div class="field">
+            <input
+              type="text"
+              bind:value={item.invoice_row_unit_price}
+              on:keyup={() => {
+                window.clearTimeout(typeTimeout);
+                $invoiceItems = $invoiceItems;
+                typeTimeout = window.setTimeout(function() {
+                  handleSubmit(index, item.id);
+                }, 500);
+              }}
+              placeholder="Unit price" />
+          </div>
+        </div>
       </div>
+
       <div class="field">
         <input
-          type="text"
-          bind:value={item.invoice_row_unit_format}
-          on:keyup={() => {
-            window.clearTimeout(typeTimeout);
-            $invoiceItems = $invoiceItems;
-            typeTimeout = window.setTimeout(function() {
-              handleSubmit(index, item.id);
-            }, 500);
-          }}
-          placeholder="Unit format" />
-      </div>
-      <div class="field">
-        <input
-          type="text"
-          bind:value={item.invoice_row_unit_price}
-          on:keyup={() => {
-            window.clearTimeout(typeTimeout);
-            $invoiceItems = $invoiceItems;
-            typeTimeout = window.setTimeout(function() {
-              handleSubmit(index, item.id);
-            }, 500);
-          }}
-          placeholder="Unit price" />
-      </div>
-      <div class="field">
-        <input
-          type="text"
+          type="date"
           bind:value={item.invoice_row_period}
           on:keyup={() => {
             window.clearTimeout(typeTimeout);
@@ -142,11 +159,12 @@
       </div>
       <div class="actions align-right">
         <span on:click={() => removeInvoiceRow(item.id)} class="button remove">
-          - Remove
+          - Remove #{index + 1}
         </span>
       </div>
     </div>
   {/each}
-  <span on:click={() => addInvoiceRow()} class="button save">+ Add item</span>
-  <!-- <button type="submit">Submit</button> on:submit|preventDefault={handleSubmit} -->
+  <div class="actions align-center">
+    <span on:click={() => addInvoiceRow()} class="button save">+ Add item</span>
+  </div>
 </form>
