@@ -19,21 +19,30 @@ const generateItemList = ({
   ]);
 
   invoiceItems.map((item, index) => {
-    const { description, units, unitFormat, unitPrice } = item;
+    const {
+      invoice_row_description,
+      invoice_row_units,
+      invoice_row_unit_format,
+      invoice_row_unit_price
+    } = item;
     list.push([
       { text: index + 1, border: [false, true, false, true] },
       {
-        text: description,
+        text: invoice_row_description,
         border: [false, true, false, true]
       },
-      { text: `${units} ${unitFormat}`, alignment: "right", border: [false, true, false, true] },
       {
-        text: formatter("USD").format(unitPrice),
+        text: `${invoice_row_units} ${invoice_row_unit_format}`,
         alignment: "right",
         border: [false, true, false, true]
       },
       {
-        text: formatter("USD").format(units * unitPrice),
+        text: formatter("USD").format(invoice_row_unit_price),
+        alignment: "right",
+        border: [false, true, false, true]
+      },
+      {
+        text: formatter("USD").format(invoice_row_units * invoice_row_unit_price),
         alignment: "right",
         border: [false, true, false, true]
       }
@@ -83,6 +92,10 @@ export const pdfMakeInvoiceDefinition = ({
   clientData,
   ownerData
 }) => {
+  console.log('a', invoiceTotal,
+  invoiceVAT,
+  invoiceTotalWithVATUSD,
+  invoiceTotalWithVATEUR);
   return {
     content: [
       {

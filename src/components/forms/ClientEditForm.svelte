@@ -27,20 +27,37 @@
 
 <form on:submit|preventDefault={handleSubmit}>
   <h3>Edit client data</h3>
-  <input
-    bind:value={$clientData.client_company_name}
-    placeholder="Client company name" />
-  <input
-    bind:value={$clientData.client_company_address}
-    placeholder="Client company address" />
-  <input
-    bind:value={$clientData.client_company_city}
-    placeholder="Client company city" />
-  <input
-    bind:value={$clientData.client_company_zip}
-    placeholder="Client company zip" />
-  <input
-    bind:value={$clientData.client_company_country}
-    placeholder="Client company country" />
-  <button type="submit">Submit</button>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_name}
+      placeholder="Client company name" />
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_address}
+      placeholder="Client company address" />
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_city}
+      placeholder="Client company city" />
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_zip}
+      placeholder="Client company zip" />
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_country}
+      placeholder="Client company country" />
+  </div>
+  <div class="actions">
+    <button type="submit" class="button save">Save</button>
+  </div>
 </form>

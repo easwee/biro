@@ -2715,6 +2715,11 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
+svelte-tabs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-tabs/-/svelte-tabs-1.1.0.tgz#093c5fdac57cbb0e6ba81e717d68fb9da7239208"
+  integrity sha512-bCynxgET2uvqpB6xf/dVyqHjzmumRURQyh2QqXlrki8NxzO7h2WghF8qgpb5qeB5NTX1bMU+9Q5Hf5ey2WLaMg==
+
 svelte@^3.0.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.7.1.tgz#a4c8cbacb6a2a83c5f6a5dcf8b2e8a6b95f5761e"

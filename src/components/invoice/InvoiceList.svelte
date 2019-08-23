@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from "svelte";
   import {
     rates,
     ratesDate,
@@ -11,7 +12,7 @@
   import { formatter, calculateTotalPrice } from "utils";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * ownerData.vat) / 100;
+  $: VAT = (total * $ownerData.vat) / 100;
   $: totalWithVATUSD = total + VAT;
   $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
 </script>
@@ -49,7 +50,7 @@
     {/each}
   </tr>
 
-  {#each $invoiceItems as item, index}
+  {#each $invoiceItems as item, index (item.id)}
     <InvoiceItem {index} {...item} />
   {/each}
 

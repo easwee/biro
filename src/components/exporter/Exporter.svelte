@@ -7,7 +7,7 @@
   import { calculateTotalPrice } from "utils";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * ownerData.vat) / 100;
+  $: VAT = (total * $ownerData.vat) / 100;
   $: totalWithVATUSD = total + VAT;
   $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
 
