@@ -30,7 +30,7 @@ export const idbCreate = (dbName, scheme, createCallback) => {
   });
 };
 
-export const idbAdd = (dbName, table, data, callback) => {
+export const idbAdd = (dbName, table, data) => {
   return new Promise((resolve, reject) => {
     const open = window.indexedDB.open(dbName, 1);
 
@@ -56,6 +56,32 @@ export const idbAdd = (dbName, table, data, callback) => {
   });
 };
 
+export const idbRemove = (dbName, table, index) => {
+  return new Promise((resolve, reject) => {
+    const open = window.indexedDB.open(dbName, 1);
+
+    open.onsuccess = function(event) {
+      const db = event.target.result;
+      const transaction = db.transaction([table], "readwrite");
+
+      transaction.onerror = function(event) {
+        console.error("Database error: " + event.target.errorCode);
+      };
+
+      const objectStore = transaction.objectStore(table);
+      const operation = objectStore.delete(index);
+
+      operation.onsuccess = function(event) {
+        db.close();
+        resolve();
+      };
+      operation.onerror = function(event) {
+        reject("Could not remove from database.");
+      };
+    };
+  });
+};
+
 export const idbRead = (dbName, table, rowId) => {
   return new Promise((resolve, reject) => {
     const open = window.indexedDB.open(dbName, 1);
@@ -66,6 +92,28 @@ export const idbRead = (dbName, table, rowId) => {
 
       const objectStore = transaction.objectStore(table);
       const operation = objectStore.get(rowId);
+
+      operation.onsuccess = function(event) {
+        db.close();
+        resolve(event.target.result);
+      };
+
+      operation.onerror = function(event) {
+        reject("Could not read from database.");
+      };
+    };
+  });
+};
+
+export const idbReadAll = (dbName, table) => {
+  return new Promise((resolve, reject) => {
+    const open = window.indexedDB.open(dbName, 1);
+
+    open.onsuccess = function(event) {
+      const db = event.target.result;
+      const transaction = db.transaction([table]);
+      const objectStore = transaction.objectStore(table);
+      const operation = objectStore.getAll();
 
       operation.onsuccess = function(event) {
         db.close();

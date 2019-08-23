@@ -100,5 +100,40 @@ export const BIRO_SCHEME = [
         unique: true
       }
     ]
+  },
+  {
+    name: "invoice_rows",
+    keyPath: "id",
+    autoIncrement: true,
+    fields: [
+      {
+        name: "id",
+        unique: true
+      },
+      {
+        name: "invoice_row_client_id",
+        unique: false
+      },
+      {
+        name: "invoice_row_description",
+        unique: false
+      },
+      {
+        name: "invoice_row_units",
+        unique: false
+      },
+      {
+        name: "invoice_row_unit_format",
+        unique: false
+      },
+      {
+        name: "invoice_row_unit_price",
+        unique: false
+      },
+      {
+        name: "invoice_row_period",
+        unique: false
+      }
+    ]
   }
 ];

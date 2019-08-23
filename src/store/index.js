@@ -37,20 +37,14 @@ export const clientData = writable({
 });
 
 export const invoiceItems = writable([
-  {
-    description: `Consultancy & development (1.6.2019 - 15.6.2019)`,
-    units: 160,
-    unitFormat: "hours",
-    unitPrice: 100,
-    period: "1.6.2019 - 15.6.2019"
-  },
-  {
-    description: `Consultancy & development (1.6.2019 - 15.6.2019)`,
-    units: 160,
-    unitFormat: "hours",
-    unitPrice: 100,
-    period: "1.6.2019 - 15.6.2019"
-  }
+  // {
+  //   invoice_row_description: `Consultancy & development (1.6.2019 - 15.6.2019)`,
+  //   invoice_row_client_id: 1,
+  //   invoice_row_units: 160,
+  //   invoice_row_unit_format: "hours",
+  //   invoice_row_unit_price: 100,
+  //   invoice_row_period: "1.6.2019 - 15.6.2019"
+  // }
 ]);
 
 export const properties = writable({

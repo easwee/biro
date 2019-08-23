@@ -18,7 +18,8 @@
     "jspdf": "^1.5.3",
     "pdfmake": "^0.1.58",
     "rollup-plugin-alias": "^1.5.2",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "svelte-tabs": "^1.1.0"
   },
   "scripts": {
     "build": "rollup -c",
