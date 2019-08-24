@@ -11,7 +11,8 @@
     idbUpdate
   } from "utils";
 
-  let typeTimeout = null;
+  let typingTimeout = null;
+
   const blankRow = {
     invoice_row_client_id: 1,
     invoice_row_description: "",
@@ -31,15 +32,16 @@
       });
   });
 
-  function handleSubmit(index, rowIndex) {
-    console.log("saving...");
-    idbUpdate("biro_db", "invoice_rows", rowIndex, $invoiceItems[index])
-      .then(() => idbReadAll("biro_db", "invoice_rows"))
-      .then(result => {
-        invoiceItems.set(result);
-        console.log("saved.");
-        console.log("hhh", $invoiceItems);
-      });
+  function handleInputChange(index, item) {
+    window.clearTimeout(typingTimeout);
+    $invoiceItems = $invoiceItems;
+    typingTimeout = window.setTimeout(function() {
+      idbUpdate("biro_db", "invoice_rows", item.id, $invoiceItems[index])
+        .then(() => idbReadAll("biro_db", "invoice_rows"))
+        .then(result => {
+          invoiceItems.set(result);
+        });
+    }, 500);
   }
 
   function addInvoiceRow() {
@@ -47,22 +49,15 @@
       .then(() => idbReadAll("biro_db", "invoice_rows"))
       .then(result => {
         invoiceItems.set(result);
-        console.log("hhh", $invoiceItems);
       });
   }
 
   function removeInvoiceRow(index) {
-    console.log(index);
     idbRemove("biro_db", "invoice_rows", index)
       .then(() => idbReadAll("biro_db", "invoice_rows"))
       .then(result => {
         invoiceItems.set(result);
-        console.log("hhh", $invoiceItems);
       });
-  }
-
-  function handleKeyUp(newInvoiceStore) {
-    $invoiceItems = $invoiceItems;
   }
 </script>
 
@@ -84,31 +79,20 @@
             <input
               type="text"
               bind:value={item.invoice_row_description}
-              on:keyup={() => {
-                window.clearTimeout(typeTimeout);
-                $invoiceItems = $invoiceItems;
-                typeTimeout = window.setTimeout(function() {
-                  handleSubmit(index, item.id);
-                }, 500);
-              }}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
               placeholder="Description" />
           </div>
         </div>
       </div>
-
       <div class="g-r">
         <div class="g-r-c g-r-c-33">
           <div class="field">
             <input
               type="text"
               bind:value={item.invoice_row_units}
-              on:keyup={() => {
-                window.clearTimeout(typeTimeout);
-                $invoiceItems = $invoiceItems;
-                typeTimeout = window.setTimeout(function() {
-                  handleSubmit(index, item.id);
-                }, 500);
-              }}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
               placeholder="Units" />
           </div>
         </div>
@@ -117,13 +101,8 @@
             <input
               type="text"
               bind:value={item.invoice_row_unit_format}
-              on:keyup={() => {
-                window.clearTimeout(typeTimeout);
-                $invoiceItems = $invoiceItems;
-                typeTimeout = window.setTimeout(function() {
-                  handleSubmit(index, item.id);
-                }, 500);
-              }}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
               placeholder="Unit format" />
           </div>
         </div>
@@ -132,30 +111,23 @@
             <input
               type="text"
               bind:value={item.invoice_row_unit_price}
-              on:keyup={() => {
-                window.clearTimeout(typeTimeout);
-                $invoiceItems = $invoiceItems;
-                typeTimeout = window.setTimeout(function() {
-                  handleSubmit(index, item.id);
-                }, 500);
-              }}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
               placeholder="Unit price" />
           </div>
         </div>
       </div>
-
-      <div class="field">
-        <input
-          type="date"
-          bind:value={item.invoice_row_period}
-          on:keyup={() => {
-            window.clearTimeout(typeTimeout);
-            $invoiceItems = $invoiceItems;
-            typeTimeout = window.setTimeout(function() {
-              handleSubmit(index, item.id);
-            }, 500);
-          }}
-          placeholder="Period" />
+      <div class="g-r">
+        <div class="g-r-c g-r-c-100">
+          <div class="field">
+            <input
+              type="date"
+              bind:value={item.invoice_row_period}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
+              placeholder="Period" />
+          </div>
+        </div>
       </div>
       <div class="actions align-right">
         <span on:click={() => removeInvoiceRow(item.id)} class="button remove">
