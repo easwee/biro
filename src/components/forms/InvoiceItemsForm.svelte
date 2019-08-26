@@ -1,4 +1,5 @@
 <script>
+  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
   import { BIRO_SCHEME } from "constants";
   import { clientData, invoiceItems } from "store";
@@ -62,17 +63,27 @@
 </script>
 
 <style>
+  form {
+    padding: 0;
+    margin: 0;
+    background: none;
+  }
   .invoice-row {
     padding: 5px;
     border-radius: 2px;
     background-color: rgba(255, 255, 255, 0.1);
     margin: 10px 0;
   }
+  .no-data {
+    color: white;
+    font-style: italic;
+    text-align: center;
+  }
 </style>
 
 <form>
   {#each $invoiceItems as item, index}
-    <div class="invoice-row">
+    <div class="invoice-row" transition:fade>
       <div class="g-r">
         <div class="g-r-c g-r-c-100">
           <div class="field">
@@ -117,24 +128,14 @@
           </div>
         </div>
       </div>
-      <div class="g-r">
-        <div class="g-r-c g-r-c-100">
-          <div class="field">
-            <input
-              type="date"
-              bind:value={item.invoice_row_period}
-              on:keyup={() => handleInputChange(index, item)}
-              on:change={() => handleInputChange(index, item)}
-              placeholder="Period" />
-          </div>
-        </div>
-      </div>
       <div class="actions align-right">
         <span on:click={() => removeInvoiceRow(item.id)} class="button remove">
           - Remove #{index + 1}
         </span>
       </div>
     </div>
+  {:else}
+    <p class="no-data">No rows added yet.</p>
   {/each}
   <div class="actions align-center">
     <span on:click={() => addInvoiceRow()} class="button save">+ Add item</span>

@@ -4,6 +4,7 @@
   import { fetchRates } from "./api";
   import { BIRO_SCHEME } from "constants";
   import { rates, ratesDate, ownerData } from "store";
+  import { idbCreate, idbRead, idbAdd } from "utils";
 
   import InvoiceIssuer from "components/invoice/InvoiceIssuer.svelte";
   import InvoiceReceiver from "components/invoice/InvoiceReceiver.svelte";
@@ -18,6 +19,15 @@
       $ownerData.base_currency
     );
     rates.set(response.data.rates);
+    idbCreate("biro_db", BIRO_SCHEME)
+      .then(() => idbRead("biro_db", "owner", 1))
+      .then(result => {
+        if (result) {
+          ownerData.set(result);
+        } else {
+          idbAdd("biro_db", "owner", $ownerData);
+        }
+      });
   });
 </script>
 

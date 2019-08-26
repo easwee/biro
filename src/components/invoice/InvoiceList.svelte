@@ -50,7 +50,7 @@
     {/each}
   </tr>
 
-  {#each $invoiceItems as item, index (item.id)}
+  {#each $invoiceItems as item, index}
     <InvoiceItem {index} {...item} />
   {/each}
 

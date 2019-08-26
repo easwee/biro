@@ -92,10 +92,6 @@ export const pdfMakeInvoiceDefinition = ({
   clientData,
   ownerData
 }) => {
-  console.log('a', invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR);
   return {
     content: [
       {
