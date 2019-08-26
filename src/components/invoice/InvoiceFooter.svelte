@@ -1,6 +1,6 @@
 <script>
   import { format } from "date-fns";
-  import { rates, ratesDate, ownerData } from "store";
+  import { rates, ownerData } from "store";
   import { formatter } from "utils";
 </script>
 
@@ -18,14 +18,14 @@
 </style>
 
 <p class="rate">
-  Exchange rate for the USD / EUR on the day {format($ratesDate, 'D.M.YYYY')}:
+  Exchange rate for the USD / EUR on the day {format($ownerData.issue_date, 'D.M.YYYY')}:
   <strong>{$rates.EUR.toFixed(4)}</strong>
   <br />
   <small>
     Source:
     <a
-      href="https://api.exchangeratesapi.io/{format($ratesDate, 'YYYY-MM-DD')}?base=USD">
-      https://api.exchangeratesapi.io/{format($ratesDate, 'YYYY-MM-DD')}?base=USD
+      href="https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base=USD">
+      https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base=USD
     </a>
   </small>
 </p>

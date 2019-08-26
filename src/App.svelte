@@ -1,9 +1,9 @@
 <script>
   import { onMount } from "svelte";
   import { format, addDays } from "date-fns";
-  import { fetchRates } from "./api";
+  import { fetchRates } from "api";
   import { BIRO_SCHEME } from "constants";
-  import { rates, ratesDate, ownerData } from "store";
+  import { rates, ownerData, clientData } from "store";
   import { idbCreate, idbRead, idbAdd } from "utils";
 
   import InvoiceIssuer from "components/invoice/InvoiceIssuer.svelte";
@@ -15,10 +15,11 @@
 
   onMount(async () => {
     const response = await fetchRates(
-      format($ratesDate, "YYYY-MM-DD"),
+      format($ownerData.issue_date, "YYYY-MM-DD"),
       $ownerData.base_currency
     );
     rates.set(response.data.rates);
+
     idbCreate("biro_db", BIRO_SCHEME)
       .then(() => idbRead("biro_db", "owner", 1))
       .then(result => {
@@ -26,6 +27,16 @@
           ownerData.set(result);
         } else {
           idbAdd("biro_db", "owner", $ownerData);
+        }
+      });
+
+    idbCreate("biro_db", BIRO_SCHEME)
+      .then(() => idbRead("biro_db", "clients", 1))
+      .then(result => {
+        if (result) {
+          clientData.set(result);
+        } else {
+          idbAdd("biro_db", "clients", $clientData);
         }
       });
   });

@@ -6,18 +6,6 @@
 
   let typingTimeout = null;
 
-  onMount(() => {
-    idbCreate("biro_db", BIRO_SCHEME)
-      .then(() => idbRead("biro_db", "clients", 1))
-      .then(result => {
-        if (result) {
-          clientData.set(result);
-        } else {
-          idbAdd("biro_db", "clients", $clientData);
-        }
-      });
-  });
-
   function handleInputChange() {
     window.clearTimeout(typingTimeout);
     $clientData = $clientData;

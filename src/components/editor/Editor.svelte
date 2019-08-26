@@ -9,6 +9,7 @@
   import InvoiceTemplateSetupForm from "components/forms/InvoiceTemplateSetupForm.svelte";
   import ClientEditForm from "components/forms/ClientEditForm.svelte";
   import InvoiceItemsForm from "components/forms/InvoiceItemsForm.svelte";
+  import IssueDateForm from "components/forms/IssueDateForm.svelte";
 </script>
 
 <style>
@@ -56,13 +57,14 @@
   </TabList>
 
   <TabPanel>
-    <section transition:fade={{ delay: 150, duration: 150 }}>
+    <section transition:fade={{ delay: 0, duration: 50 }}>
+      <IssueDateForm />
       <InvoiceItemsForm />
     </section>
   </TabPanel>
 
   <TabPanel>
-    <section transition:fade={{ delay: 150, duration: 150 }}>
+    <section transition:fade={{ delay: 0, duration: 50 }}>
       <InvoiceTemplateSetupForm />
       <ClientEditForm />
       <!-- <ColumnSelector /> -->

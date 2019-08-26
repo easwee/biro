@@ -2,7 +2,6 @@
   import { onDestroy } from "svelte";
   import {
     rates,
-    ratesDate,
     invoiceItems,
     properties,
     shownPropertiesCount,

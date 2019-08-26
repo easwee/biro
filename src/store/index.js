@@ -1,7 +1,6 @@
 import { writable, derived } from "svelte/store";
 
 export const isSidebarOpened = writable(true);
-export const ratesDate = writable(new Date("2019-07-30"));
 export const rates = writable({});
 export const invoiceTotal = writable(0);
 export const invoiceVAT = writable(0);
@@ -18,7 +17,7 @@ export const ownerData = writable({
   company_business_registration_number: "321321321",
   bank_account_number: "SI56 1234 1234 1234 123",
   base_currency: "USD",
-  issue_date: "2019-07-30",
+  issue_date: new Date(),
   issue_city: "Ljubljana",
   issuer: "John Doe",
   issuer_signature:
