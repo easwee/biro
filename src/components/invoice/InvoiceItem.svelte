@@ -1,4 +1,5 @@
 <script>
+  import { fade } from "svelte/transition";
   import { properties } from "store";
   import { formatter } from "utils";
   export let index,
@@ -18,7 +19,7 @@
   }
 </style>
 
-<tr>
+<tr transition:fade>
   <td>{index + 1}</td>
   {#if $properties.description.show}
     <td>{invoice_row_description}</td>
@@ -28,9 +29,6 @@
       {invoice_row_units} {invoice_row_unit_format}
     </td>
   {/if}
-  <!-- {#if $properties.period.show}
-    <td class="align-right no-wrap">{period}</td>
-  {/if} -->
   {#if $properties.pricePerUnit.show}
     <td class="align-right no-wrap">
       {formatter('USD').format(invoice_row_unit_price)}

@@ -2,7 +2,6 @@
   import { onDestroy } from "svelte";
   import {
     rates,
-    ratesDate,
     invoiceItems,
     properties,
     shownPropertiesCount,
@@ -50,7 +49,7 @@
     {/each}
   </tr>
 
-  {#each $invoiceItems as item, index (item.id)}
+  {#each $invoiceItems as item, index}
     <InvoiceItem {index} {...item} />
   {/each}
 

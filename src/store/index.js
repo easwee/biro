@@ -1,7 +1,6 @@
 import { writable, derived } from "svelte/store";
 
 export const isSidebarOpened = writable(true);
-export const ratesDate = writable(new Date("2019-07-30"));
 export const rates = writable({});
 export const invoiceTotal = writable(0);
 export const invoiceVAT = writable(0);
@@ -18,7 +17,7 @@ export const ownerData = writable({
   company_business_registration_number: "321321321",
   bank_account_number: "SI56 1234 1234 1234 123",
   base_currency: "USD",
-  issue_date: "2019-07-30",
+  issue_date: new Date(),
   issue_city: "Ljubljana",
   issuer: "John Doe",
   issuer_signature:
@@ -36,16 +35,7 @@ export const clientData = writable({
   client_company_country: "USA"
 });
 
-export const invoiceItems = writable([
-  // {
-  //   invoice_row_description: `Consultancy & development (1.6.2019 - 15.6.2019)`,
-  //   invoice_row_client_id: 1,
-  //   invoice_row_units: 160,
-  //   invoice_row_unit_format: "hours",
-  //   invoice_row_unit_price: 100,
-  //   invoice_row_period: "1.6.2019 - 15.6.2019"
-  // }
-]);
+export const invoiceItems = writable([]);
 
 export const properties = writable({
   description: {
@@ -62,13 +52,6 @@ export const properties = writable({
     alignRight: true,
     noWrap: true
   },
-  // period: {
-  //   id: "period",
-  //   name: "Period",
-  //   show: true,
-  //   alignRight: true,
-  //   noWrap: true
-  // },
   pricePerUnit: {
     id: "pricePerUnit",
     name: "Price per unit",

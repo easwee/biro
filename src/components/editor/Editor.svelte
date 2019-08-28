@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { Tabs, Tab, TabList, TabPanel } from "svelte-tabs";
   import { invoiceItems } from "store";
 
@@ -8,6 +9,7 @@
   import InvoiceTemplateSetupForm from "components/forms/InvoiceTemplateSetupForm.svelte";
   import ClientEditForm from "components/forms/ClientEditForm.svelte";
   import InvoiceItemsForm from "components/forms/InvoiceItemsForm.svelte";
+  import IssueDateForm from "components/forms/IssueDateForm.svelte";
 </script>
 
 <style>
@@ -44,6 +46,7 @@
   }
   :global(.svelte-tabs div.svelte-tabs__tab-panel) {
     width: 100%;
+    background: pink;
   }
 </style>
 
@@ -54,16 +57,17 @@
   </TabList>
 
   <TabPanel>
-    <section>
+    <section transition:fade={{ delay: 0, duration: 50 }}>
+      <IssueDateForm />
       <InvoiceItemsForm />
     </section>
   </TabPanel>
 
   <TabPanel>
-    <section>
+    <section transition:fade={{ delay: 0, duration: 50 }}>
       <InvoiceTemplateSetupForm />
       <ClientEditForm />
-      <ColumnSelector />
+      <!-- <ColumnSelector /> -->
     </section>
   </TabPanel>
 
