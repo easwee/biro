@@ -4,17 +4,7 @@
   import { ownerData } from "store";
   import { idbCreate, idbAdd, idbRead, idbUpdate } from "utils";
 
-  onMount(() => {
-    idbCreate("biro_db", BIRO_SCHEME)
-      .then(() => idbRead("biro_db", "owner", 1))
-      .then(result => {
-        if (result) {
-          ownerData.set(result);
-        } else {
-          idbAdd("biro_db", "owner", $ownerData);
-        }
-      });
-  });
+  let typingTimeout = null;
 
   function handleSubmit() {
     idbUpdate("biro_db", "owner", 1, $ownerData)
@@ -22,6 +12,31 @@
       .then(result => {
         ownerData.update(() => result);
       });
+  }
+
+  function handleUploadChange(event) {
+    if (event.target.files[0]) {
+      const FR = new FileReader();
+
+      FR.addEventListener("load", function(e) {
+        document.getElementById("signature").src = e.target.result;
+        ownerData.update(object => {
+          object.issuer_signature = e.target.result;
+          return object;
+        });
+        idbUpdate("biro_db", "owner", 1, $ownerData);
+      });
+
+      FR.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  function handleRemoveSignatureClick() {
+    ownerData.update(object => {
+      object.issuer_signature = "";
+      return object;
+    });
+    idbUpdate("biro_db", "owner", 1, $ownerData);
   }
 </script>
 
@@ -97,12 +112,6 @@
   <div class="field">
     <input
       type="text"
-      bind:value={$ownerData.issue_date}
-      placeholder="Issue date" />
-  </div>
-  <div class="field">
-    <input
-      type="text"
       bind:value={$ownerData.issue_city}
       placeholder="Issue city" />
   </div>
@@ -119,7 +128,14 @@
       bind:value={$ownerData.bank_account_number}
       placeholder="Bank account number" />
   </div>
-  <div class="actions">
-    <button type="submit" class="button save">Save</button>
+  <div class="field">
+    <label>Signature:</label>
+    {#if $ownerData.issuer_signature}
+      <img id="signature" src={$ownerData.issuer_signature} alt="signature" />
+    {/if}
+    <input type="file" on:change={handleUploadChange} />
+    <span on:click={handleRemoveSignatureClick} class="button remove">
+      Remove signature
+    </span>
   </div>
 </form>

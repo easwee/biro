@@ -36,7 +36,9 @@
   <br />
   {$ownerData.issuer}
   <br />
-  <img src={$ownerData.issuer_signature} alt={$ownerData.issuer} />
+  {#if $ownerData.issuer_signature}
+    <img src={$ownerData.issuer_signature} alt={$ownerData.issuer} />
+  {/if}
   <br />
   <small>
     <em>No company seal is used</em>
