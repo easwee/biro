@@ -5,6 +5,7 @@
   import { idbRead, idbUpdate } from "utils";
 
   let typingTimeout = null;
+  let files = [];
 
   function handleInputChange() {
     window.clearTimeout(typingTimeout);
@@ -142,14 +143,6 @@
       on:keyup={() => handleInputChange()}
       on:change={() => handleInputChange()}
       placeholder="PDF file name prefix" />
-  </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$ownerData.issue_date}
-      on:keyup={() => handleInputChange()}
-      on:change={() => handleInputChange()}
-      placeholder="Issue date" />
   </div>
   <div class="field">
     <input
