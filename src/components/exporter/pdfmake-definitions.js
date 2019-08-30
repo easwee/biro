@@ -88,14 +88,9 @@ export const pdfMakeInvoiceDefinition = ({
   invoiceTotalWithVATEUR,
   invoiceItems,
   rates,
-  ratesDate,
   clientData,
   ownerData
 }) => {
-  console.log('a', invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR);
   return {
     content: [
       {
@@ -135,12 +130,12 @@ export const pdfMakeInvoiceDefinition = ({
               body: [
                 [
                   { text: "INVOICE No.", style: "metaCell", bold: true },
-                  { text: format(ratesDate, "YYYY-MM"), style: "metaCell", bold: true }
+                  { text: format(ownerData.issue_date, "YYYY-MM"), style: "metaCell", bold: true }
                 ],
                 [
                   { text: "Date:", style: "metaCell", bold: true },
                   {
-                    text: `${ownerData.issue_city}, ${format(ratesDate, "D.M.YYYY")}`,
+                    text: `${ownerData.issue_city}, ${format(ownerData.issue_date, "D.M.YYYY")}`,
                     style: "metaCell",
                     bold: true
                   }
@@ -152,7 +147,7 @@ export const pdfMakeInvoiceDefinition = ({
                 [
                   { text: "Due date:", style: "metaCell", bold: true },
                   {
-                    text: format(addDays(ratesDate, ownerData.terms), "D.M.YYYY"),
+                    text: format(addDays(ownerData.issue_date, ownerData.terms), "D.M.YYYY"),
                     style: "metaCell",
                     bold: true
                   }
@@ -189,7 +184,7 @@ export const pdfMakeInvoiceDefinition = ({
       },
       {
         text: `Exchange rate for the USD / EUR on the day ${format(
-          ratesDate,
+          ownerData.issue_date,
           "D.M.YYYY"
         )}: ${rates.EUR.toFixed(4)}`,
         margin: [0, 30, 0, 5]
@@ -200,8 +195,14 @@ export const pdfMakeInvoiceDefinition = ({
             text: "Source: "
           },
           {
-            text: `https://api.exchangeratesapi.io/${format(ratesDate, "YYYY-MM-DD")}?base=USD`,
-            link: `https://api.exchangeratesapi.io/${format(ratesDate, "YYYY-MM-DD")}?base=USD`
+            text: `https://api.exchangeratesapi.io/${format(
+              ownerData.issue_date,
+              "YYYY-MM-DD"
+            )}?base=USD`,
+            link: `https://api.exchangeratesapi.io/${format(
+              ownerData.issue_date,
+              "YYYY-MM-DD"
+            )}?base=USD`
           }
         ],
         italics: true,

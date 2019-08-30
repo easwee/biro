@@ -2,7 +2,6 @@ import { writable, derived } from "svelte/store";
 import { format } from "date-fns";
 
 export const isSidebarOpened = writable(true);
-export const ratesDate = writable(new Date("2019-07-30"));
 export const rates = writable({});
 export const invoiceTotal = writable(0);
 export const invoiceVAT = writable(0);
@@ -64,13 +63,6 @@ export const properties = writable({
     alignRight: true,
     noWrap: true
   },
-  // period: {
-  //   id: "period",
-  //   name: "Period",
-  //   show: true,
-  //   alignRight: true,
-  //   noWrap: true
-  // },
   pricePerUnit: {
     id: "pricePerUnit",
     name: "Price per unit",
