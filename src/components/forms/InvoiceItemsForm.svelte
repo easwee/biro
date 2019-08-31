@@ -29,6 +29,8 @@
       .then(result => {
         if (result.length > 0) {
           invoiceItems.set(result);
+        } else {
+          idbAdd("biro_db", "invoice_rows", $invoiceItems[0]);
         }
       });
   });

@@ -38,7 +38,7 @@ export const clientData = writable({
 
 export const invoiceItems = writable([
   {
-    id: 1,
+    id: 0,
     invoice_row_client_id: 1,
     invoice_row_description: "Example invoice item",
     invoice_row_units: "100",
