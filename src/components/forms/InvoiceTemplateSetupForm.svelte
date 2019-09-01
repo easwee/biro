@@ -149,7 +149,10 @@
   <div class="field">
     <label>Signature:</label>
 
-    <img id="signature" src={$ownerData.issuer_signature} />
+    <img
+      id="signature"
+      src={$ownerData.issuer_signature}
+      alt="Empty signature" />
 
     <input type="file" on:change={handleUploadChange} />
     {#if $ownerData.issuer_signature !== ''}

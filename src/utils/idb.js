@@ -41,7 +41,6 @@ export const idbAdd = (dbName, table, data) => {
       transaction.onerror = function(event) {
         console.error("Database error: " + event.target.errorCode);
       };
-
       const objectStore = transaction.objectStore(table);
       const operation = objectStore.add(data);
 
