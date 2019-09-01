@@ -29,11 +29,11 @@ export const ownerData = writable({
 });
 
 export const clientData = writable({
-  client_company_name: "Client company name",
-  client_company_address: "Client company address",
-  client_company_city: "Client company city",
-  client_company_zip: "Client company postal code",
-  client_company_country: "Client company country"
+  client_company_name: "Company name",
+  client_company_address: "Street address",
+  client_company_city: "City",
+  client_company_zip: "Postal code",
+  client_company_country: "Country"
 });
 
 export const invoiceItems = writable([

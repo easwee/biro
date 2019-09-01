@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { BIRO_SCHEME } from "constants";
   import { clientData } from "store";
-  import { idbCreate, idbAdd, idbRead, idbUpdate } from "utils";
+  import { idbRead, idbUpdate } from "utils";
 
   let typingTimeout = null;
 
@@ -13,7 +13,7 @@
       idbUpdate("biro_db", "clients", 1, $clientData)
         .then(() => idbRead("biro_db", "clients", 1))
         .then(result => {
-          clientData.update(() => result);
+          clientData.set(result);
         });
     }, 500);
   }
@@ -32,24 +32,24 @@
     <input
       type="text"
       bind:value={$clientData.client_company_name}
-      on:keyup={() => handleInputChange()}
-      on:change={() => handleInputChange()}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
       placeholder="Client company name" />
   </div>
   <div class="field">
     <input
       type="text"
       bind:value={$clientData.client_company_address}
-      on:keyup={() => handleInputChange()}
-      on:change={() => handleInputChange()}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
       placeholder="Client company address" />
   </div>
   <div class="field">
     <input
       type="text"
       bind:value={$clientData.client_company_city}
-      on:keyup={() => handleInputChange()}
-      on:change={() => handleInputChange()}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
       placeholder="Client company city" />
   </div>
   <div class="g-r">
@@ -58,8 +58,8 @@
         <input
           type="text"
           bind:value={$clientData.client_company_zip}
-          on:keyup={() => handleInputChange()}
-          on:change={() => handleInputChange()}
+          on:keyup={handleInputChange}
+          on:change={handleInputChange}
           placeholder="Client company zip" />
       </div>
     </div>
@@ -68,8 +68,8 @@
         <input
           type="text"
           bind:value={$clientData.client_company_country}
-          on:keyup={() => handleInputChange()}
-          on:change={() => handleInputChange()}
+          on:keyup={handleInputChange}
+          on:change={handleInputChange}
           placeholder="Client company country" />
       </div>
     </div>

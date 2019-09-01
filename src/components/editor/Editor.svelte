@@ -27,14 +27,19 @@
     height: 100%;
     position: relative;
   }
+  :global(.svelte-tabs ul.svelte-tabs__tab-list) {
+    display: flex;
+  }
   :global(.svelte-tabs li.svelte-tabs__tab) {
     padding: 15px 10px;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    outline: 0;
     vertical-align: top;
+    width: 50%;
+    border-top: 2px solid transparent;
+    text-align: center;
   }
   :global(.svelte-tabs li.svelte-tabs__selected) {
     border-top: 2px solid white;
@@ -46,7 +51,6 @@
   }
   :global(.svelte-tabs div.svelte-tabs__tab-panel) {
     width: 100%;
-    background: pink;
   }
 </style>
 
@@ -57,14 +61,14 @@
   </TabList>
 
   <TabPanel>
-    <section transition:fade={{ delay: 0, duration: 50 }}>
+    <section transition:fade>
       <IssueDateForm />
       <InvoiceItemsForm />
     </section>
   </TabPanel>
 
   <TabPanel>
-    <section transition:fade={{ delay: 0, duration: 50 }}>
+    <section transition:fade>
       <InvoiceTemplateSetupForm />
       <ClientEditForm />
       <!-- <ColumnSelector /> -->
