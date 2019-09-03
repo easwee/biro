@@ -14,7 +14,7 @@
       idbUpdate("biro_db", "owner", 1, $ownerData)
         .then(() => idbRead("biro_db", "owner", 1))
         .then(async result => {
-          ownerData.update(() => result);
+          ownerData.set(result);
           const response = await fetchRates(
             format($ownerData.issue_date, "YYYY-MM-DD"),
             $ownerData.base_currency
