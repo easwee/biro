@@ -20,7 +20,7 @@
     invoice_row_units: "",
     invoice_row_unit_format: "",
     invoice_row_unit_price: "",
-    invoice_row_period: ""
+    invoice_row_vat: 0
   };
 
   onMount(() => {
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="g-r">
-        <div class="g-r-c g-r-c-33">
+        <div class="g-r-c g-r-c-25">
           <div class="field">
             <input
               type="text"
@@ -109,7 +109,7 @@
               placeholder="Units" />
           </div>
         </div>
-        <div class="g-r-c g-r-c-33">
+        <div class="g-r-c g-r-c-25">
           <div class="field">
             <input
               type="text"
@@ -119,7 +119,7 @@
               placeholder="Unit format" />
           </div>
         </div>
-        <div class="g-r-c g-r-c-33">
+        <div class="g-r-c g-r-c-25">
           <div class="field">
             <input
               type="text"
@@ -127,6 +127,16 @@
               on:keyup={() => handleInputChange(index, item)}
               on:change={() => handleInputChange(index, item)}
               placeholder="Unit price" />
+          </div>
+        </div>
+        <div class="g-r-c g-r-c-25">
+          <div class="field">
+            <input
+              type="text"
+              bind:value={item.invoice_row_vat}
+              on:keyup={() => handleInputChange(index, item)}
+              on:change={() => handleInputChange(index, item)}
+              placeholder="VAT" />
           </div>
         </div>
       </div>

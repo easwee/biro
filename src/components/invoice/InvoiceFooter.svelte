@@ -17,20 +17,24 @@
   }
 </style>
 
-<p class="rate">
-  Exchange rate for the USD / EUR on the day {format($ownerData.issue_date, 'D.M.YYYY')}:
-  <strong>{$rates.EUR.toFixed(4)}</strong>
-  <br />
-  <small>
-    Source:
-    <a
-      href="https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base=USD">
-      https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base=USD
-    </a>
-  </small>
-</p>
-
-<p>VAT exempt under article 287 of VAT Directive</p>
+{#if Object.entries($rates).length > 0 && $ownerData.use_conversion}
+  <p class="rate">
+    Exchange rate for the {$ownerData.base_currency} / {$ownerData.foreign_currency}
+    on the day {format($ownerData.issue_date, 'D.M.YYYY')}:
+    <strong>{$rates[$ownerData.foreign_currency].toFixed(4)}</strong>
+    <br />
+    <small>
+      Source:
+      <a
+        href="https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base={$ownerData.base_currency}">
+        https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'YYYY-MM-DD')}?base={$ownerData.base_currency}
+      </a>
+    </small>
+  </p>
+{/if}
+{#if $ownerData.is_vat_free}
+  <p>VAT exempt under article 287 of VAT Directive</p>
+{/if}
 <p class="signature">
   Invoice issued by:
   <br />

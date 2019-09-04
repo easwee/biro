@@ -1,13 +1,17 @@
 <script>
   import { onMount } from "svelte";
   import { BIRO_SCHEME } from "constants";
-  import { ownerData } from "store";
+  import { ownerData, rates } from "store";
   import { idbRead, idbUpdate } from "utils";
+  import { fetchRates } from "api";
+  import { format } from "date-fns";
+  import { LOCALES } from "constants";
 
   let typingTimeout = null;
 
   function handleInputChange() {
     window.clearTimeout(typingTimeout);
+    console.log("oo", $ownerData);
     $ownerData = $ownerData;
     typingTimeout = window.setTimeout(function() {
       idbUpdate("biro_db", "owner", 1, $ownerData)
@@ -63,6 +67,33 @@
 
 <form>
   <h3>Invoice template setup</h3>
+
+  <div class="field">
+    <label>
+      <input
+        type="checkbox"
+        bind:checked={$ownerData.use_conversion}
+        on:change={async () => {
+          handleInputChange();
+          debugger;
+          if ($ownerData.use_conversion) {
+            const response = await fetchRates(format($ownerData.issue_date, 'YYYY-MM-DD'), $ownerData.base_currency);
+            rates.set(response.data.rates);
+          }
+        }} />
+      Use conversion
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <input
+        type="checkbox"
+        bind:checked={$ownerData.is_vat_free}
+        on:change={handleInputChange} />
+      I am VAT free
+    </label>
+  </div>
 
   <div class="field">
     <input
@@ -163,13 +194,30 @@
       placeholder="Issue city" />
   </div>
   <div class="field">
-    <input
-      type="text"
+    <select
       bind:value={$ownerData.base_currency}
-      on:keyup={handleInputChange}
-      on:change={handleInputChange}
-      placeholder="USD"
-      disabled />
+      on:change={async () => {
+        handleInputChange();
+        if ($ownerData.use_conversion) {
+          const response = await fetchRates(format($ownerData.issue_date, 'YYYY-MM-DD'), $ownerData.base_currency);
+          rates.set(response.data.rates);
+        }
+      }}>
+      {#each Object.keys(LOCALES) as currency, index}
+        <option value={currency}>{currency}</option>
+      {/each}
+    </select>
+  </div>
+  <div class="field">
+    <select
+      bind:value={$ownerData.foreign_currency}
+      on:change={async () => {
+        handleInputChange();
+      }}>
+      {#each Object.keys(LOCALES) as currency, index}
+        <option value={currency}>{currency}</option>
+      {/each}
+    </select>
   </div>
   <div class="field">
     <input
@@ -180,8 +228,15 @@
       placeholder="Bank account number" />
   </div>
   <div class="field">
+    <input
+      type="text"
+      bind:value={$ownerData.issuer}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
+      placeholder="Issuer" />
+  </div>
+  <div class="field">
     <label>Signature:</label>
-
     <img
       id="signature"
       src={$ownerData.issuer_signature}

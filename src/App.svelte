@@ -14,19 +14,20 @@
   import Editor from "components/editor/Editor.svelte";
 
   onMount(async () => {
-    const response = await fetchRates(
-      format($ownerData.issue_date, "YYYY-MM-DD"),
-      $ownerData.base_currency
-    );
-    rates.set(response.data.rates);
-
     idbCreate("biro_db", BIRO_SCHEME)
       .then(() => idbRead("biro_db", "owner", 1))
-      .then(result => {
+      .then(async result => {
         if (result) {
           ownerData.set(result);
         } else {
           idbAdd("biro_db", "owner", $ownerData);
+        }
+        if ($ownerData.use_conversion) {
+          const response = await fetchRates(
+            format($ownerData.issue_date, "YYYY-MM-DD"),
+            $ownerData.base_currency
+          );
+          rates.set(response.data.rates);
         }
       });
 
@@ -43,7 +44,7 @@
 </script>
 
 <div class="app">
-  {#if $rates.EUR}
+  {#if Object.entries($rates).length > 0 || !$ownerData.use_conversion}
     <div class="controls">
       <Editor />
     </div>

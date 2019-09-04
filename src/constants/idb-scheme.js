@@ -29,6 +29,10 @@ export const BIRO_SCHEME = [
         unique: false
       },
       {
+        name: "foreign_currency",
+        unique: false
+      },
+      {
         name: "issue_date",
         unique: false
       },
@@ -66,6 +70,14 @@ export const BIRO_SCHEME = [
       },
       {
         name: "issuer_signature",
+        unique: false
+      },
+      {
+        name: "use_conversion",
+        unique: false
+      },
+      {
+        name: "is_vat_free",
         unique: false
       }
     ]
@@ -131,7 +143,7 @@ export const BIRO_SCHEME = [
         unique: false
       },
       {
-        name: "invoice_row_period",
+        name: "invoice_row_vat",
         unique: false
       }
     ]
