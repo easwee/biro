@@ -145,6 +145,10 @@ export const BIRO_SCHEME = [
       {
         name: "invoice_row_vat",
         unique: false
+      },
+      {
+        name: "invoice_past_total",
+        unique: false
       }
     ]
   }

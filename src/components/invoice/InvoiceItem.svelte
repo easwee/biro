@@ -23,7 +23,7 @@
 </style>
 
 <tr transition:fade>
-  <td>{index + 1}</td>
+  <td class="no-wrap">{index + 1}</td>
   <td>{invoice_row_description}</td>
   <td class="align-right no-wrap">
     {invoice_row_units} {invoice_row_unit_format}

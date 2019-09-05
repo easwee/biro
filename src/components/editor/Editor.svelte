@@ -19,8 +19,7 @@
     position: absolute;
     top: 45px;
     left: 0;
-    margin-top: 0;
-    padding-top: 10px;
+    margin-top: 6px;
     width: 100%;
   }
   :global(.svelte-tabs) {

@@ -2,11 +2,12 @@ import { format, addDays } from "date-fns";
 import { formatter } from "utils";
 
 const generateItemList = ({
-  invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR,
-  invoiceItems
+  total,
+  VAT,
+  totalWithVAT_base_currency,
+  totalWithVAT_foreign_currency,
+  invoiceItems,
+  ownerData
 }) => {
   let list = [];
 
@@ -14,6 +15,7 @@ const generateItemList = ({
     { text: "" },
     { text: "Description", style: "tableHeader", bold: true },
     { text: "Units", style: "tableHeader", bold: true },
+    { text: "VAT", style: "tableHeader", alignment: "right", bold: true },
     { text: "Price per unit", style: "tableHeader", alignment: "right", bold: true },
     { text: "Total", style: "tableHeader", alignment: "right", bold: true }
   ]);
@@ -23,6 +25,7 @@ const generateItemList = ({
       invoice_row_description,
       invoice_row_units,
       invoice_row_unit_format,
+      invoice_row_vat,
       invoice_row_unit_price
     } = item;
     list.push([
@@ -37,12 +40,17 @@ const generateItemList = ({
         border: [false, true, false, true]
       },
       {
-        text: formatter("USD").format(invoice_row_unit_price),
+        text: invoice_row_vat,
         alignment: "right",
         border: [false, true, false, true]
       },
       {
-        text: formatter("USD").format(invoice_row_units * invoice_row_unit_price),
+        text: formatter(ownerData.base_currency).format(invoice_row_unit_price),
+        alignment: "right",
+        border: [false, true, false, true]
+      },
+      {
+        text: formatter(ownerData.base_currency).format(invoice_row_units * invoice_row_unit_price),
         alignment: "right",
         border: [false, true, false, true]
       }
@@ -53,39 +61,51 @@ const generateItemList = ({
     "",
     "",
     "",
+    "",
     { text: "Total", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceTotal), alignment: "right" }
+    { text: formatter(ownerData.base_currency).format(total), alignment: "right" }
   ]);
   list.push([
+    "",
     "",
     "",
     "",
     { text: "VAT", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceVAT), alignment: "right" }
+    { text: formatter(ownerData.base_currency).format(VAT), alignment: "right" }
   ]);
   list.push([
+    "",
     "",
     "",
     "",
     { text: "Total in USD", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceTotalWithVATUSD), alignment: "right" }
+    {
+      text: formatter(ownerData.base_currency).format(totalWithVAT_base_currency),
+      alignment: "right"
+    }
   ]);
-  list.push([
-    "",
-    "",
-    "",
-    { text: "Total in EUR", bold: true, alignment: "right" },
-    { text: formatter("EUR").format(invoiceTotalWithVATEUR), alignment: "right" }
-  ]);
+  if (ownerData.use_conversion) {
+    list.push([
+      "",
+      "",
+      "",
+      "",
+      { text: `Total in ${ownerData.foreign_currency}`, bold: true, alignment: "right" },
+      {
+        text: formatter(ownerData.foreign_currency).format(totalWithVAT_foreign_currency),
+        alignment: "right"
+      }
+    ]);
+  }
 
   return list;
 };
 
 export const pdfMakeInvoiceDefinition = ({
-  invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR,
+  total,
+  VAT,
+  totalWithVAT_base_currency,
+  totalWithVAT_foreign_currency,
   invoiceItems,
   rates,
   clientData,
@@ -168,46 +188,55 @@ export const pdfMakeInvoiceDefinition = ({
       },
       {
         table: {
-          widths: ["auto", 270, "auto", "auto", "auto"],
+          widths: ["auto", 270, "auto", "auto", "auto", "auto"],
           headerRows: 1,
           body: generateItemList({
-            invoiceTotal,
-            invoiceVAT,
-            invoiceTotalWithVATUSD,
-            invoiceTotalWithVATEUR,
-            invoiceItems
+            total,
+            VAT,
+            totalWithVAT_base_currency,
+            totalWithVAT_foreign_currency,
+            invoiceItems,
+            ownerData
           })
         },
         layout: {
           defaultBorder: false
         }
       },
-      {
-        text: `Exchange rate for the USD / EUR on the day ${format(
-          ownerData.issue_date,
-          "D.M.YYYY"
-        )}: ${rates.EUR.toFixed(4)}`,
-        margin: [0, 30, 0, 5]
-      },
-      {
-        text: [
-          {
-            text: "Source: "
-          },
-          {
-            text: `https://api.exchangeratesapi.io/${format(
-              ownerData.issue_date,
-              "YYYY-MM-DD"
-            )}?base=USD`,
-            link: `https://api.exchangeratesapi.io/${format(
-              ownerData.issue_date,
-              "YYYY-MM-DD"
-            )}?base=USD`
-          }
-        ],
-        italics: true,
-        fontSize: 9
-      },
+      // {
+      //   text: () => {
+      //     return ownerData.use_conversion
+      //       ? `Exchange rate for the USD / EUR on the day ${format(
+      //           ownerData.issue_date,
+      //           "D.M.YYYY"
+      //         )}: ${rates.EUR.toFixed(4)}`
+      //       : "";
+      //   },
+      //   margin: [0, 30, 0, 5]
+      // },
+      // {
+      //   text: () => {
+      //     return ownerData.use_conversion
+      //       ? [
+      //           {
+      //             text: "Source: "
+      //           },
+      //           {
+      //             text: `https://api.exchangeratesapi.io/${format(
+      //               ownerData.issue_date,
+      //               "YYYY-MM-DD"
+      //             )}?base=USD`,
+      //             link: `https://api.exchangeratesapi.io/${format(
+      //               ownerData.issue_date,
+      //               "YYYY-MM-DD"
+      //             )}?base=USD`
+      //           }
+      //         ]
+      //       : "";
+      //   },
+      //   italics: true,
+      //   fontSize: 9
+      // },
       {
         text: "VAT exempt under article 287 of VAT Directive",
         margin: [0, 20, 0, 30]

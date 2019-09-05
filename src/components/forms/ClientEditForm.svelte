@@ -44,14 +44,6 @@
       on:change={handleInputChange}
       placeholder="Client company address" />
   </div>
-  <div class="field">
-    <input
-      type="text"
-      bind:value={$clientData.client_company_city}
-      on:keyup={handleInputChange}
-      on:change={handleInputChange}
-      placeholder="Client company city" />
-  </div>
   <div class="g-r">
     <div class="g-r-c g-r-c-30">
       <div class="field">
@@ -67,11 +59,19 @@
       <div class="field">
         <input
           type="text"
-          bind:value={$clientData.client_company_country}
+          bind:value={$clientData.client_company_city}
           on:keyup={handleInputChange}
           on:change={handleInputChange}
-          placeholder="Client company country" />
+          placeholder="Client company city" />
       </div>
     </div>
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_country}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
+      placeholder="Client company country" />
   </div>
 </form>

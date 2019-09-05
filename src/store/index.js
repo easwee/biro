@@ -44,10 +44,11 @@ export const invoiceItems = writable([
     id: 0,
     invoice_row_client_id: 1,
     invoice_row_description: "Example invoice item",
-    invoice_row_units: "100",
+    invoice_row_units: 1,
     invoice_row_unit_format: "hours",
-    invoice_row_unit_price: "10",
-    invoice_row_vat: 0
+    invoice_row_unit_price: 0,
+    invoice_row_vat: 0,
+    invoice_past_total: null
   }
 ]);
 

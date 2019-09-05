@@ -17,7 +17,7 @@
   <br />
   {$clientData.client_company_address}
   <br />
-  {$clientData.client_company_city}, {$clientData.client_company_zip}
+  {$clientData.client_company_zip} {$clientData.client_company_city}
   <br />
   {$clientData.client_company_country}
 </address>
