@@ -271,7 +271,7 @@ export const pdfMakeInvoiceDefinition = ({
           { text: "" },
           {
             image: ownerData.issuer_signature,
-            width: 60,
+            width: 80,
             alignment: "center",
             margin: [10, 0, 40, 0]
           }
