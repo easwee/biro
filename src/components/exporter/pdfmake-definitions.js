@@ -37,48 +37,52 @@ const generateItemList = ({
       {
         text: `${invoice_row_units} ${invoice_row_unit_format}`,
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       },
       {
         text: invoice_row_vat,
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       },
       {
         text: formatter(ownerData.base_currency).format(invoice_row_unit_price),
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       },
       {
         text: formatter(ownerData.base_currency).format(invoice_row_units * invoice_row_unit_price),
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       }
     ]);
   });
 
   list.push([
+    { colSpan: 5, text: "Total", bold: true, alignment: "right" },
     "",
     "",
     "",
     "",
-    { text: "Total", bold: true, alignment: "right" },
     { text: formatter(ownerData.base_currency).format(total), alignment: "right" }
   ]);
   list.push([
+    { colSpan: 5, text: "VAT", bold: true, alignment: "right" },
     "",
     "",
     "",
     "",
-    { text: "VAT", bold: true, alignment: "right" },
     { text: formatter(ownerData.base_currency).format(VAT), alignment: "right" }
   ]);
   list.push([
+    { colSpan: 5, text: "Total in USD", bold: true, alignment: "right" },
     "",
     "",
     "",
     "",
-    { text: "Total in USD", bold: true, alignment: "right" },
     {
       text: formatter(ownerData.base_currency).format(totalWithVAT_base_currency),
       alignment: "right"
@@ -86,11 +90,16 @@ const generateItemList = ({
   ]);
   if (ownerData.use_conversion) {
     list.push([
+      {
+        colSpan: 5,
+        text: `Total in ${ownerData.foreign_currency}`,
+        bold: true,
+        alignment: "right"
+      },
       "",
       "",
       "",
       "",
-      { text: `Total in ${ownerData.foreign_currency}`, bold: true, alignment: "right" },
       {
         text: formatter(ownerData.foreign_currency).format(totalWithVAT_foreign_currency),
         alignment: "right"
@@ -188,7 +197,7 @@ export const pdfMakeInvoiceDefinition = ({
       },
       {
         table: {
-          widths: ["auto", 270, "auto", "auto", "auto", "auto"],
+          widths: ["auto", "*", "auto", "auto", "auto", "auto"],
           headerRows: 1,
           body: generateItemList({
             total,
