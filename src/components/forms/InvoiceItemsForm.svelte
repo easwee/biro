@@ -7,20 +7,34 @@
     idbCreate,
     idbAdd,
     idbRemove,
+    idbRemoveAll,
     idbRead,
     idbReadAll,
     idbUpdate
   } from "utils";
+  import InvoiceItemsFormItem from "./InvoiceItemsFormItem.svelte";
+  import InvoiceItemsFormItemPast from "./InvoiceItemsFormItemPast.svelte";
 
   let typingTimeout = null;
 
   const blankRow = {
     invoice_row_client_id: 1,
     invoice_row_description: "",
-    invoice_row_units: "",
+    invoice_row_units: 1,
     invoice_row_unit_format: "",
-    invoice_row_unit_price: "",
-    invoice_row_period: ""
+    invoice_row_unit_price: 0,
+    invoice_row_vat: 0,
+    invoice_past_total: null
+  };
+
+  const blankPastRow = {
+    invoice_row_client_id: 1,
+    invoice_row_description: "Development",
+    invoice_row_units: 1,
+    invoice_row_unit_format: "",
+    invoice_row_unit_price: 0,
+    invoice_row_vat: 0,
+    invoice_past_total: 0
   };
 
   onMount(() => {
@@ -55,6 +69,15 @@
       });
   }
 
+  function createPastInvoice() {
+    idbRemoveAll("biro_db", "invoice_rows")
+      .then(() => idbAdd("biro_db", "invoice_rows", blankPastRow))
+      .then(() => idbReadAll("biro_db", "invoice_rows"))
+      .then(result => {
+        invoiceItems.set(result);
+      });
+  }
+
   function removeInvoiceRow(index) {
     idbRemove("biro_db", "invoice_rows", index)
       .then(() => idbReadAll("biro_db", "invoice_rows"))
@@ -70,12 +93,6 @@
     margin: 0;
     background: none;
   }
-  .invoice-row {
-    padding: 5px;
-    border-radius: 2px;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 10px 0;
-  }
   .no-data {
     color: white;
     font-style: italic;
@@ -85,61 +102,26 @@
 
 <form>
   {#each $invoiceItems as item, index}
-    <div class="invoice-row" transition:fade>
-      <div class="g-r">
-        <div class="g-r-c g-r-c-100">
-          <div class="field">
-            <input
-              type="text"
-              bind:value={item.invoice_row_description}
-              on:keyup={() => handleInputChange(index, item)}
-              on:change={() => handleInputChange(index, item)}
-              placeholder="Description" />
-          </div>
-        </div>
-      </div>
-      <div class="g-r">
-        <div class="g-r-c g-r-c-33">
-          <div class="field">
-            <input
-              type="text"
-              bind:value={item.invoice_row_units}
-              on:keyup={() => handleInputChange(index, item)}
-              on:change={() => handleInputChange(index, item)}
-              placeholder="Units" />
-          </div>
-        </div>
-        <div class="g-r-c g-r-c-33">
-          <div class="field">
-            <input
-              type="text"
-              bind:value={item.invoice_row_unit_format}
-              on:keyup={() => handleInputChange(index, item)}
-              on:change={() => handleInputChange(index, item)}
-              placeholder="Unit format" />
-          </div>
-        </div>
-        <div class="g-r-c g-r-c-33">
-          <div class="field">
-            <input
-              type="text"
-              bind:value={item.invoice_row_unit_price}
-              on:keyup={() => handleInputChange(index, item)}
-              on:change={() => handleInputChange(index, item)}
-              placeholder="Unit price" />
-          </div>
-        </div>
-      </div>
-      <div class="actions align-right">
-        <span on:click={() => removeInvoiceRow(item.id)} class="button remove">
-          - Remove #{index + 1}
-        </span>
-      </div>
-    </div>
+    {#if item.invoice_past_total === null}
+      <InvoiceItemsFormItem
+        {index}
+        {item}
+        {handleInputChange}
+        {removeInvoiceRow} />
+    {:else}
+      <InvoiceItemsFormItemPast
+        {index}
+        {item}
+        {handleInputChange}
+        {removeInvoiceRow} />
+    {/if}
   {:else}
     <p class="no-data">No rows added yet.</p>
   {/each}
   <div class="actions align-center">
     <span on:click={() => addInvoiceRow()} class="button save">+ Add item</span>
+    <span on:click={() => createPastInvoice()} class="button save">
+      Create past invoice
+    </span>
   </div>
 </form>

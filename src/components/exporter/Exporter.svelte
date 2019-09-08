@@ -4,22 +4,23 @@
   import { invoiceItems, rates, clientData, ownerData } from "store";
   import { pdfMakeFont } from "constants";
   import { pdfMakeInvoiceDefinition } from "./pdfmake-definitions";
-  import { calculateTotalPrice } from "utils";
+  import { calculateTotalPrice, calculateTotalVAT } from "utils";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * $ownerData.vat) / 100;
-  $: totalWithVATUSD = total + VAT;
-  $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
+  $: VAT = calculateTotalVAT($invoiceItems);
+  $: totalWithVAT_base_currency = total + VAT;
+  $: totalWithVAT_foreign_currency =
+    totalWithVAT_base_currency * $rates[$ownerData.foreign_currency];
 
   function exportToPDF() {
     pdfMake.vfs = pdfMakeFont;
     pdfMake
       .createPdf(
         pdfMakeInvoiceDefinition({
-          invoiceTotal: total,
-          invoiceVAT: VAT,
-          invoiceTotalWithVATUSD: totalWithVATUSD,
-          invoiceTotalWithVATEUR: totalWithVATEUR,
+          total,
+          VAT,
+          totalWithVAT_base_currency,
+          totalWithVAT_foreign_currency,
           invoiceItems: $invoiceItems,
           rates: $rates,
           clientData: $clientData,

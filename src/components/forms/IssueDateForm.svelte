@@ -15,11 +15,13 @@
         .then(() => idbRead("biro_db", "owner", 1))
         .then(async result => {
           ownerData.set(result);
-          const response = await fetchRates(
-            format($ownerData.issue_date, "YYYY-MM-DD"),
-            $ownerData.base_currency
-          );
-          rates.set(response.data.rates);
+          if ($ownerData.use_conversion) {
+            const response = await fetchRates(
+              format($ownerData.issue_date, "YYYY-MM-DD"),
+              $ownerData.base_currency
+            );
+            rates.set(response.data.rates);
+          }
         });
     }, 500);
   }

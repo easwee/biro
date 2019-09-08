@@ -2,11 +2,12 @@ import { format, addDays } from "date-fns";
 import { formatter } from "utils";
 
 const generateItemList = ({
-  invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR,
-  invoiceItems
+  total,
+  VAT,
+  totalWithVAT_base_currency,
+  totalWithVAT_foreign_currency,
+  invoiceItems,
+  ownerData
 }) => {
   let list = [];
 
@@ -14,6 +15,7 @@ const generateItemList = ({
     { text: "" },
     { text: "Description", style: "tableHeader", bold: true },
     { text: "Units", style: "tableHeader", bold: true },
+    { text: "VAT", style: "tableHeader", alignment: "right", bold: true },
     { text: "Price per unit", style: "tableHeader", alignment: "right", bold: true },
     { text: "Total", style: "tableHeader", alignment: "right", bold: true }
   ]);
@@ -23,6 +25,7 @@ const generateItemList = ({
       invoice_row_description,
       invoice_row_units,
       invoice_row_unit_format,
+      invoice_row_vat,
       invoice_row_unit_price
     } = item;
     list.push([
@@ -34,226 +37,289 @@ const generateItemList = ({
       {
         text: `${invoice_row_units} ${invoice_row_unit_format}`,
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       },
       {
-        text: formatter("USD").format(invoice_row_unit_price),
+        text: invoice_row_vat,
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
       },
       {
-        text: formatter("USD").format(invoice_row_units * invoice_row_unit_price),
+        text: formatter(ownerData.base_currency).format(invoice_row_unit_price),
         alignment: "right",
-        border: [false, true, false, true]
+        border: [false, true, false, true],
+        noWrap: true
+      },
+      {
+        text: formatter(ownerData.base_currency).format(invoice_row_units * invoice_row_unit_price),
+        alignment: "right",
+        border: [false, true, false, true],
+        noWrap: true
       }
     ]);
   });
 
   list.push([
+    { colSpan: 5, text: "Total", bold: true, alignment: "right" },
     "",
     "",
     "",
-    { text: "Total", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceTotal), alignment: "right" }
+    "",
+    { text: formatter(ownerData.base_currency).format(total), alignment: "right" }
   ]);
   list.push([
+    { colSpan: 5, text: "VAT", bold: true, alignment: "right" },
     "",
     "",
     "",
-    { text: "VAT", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceVAT), alignment: "right" }
+    "",
+    { text: formatter(ownerData.base_currency).format(VAT), alignment: "right" }
   ]);
   list.push([
+    { colSpan: 5, text: "Total in USD", bold: true, alignment: "right" },
     "",
     "",
     "",
-    { text: "Total in USD", bold: true, alignment: "right" },
-    { text: formatter("USD").format(invoiceTotalWithVATUSD), alignment: "right" }
+    "",
+    {
+      text: formatter(ownerData.base_currency).format(totalWithVAT_base_currency),
+      alignment: "right"
+    }
   ]);
-  list.push([
-    "",
-    "",
-    "",
-    { text: "Total in EUR", bold: true, alignment: "right" },
-    { text: formatter("EUR").format(invoiceTotalWithVATEUR), alignment: "right" }
-  ]);
+  if (ownerData.use_conversion) {
+    list.push([
+      {
+        colSpan: 5,
+        text: `Total in ${ownerData.foreign_currency}`,
+        bold: true,
+        alignment: "right"
+      },
+      "",
+      "",
+      "",
+      "",
+      {
+        text: formatter(ownerData.foreign_currency).format(totalWithVAT_foreign_currency),
+        alignment: "right"
+      }
+    ]);
+  }
 
   return list;
 };
 
-export const pdfMakeInvoiceDefinition = ({
-  invoiceTotal,
-  invoiceVAT,
-  invoiceTotalWithVATUSD,
-  invoiceTotalWithVATEUR,
+const generateInvoice = ({
+  total,
+  VAT,
+  totalWithVAT_base_currency,
+  totalWithVAT_foreign_currency,
   invoiceItems,
-  rates,
   clientData,
-  ownerData
+  ownerData,
+  rates
 }) => {
-  return {
-    content: [
-      {
-        columns: [
-          { text: "" },
-          {
-            text: [
-              `${ownerData.company_name}
-              ${ownerData.company_address}
-              ${ownerData.company_postal_number} ${ownerData.company_city}
-              Tax reg. no.: ${ownerData.company_tax_registration_number}
-              Business reg. no.: ${ownerData.company_business_registration_number}`
-            ],
-            fontSize: 11,
-            margin: [0, 0, 0, 15]
-          }
-        ]
-      },
+  const invoice = [];
 
+  invoice.push({
+    columns: [
+      { text: "" },
       {
-        columns: [
-          {
-            text: [
-              `${clientData.client_company_name}
-              ${clientData.client_company_address}
-              ${clientData.client_company_city}, ${clientData.client_company_zip}
-              ${clientData.client_company_country}`
-            ],
-            fontSize: 11,
-            italics: true,
-            margin: [0, 15, 0, 0]
-          },
-          {
-            table: {
-              widths: [100, "auto"],
-              headerRows: 1,
-              body: [
-                [
-                  { text: "INVOICE No.", style: "metaCell", bold: true },
-                  { text: format(ownerData.issue_date, "YYYY-MM"), style: "metaCell", bold: true }
-                ],
-                [
-                  { text: "Date:", style: "metaCell", bold: true },
-                  {
-                    text: `${ownerData.issue_city}, ${format(ownerData.issue_date, "D.M.YYYY")}`,
-                    style: "metaCell",
-                    bold: true
-                  }
-                ],
-                [
-                  { text: "Terms:", style: "metaCell", bold: true },
-                  { text: `${ownerData.terms} days`, style: "metaCell", bold: true }
-                ],
-                [
-                  { text: "Due date:", style: "metaCell", bold: true },
-                  {
-                    text: format(addDays(ownerData.issue_date, ownerData.terms), "D.M.YYYY"),
-                    style: "metaCell",
-                    bold: true
-                  }
-                ],
-                [
-                  { text: "Bank account:", style: "metaCell", bold: true },
-                  { text: ownerData.bank_account_number, style: "metaCell", bold: true }
-                ]
-              ]
-            },
-            layout: {
-              defaultBorder: false
-            },
-            margin: [0, 0, 0, 30]
-          }
+        text: [
+          `${ownerData.company_name}
+          ${ownerData.company_address}
+          ${ownerData.company_postal_number} ${ownerData.company_city}
+          Tax reg. no.: ${ownerData.company_tax_registration_number}
+          Business reg. no.: ${ownerData.company_business_registration_number}`
         ],
-        margin: [0, 0, 0, 30]
+        fontSize: 11,
+        margin: [0, 0, 0, 15]
+      }
+    ]
+  });
+
+  invoice.push({
+    columns: [
+      {
+        text: [
+          `${clientData.client_company_name}
+          ${clientData.client_company_address}
+          ${clientData.client_company_city}, ${clientData.client_company_zip}
+          ${clientData.client_company_country}`
+        ],
+        fontSize: 11,
+        italics: true,
+        margin: [0, 15, 0, 0]
       },
       {
         table: {
-          widths: ["auto", 270, "auto", "auto", "auto"],
+          widths: [100, "auto"],
           headerRows: 1,
-          body: generateItemList({
-            invoiceTotal,
-            invoiceVAT,
-            invoiceTotalWithVATUSD,
-            invoiceTotalWithVATEUR,
-            invoiceItems
-          })
+          body: [
+            [
+              { text: "INVOICE No.", style: "metaCell", bold: true },
+              { text: format(ownerData.issue_date, "YYYY-MM"), style: "metaCell", bold: true }
+            ],
+            [
+              { text: "Date:", style: "metaCell", bold: true },
+              {
+                text: `${ownerData.issue_city}, ${format(ownerData.issue_date, "D.M.YYYY")}`,
+                style: "metaCell",
+                bold: true
+              }
+            ],
+            [
+              { text: "Terms:", style: "metaCell", bold: true },
+              { text: `${ownerData.terms} days`, style: "metaCell", bold: true }
+            ],
+            [
+              { text: "Due date:", style: "metaCell", bold: true },
+              {
+                text: format(addDays(ownerData.issue_date, ownerData.terms), "D.M.YYYY"),
+                style: "metaCell",
+                bold: true
+              }
+            ],
+            [
+              { text: "Bank account:", style: "metaCell", bold: true },
+              { text: ownerData.bank_account_number, style: "metaCell", bold: true }
+            ]
+          ]
         },
         layout: {
           defaultBorder: false
+        },
+        margin: [0, 0, 0, 30]
+      }
+    ],
+    margin: [0, 0, 0, 30]
+  });
+
+  invoice.push({
+    table: {
+      widths: ["auto", "*", "auto", "auto", "auto", "auto"],
+      headerRows: 1,
+      body: generateItemList({
+        total,
+        VAT,
+        totalWithVAT_base_currency,
+        totalWithVAT_foreign_currency,
+        invoiceItems,
+        ownerData
+      })
+    },
+    layout: {
+      defaultBorder: false
+    }
+  });
+
+  if (ownerData.use_conversion) {
+    invoice.push({
+      text: `Exchange rate for the USD / EUR on the day ${format(
+        ownerData.issue_date,
+        "D.M.YYYY"
+      )}: ${rates[ownerData.foreign_currency].toFixed(4)}`,
+
+      margin: [0, 30, 0, 5]
+    });
+
+    invoice.push({
+      text: [
+        {
+          text: "Source: "
+        },
+        {
+          text: `https://api.exchangeratesapi.io/${format(
+            ownerData.issue_date,
+            "YYYY-MM-DD"
+          )}?base=USD`,
+          link: `https://api.exchangeratesapi.io/${format(
+            ownerData.issue_date,
+            "YYYY-MM-DD"
+          )}?base=USD`
         }
-      },
-      {
-        text: `Exchange rate for the USD / EUR on the day ${format(
-          ownerData.issue_date,
-          "D.M.YYYY"
-        )}: ${rates.EUR.toFixed(4)}`,
-        margin: [0, 30, 0, 5]
-      },
+      ],
+
+      italics: true,
+      fontSize: 9
+    });
+  }
+
+  if (ownerData.is_vat_free) {
+    invoice.push({
+      text: "VAT exempt under article 287 of VAT Directive",
+      margin: [0, 20, 0, 30]
+    });
+  }
+
+  invoice.push({
+    columns: [
+      { text: "" },
+      { text: "" },
       {
         text: [
           {
-            text: "Source: "
-          },
-          {
-            text: `https://api.exchangeratesapi.io/${format(
-              ownerData.issue_date,
-              "YYYY-MM-DD"
-            )}?base=USD`,
-            link: `https://api.exchangeratesapi.io/${format(
-              ownerData.issue_date,
-              "YYYY-MM-DD"
-            )}?base=USD`
+            text: ["Invoice issued by:\n", ownerData.issuer]
           }
         ],
-        italics: true,
-        fontSize: 9
-      },
-      {
-        text: "VAT exempt under article 287 of VAT Directive",
-        margin: [0, 20, 0, 30]
-      },
-
-      {
-        columns: [
-          { text: "" },
-          { text: "" },
-          {
-            text: [
-              {
-                text: ["Invoice issued by:\n", ownerData.issuer]
-              }
-            ],
-            alignment: "center"
-          }
-        ]
-      },
-      {
-        columns: [
-          { text: "" },
-          { text: "" },
-          {
-            image: ownerData.issuer_signature,
-            width: 60,
-            alignment: "center",
-            margin: [10, 0, 40, 0]
-          }
-        ]
-      },
-
-      {
-        columns: [
-          { text: "" },
-          { text: "" },
-          {
-            text: "No company seal is used",
-            alignment: "center",
-            italics: true,
-            fontSize: 9,
-            margin: [0, 10, 0, 0]
-          }
-        ]
+        alignment: "center",
+        margin: [0, 30, 0, 0]
       }
-    ],
+    ]
+  });
+
+  invoice.push({
+    columns: [
+      { text: "" },
+      { text: "" },
+      {
+        image: ownerData.issuer_signature,
+        width: 80,
+        alignment: "center",
+        margin: [10, 0, 40, 0]
+      }
+    ]
+  });
+
+  invoice.push({
+    columns: [
+      { text: "" },
+      { text: "" },
+      {
+        text: "No company seal is used",
+        alignment: "center",
+        italics: true,
+        fontSize: 9,
+        margin: [0, 10, 0, 0]
+      }
+    ]
+  });
+
+  return invoice;
+};
+
+export const pdfMakeInvoiceDefinition = ({
+  total,
+  VAT,
+  totalWithVAT_base_currency,
+  totalWithVAT_foreign_currency,
+  invoiceItems,
+  clientData,
+  ownerData,
+  rates
+}) => {
+  return {
+    content: generateInvoice({
+      total,
+      VAT,
+      totalWithVAT_base_currency,
+      totalWithVAT_foreign_currency,
+      invoiceItems,
+      clientData,
+      ownerData,
+      rates
+    }),
     styles: {
       metaCell: {
         fontSize: 11,

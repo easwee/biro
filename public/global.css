@@ -64,12 +64,17 @@ table th {
 
 table th,
 table td {
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 table th:last-child,
 table td:last-child {
   padding-right: 0;
+}
+
+table th:first-child,
+table td:first-child {
+  padding-left: 0;
 }
 
 .align-right {
@@ -82,6 +87,7 @@ table td:last-child {
 
 .no-wrap {
   white-space: nowrap;
+  width: 1%;
 }
 
 form {
@@ -94,11 +100,13 @@ form {
 }
 
 .field {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .field input[type="text"],
-.field input[type="date"] {
+.field input[type="date"],
+.field input[type="number"],
+.field select {
   display: block;
   height: 28px;
   line-height: 28px;
@@ -152,6 +160,10 @@ form {
 
 .g-r-c-20 {
   width: 20%;
+}
+
+.g-r-c-25 {
+  width: 25%;
 }
 
 .g-r-c-30 {

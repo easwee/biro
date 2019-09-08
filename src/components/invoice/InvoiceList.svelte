@@ -8,12 +8,13 @@
     ownerData
   } from "store";
   import InvoiceItem from "./InvoiceItem.svelte";
-  import { formatter, calculateTotalPrice } from "utils";
+  import { formatter, calculateTotalPrice, calculateTotalVAT } from "utils";
 
   $: total = calculateTotalPrice($invoiceItems);
-  $: VAT = (total * $ownerData.vat) / 100;
-  $: totalWithVATUSD = total + VAT;
-  $: totalWithVATEUR = totalWithVATUSD * $rates.EUR;
+  $: VAT = calculateTotalVAT($invoiceItems);
+  $: totalWithVAT_base_currency = total + VAT;
+  $: totalWithVAT_foreign_currency =
+    totalWithVAT_base_currency * $rates[$ownerData.foreign_currency];
 </script>
 
 <style>
@@ -39,14 +40,11 @@
 <table class="invoice">
   <tr class="header">
     <th />
-    {#each Object.values($properties) as property, index}
-      {#if property.show}
-        <th
-          class={`${property.alignRight ? 'align-right' : ''} ${property.alignRight ? 'no-wrap' : ''}`}>
-          {property.name}
-        </th>
-      {/if}
-    {/each}
+    <th>Description</th>
+    <th class="align-right no-wrap">Units</th>
+    <th class="align-right no-wrap">VAT</th>
+    <th class="align-right no-wrap">Price per unit</th>
+    <th class="align-right no-wrap">Total</th>
   </tr>
 
   {#each $invoiceItems as item, index}
@@ -54,19 +52,29 @@
   {/each}
 
   <tr class="footer footer-total">
-    <th colspan={$shownPropertiesCount}>Total:</th>
-    <td class="align-right">{formatter('USD').format(total)}</td>
+    <th colspan="5">Total:</th>
+    <td class="align-right">
+      {formatter($ownerData.base_currency).format(total)}
+    </td>
   </tr>
   <tr class="footer">
-    <th colspan={$shownPropertiesCount}>VAT:</th>
-    <td class="align-right">{formatter('USD').format(VAT)}</td>
+    <th colspan="5">VAT:</th>
+    <td class="align-right">
+      {formatter($ownerData.base_currency).format(VAT)}
+    </td>
   </tr>
   <tr class="footer">
-    <th colspan={$shownPropertiesCount}>Total in USD:</th>
-    <td class="align-right">{formatter('USD').format(totalWithVATUSD)}</td>
+    <th colspan="5">Total with VAT in {$ownerData.base_currency}:</th>
+    <td class="align-right">
+      {formatter($ownerData.base_currency).format(totalWithVAT_base_currency)}
+    </td>
   </tr>
-  <tr class="footer">
-    <th colspan={$shownPropertiesCount}>Total in EUR:</th>
-    <td class="align-right">{formatter('EUR').format(totalWithVATEUR)}</td>
-  </tr>
+  {#if $ownerData.use_conversion}
+    <tr class="footer">
+      <th colspan="5">Total with VAT in {$ownerData.foreign_currency}:</th>
+      <td class="align-right">
+        {formatter($ownerData.foreign_currency).format(totalWithVAT_foreign_currency)}
+      </td>
+    </tr>
+  {/if}
 </table>

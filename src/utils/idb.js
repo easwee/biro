@@ -81,6 +81,32 @@ export const idbRemove = (dbName, table, index) => {
   });
 };
 
+export const idbRemoveAll = (dbName, table) => {
+  return new Promise((resolve, reject) => {
+    const open = window.indexedDB.open(dbName, 1);
+
+    open.onsuccess = function(event) {
+      const db = event.target.result;
+      const transaction = db.transaction([table], "readwrite");
+
+      transaction.onerror = function(event) {
+        console.error("Database error: " + event.target.errorCode);
+      };
+
+      const objectStore = transaction.objectStore(table);
+      const operation = objectStore.clear();
+
+      operation.onsuccess = function(event) {
+        db.close();
+        resolve();
+      };
+      operation.onerror = function(event) {
+        reject("Could not remove from database.");
+      };
+    };
+  });
+};
+
 export const idbRead = (dbName, table, rowId) => {
   return new Promise((resolve, reject) => {
     const open = window.indexedDB.open(dbName, 1);

@@ -1,6 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  import { properties } from "store";
+  import { ownerData, properties } from "store";
   import { formatter } from "utils";
   export let index,
     id,
@@ -9,7 +9,10 @@
     invoice_row_units,
     invoice_row_unit_format,
     invoice_row_unit_price,
-    invoice_row_period;
+    invoice_row_vat;
+
+  $: total = invoice_row_units * invoice_row_unit_price;
+  $: totalWithVat = total + (total * invoice_row_vat) / 100;
 </script>
 
 <style>
@@ -20,23 +23,16 @@
 </style>
 
 <tr transition:fade>
-  <td>{index + 1}</td>
-  {#if $properties.description.show}
-    <td>{invoice_row_description}</td>
-  {/if}
-  {#if $properties.units.show}
-    <td class="align-right no-wrap">
-      {invoice_row_units} {invoice_row_unit_format}
-    </td>
-  {/if}
-  {#if $properties.pricePerUnit.show}
-    <td class="align-right no-wrap">
-      {formatter('USD').format(invoice_row_unit_price)}
-    </td>
-  {/if}
-  {#if $properties.total.show}
-    <td class="align-right no-wrap">
-      {formatter('USD').format(invoice_row_units * invoice_row_unit_price)}
-    </td>
-  {/if}
+  <td class="no-wrap">{index + 1}</td>
+  <td>{invoice_row_description}</td>
+  <td class="align-right no-wrap">
+    {invoice_row_units} {invoice_row_unit_format}
+  </td>
+  <td class="align-right no-wrap">{invoice_row_vat}%</td>
+  <td class="align-right no-wrap">
+    {formatter($ownerData.base_currency).format(invoice_row_unit_price)}
+  </td>
+  <td class="align-right no-wrap">
+    {formatter($ownerData.base_currency).format(total)}
+  </td>
 </tr>
