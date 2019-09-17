@@ -12,12 +12,19 @@
     background-color: rgba(255, 255, 255, 0.1);
     margin: 10px 0;
   }
+  .invoice-row label {
+    font-size: 11px;
+    color: white;
+    display: block;
+    margin-bottom: 3px;
+  }
 </style>
 
 <div class="invoice-row" transition:fade>
   <div class="g-r">
     <div class="g-r-c g-r-c-100">
       <div class="field">
+        <label>Description:</label>
         <input
           type="text"
           bind:value={item.invoice_row_description}
@@ -30,6 +37,7 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-25">
       <div class="field">
+        <label>Units:</label>
         <input
           type="text"
           min="1"
@@ -41,6 +49,7 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
+        <label>Unit format:</label>
         <input
           type="text"
           bind:value={item.invoice_row_unit_format}
@@ -51,6 +60,7 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
+        <label>Unit price:</label>
         <input
           type="text"
           bind:value={item.invoice_row_unit_price}
@@ -61,6 +71,7 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
+        <label>VAT %:</label>
         <input
           type="text"
           bind:value={item.invoice_row_vat}

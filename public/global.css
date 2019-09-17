@@ -117,6 +117,10 @@ form {
   font-family: sans-serif;
 }
 
+.field select option {
+  background: white;
+}
+
 .button {
   display: inline-block;
   color: white;

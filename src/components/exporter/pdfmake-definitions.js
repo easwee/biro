@@ -41,7 +41,7 @@ const generateItemList = ({
         noWrap: true
       },
       {
-        text: invoice_row_vat,
+        text: `${invoice_row_vat}%`,
         alignment: "right",
         border: [false, true, false, true],
         noWrap: true

@@ -79,6 +79,10 @@ export const BIRO_SCHEME = [
       {
         name: "is_vat_free",
         unique: false
+      },
+      {
+        name: "invoice_number",
+        unique: false
       }
     ]
   },

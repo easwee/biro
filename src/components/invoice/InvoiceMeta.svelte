@@ -25,7 +25,7 @@
 <table class="invoice-meta">
   <tr>
     <th>INVOICE No.</th>
-    <th>{format($ownerData.issue_date, 'YYYY-MM')}</th>
+    <th>{$ownerData.invoice_number}</th>
   </tr>
   <tr>
     <td>Date:</td>

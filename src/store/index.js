@@ -28,7 +28,8 @@ export const ownerData = writable({
   vat: 0,
   pdf_file_name_prefix: "pdf-file-name-prefix",
   use_conversion: false,
-  is_vat_free: true
+  is_vat_free: true,
+  invoice_number: format(new Date(), "YYYY-MM")
 });
 
 export const clientData = writable({

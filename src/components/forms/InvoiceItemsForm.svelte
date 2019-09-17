@@ -70,8 +70,7 @@
   }
 
   function createPastInvoice() {
-    idbRemoveAll("biro_db", "invoice_rows")
-      .then(() => idbAdd("biro_db", "invoice_rows", blankPastRow))
+    idbAdd("biro_db", "invoice_rows", blankPastRow)
       .then(() => idbReadAll("biro_db", "invoice_rows"))
       .then(result => {
         invoiceItems.set(result);
@@ -119,9 +118,19 @@
     <p class="no-data">No rows added yet.</p>
   {/each}
   <div class="actions align-center">
-    <span on:click={() => addInvoiceRow()} class="button save">+ Add item</span>
-    <span on:click={() => createPastInvoice()} class="button save">
-      Create past invoice
+    <span
+      on:click={() => addInvoiceRow()}
+      class="button save"
+      title="Adds a row where you specify ammount of units and unit price to get
+      row total.">
+      + Add row
+    </span>
+    <span
+      on:click={() => createPastInvoice()}
+      class="button save"
+      title="Adds a row that let's you calculate unit price from the total
+      ammount and number of units.">
+      + Add special row
     </span>
   </div>
 </form>
