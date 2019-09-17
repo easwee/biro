@@ -78,7 +78,7 @@ const generateItemList = ({
     { text: formatter(ownerData.base_currency).format(VAT), alignment: "right" }
   ]);
   list.push([
-    { colSpan: 5, text: "Total in USD", bold: true, alignment: "right" },
+    { colSpan: 5, text: `Total in ${ownerData.base_currency}`, bold: true, alignment: "right" },
     "",
     "",
     "",

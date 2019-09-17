@@ -255,7 +255,6 @@
         bind:checked={$ownerData.use_conversion}
         on:change={async () => {
           handleInputChange();
-          debugger;
           if ($ownerData.use_conversion) {
             const response = await fetchRates(format($ownerData.issue_date, 'YYYY-MM-DD'), $ownerData.base_currency);
             rates.set(response.data.rates);
