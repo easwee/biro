@@ -94,7 +94,7 @@
     </div>
   </div>
   <div class="field">
-    <label>Total:</label>
+    <label>Total in {$ownerData.base_currency}:</label>
     <input
       type="number"
       min="1"
