@@ -30,7 +30,7 @@
 <style>
   label {
     display: block;
-    font-weight: 700;
+    font-size: 11px;
     color: white;
     margin-bottom: 5px;
   }
