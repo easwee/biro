@@ -47,16 +47,9 @@
 </script>
 
 <style>
-  h3,
-  label {
+  h3 {
     color: white;
     margin: 0 0 10px 0;
-  }
-
-  label {
-    font-size: 11px;
-    display: block;
-    margin-bottom: 5px;
   }
 
   .button.remove {

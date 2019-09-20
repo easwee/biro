@@ -27,15 +27,6 @@
   }
 </script>
 
-<style>
-  label {
-    display: block;
-    font-size: 11px;
-    color: white;
-    margin-bottom: 5px;
-  }
-</style>
-
 <form>
   <div class="field">
     <label>Issue date:</label>

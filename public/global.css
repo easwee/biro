@@ -116,6 +116,13 @@ form {
   margin-bottom: 10px;
 }
 
+.field label {
+  display: block;
+  font-size: 11px;
+  color: white;
+  margin-bottom: 3px;
+}
+
 .field input[type="text"],
 .field input[type="date"],
 .field input[type="number"],

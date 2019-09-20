@@ -23,12 +23,6 @@
     background-color: rgba(255, 255, 255, 0.1);
     margin: 10px 0;
   }
-  .invoice-row label {
-    font-size: 11px;
-    color: white;
-    display: block;
-    margin-bottom: 3px;
-  }
 </style>
 
 <div class="invoice-row" transition:fade>
