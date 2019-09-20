@@ -58,6 +58,6 @@
       </div>
     </div>
   {:else}
-    <p>Loading...</p>
+    <div class="loader">Loading...</div>
   {/if}
 </div>

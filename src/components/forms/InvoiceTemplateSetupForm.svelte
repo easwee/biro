@@ -54,7 +54,7 @@
   }
 
   label {
-    font-weight: 700;
+    font-size: 11px;
     display: block;
     margin-bottom: 5px;
   }
@@ -111,7 +111,7 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Tax registration number</label>
+        <label>Tax registration no.</label>
         <input
           type="text"
           bind:value={$ownerData.company_tax_registration_number}
@@ -122,7 +122,7 @@
     </div>
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Business registration number</label>
+        <label>Business registration no.</label>
         <input
           type="text"
           bind:value={$ownerData.company_business_registration_number}

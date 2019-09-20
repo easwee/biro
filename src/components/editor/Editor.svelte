@@ -30,15 +30,18 @@
     display: flex;
   }
   :global(.svelte-tabs li.svelte-tabs__tab) {
-    padding: 15px 10px;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    vertical-align: top;
     width: 50%;
     border-top: 2px solid transparent;
     text-align: center;
+    white-space: nowrap;
   }
   :global(.svelte-tabs li.svelte-tabs__selected) {
     border-top: 2px solid white;
