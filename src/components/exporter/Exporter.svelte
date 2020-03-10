@@ -28,10 +28,7 @@
         })
       )
       .download(
-        `${$ownerData.pdf_file_name_prefix}-${format(
-          $ownerData.issue_date,
-          "YYYY-MM"
-        )}`
+        `${$ownerData.pdf_file_name_prefix}-${$ownerData.invoice_number}`
       );
   }
 </script>
