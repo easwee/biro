@@ -159,7 +159,7 @@ const generateInvoice = ({
           body: [
             [
               { text: "INVOICE No.", style: "metaCell", bold: true },
-              { text: format(ownerData.issue_date, "YYYY-MM"), style: "metaCell", bold: true }
+              { text: format(ownerData.invoice_number, "YYYY-MM"), style: "metaCell", bold: true }
             ],
             [
               { text: "Date:", style: "metaCell", bold: true },
