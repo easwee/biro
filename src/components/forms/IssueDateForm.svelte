@@ -37,4 +37,13 @@
       on:change={() => handleInputChange()}
       placeholder="Issue date" />
   </div>
+  <div class="field">
+    <label>Invoice No.</label>
+    <input
+      type="text"
+      bind:value={$ownerData.invoice_number}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
+      placeholder="Invoice number" />
+  </div>
 </form>

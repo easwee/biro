@@ -137,18 +137,7 @@
           placeholder="Terms" />
       </div>
     </div>
-    <div class="g-r-c g-r-c-50">
-      <div class="field">
-        <label>Invoice No.</label>
-        <input
-          type="text"
-          bind:value={$ownerData.invoice_number}
-          on:keyup={handleInputChange}
-          on:change={handleInputChange}
-          placeholder="Invoice number" />
-      </div>
-    </div>
-
+    <div class="g-r-c g-r-c-50" />
   </div>
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
