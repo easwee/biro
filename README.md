@@ -1,6 +1,6 @@
 # biro
 
-s.p. asisstant app based on Svelte
+PDF invoice generator app based on Svelte.
 
 `npm install` to install
 
