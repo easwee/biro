@@ -17,7 +17,7 @@
           ownerData.set(result);
           if ($ownerData.use_conversion) {
             const response = await fetchRates(
-              format($ownerData.issue_date, "YYYY-MM-DD"),
+              format($ownerData.issue_date, "yyyy-MM-dd"),
               $ownerData.base_currency
             );
             rates.set(response.data.rates);
@@ -29,8 +29,9 @@
 
 <form>
   <div class="field">
-    <label>Issue date:</label>
+    <label for="date">Issue date:</label>
     <input
+      id="date"
       type="date"
       bind:value={$ownerData.issue_date}
       on:keyup={() => handleInputChange()}
@@ -38,8 +39,9 @@
       placeholder="Issue date" />
   </div>
   <div class="field">
-    <label>Invoice No.</label>
+    <label for="invoice_no">Invoice No.</label>
     <input
+      id="invoice_no"
       type="text"
       bind:value={$ownerData.invoice_number}
       on:keyup={handleInputChange}

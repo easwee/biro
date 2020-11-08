@@ -19,7 +19,7 @@ export const ownerData = writable({
   bank_account_number: "Bank account number",
   base_currency: "EUR",
   foreign_currency: "USD",
-  issue_date: format(new Date(), "YYYY-MM-DD"),
+  issue_date: format(new Date(), "yyyy-MM-dd"),
   issue_city: "Issue city",
   issuer: "Invoice issuer name",
   issuer_signature:
@@ -29,7 +29,7 @@ export const ownerData = writable({
   pdf_file_name_prefix: "pdf-file-name-prefix",
   use_conversion: false,
   is_vat_free: true,
-  invoice_number: format(new Date(), "YYYY-MM")
+  invoice_number: format(new Date(), "yyyy-MM"),
 });
 
 export const clientData = writable({
@@ -37,7 +37,7 @@ export const clientData = writable({
   client_company_address: "Street address",
   client_company_city: "City",
   client_company_zip: "Postal code",
-  client_company_country: "Country"
+  client_company_country: "Country",
 });
 
 export const invoiceItems = writable([
@@ -49,8 +49,8 @@ export const invoiceItems = writable([
     invoice_row_unit_format: "hours",
     invoice_row_unit_price: 0,
     invoice_row_vat: 0,
-    invoice_past_total: null
-  }
+    invoice_past_total: null,
+  },
 ]);
 
 export const properties = writable({
@@ -59,32 +59,33 @@ export const properties = writable({
     name: "Description",
     show: true,
     alignRight: false,
-    noWrap: false
+    noWrap: false,
   },
   units: {
     id: "units",
     name: "Units",
     show: true,
     alignRight: true,
-    noWrap: true
+    noWrap: true,
   },
   pricePerUnit: {
     id: "pricePerUnit",
     name: "Price per unit",
     show: true,
     alignRight: true,
-    noWrap: true
+    noWrap: true,
   },
   total: {
     id: "total",
     name: "Total",
     show: true,
     alignRight: true,
-    noWrap: true
-  }
+    noWrap: true,
+  },
 });
 
 export const shownPropertiesCount = derived(
   properties,
-  $properties => Object.values($properties).filter(property => property.show).length
+  ($properties) =>
+    Object.values($properties).filter((property) => property.show).length
 );

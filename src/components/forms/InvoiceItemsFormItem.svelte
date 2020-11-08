@@ -18,8 +18,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-100">
       <div class="field">
-        <label>Description:</label>
+        <label for={`description_${index}`}>Description:</label>
         <input
+          id={`description_${index}`}
           type="text"
           bind:value={item.invoice_row_description}
           on:keyup={() => handleInputChange(index, item)}
@@ -31,8 +32,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Units:</label>
+        <label for={`units_${index}`}>Units:</label>
         <input
+          id={`units_${index}`}
           type="text"
           min="1"
           bind:value={item.invoice_row_units}
@@ -43,8 +45,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Unit format:</label>
+        <label for={`unitFormat_${index}`}>Unit format:</label>
         <input
+          id={`unitFormat_${index}`}
           type="text"
           bind:value={item.invoice_row_unit_format}
           on:keyup={() => handleInputChange(index, item)}
@@ -54,8 +57,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Unit price:</label>
+        <label for={`unitPrice_${index}`}>Unit price:</label>
         <input
+          id={`unitPrice_${index}`}
           type="text"
           bind:value={item.invoice_row_unit_price}
           on:keyup={() => handleInputChange(index, item)}
@@ -65,8 +69,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>VAT %:</label>
+        <label for={`vat_${index}`}>VAT %:</label>
         <input
+          id={`vat_${index}`}
           type="text"
           bind:value={item.invoice_row_vat}
           on:keyup={() => handleInputChange(index, item)}

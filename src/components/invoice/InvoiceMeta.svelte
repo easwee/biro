@@ -1,6 +1,8 @@
 <script>
-  import { format, addDays } from "date-fns";
+  import format from "date-fns/format";
+  import addDays from "date-fns/addDays";
   import { ownerData } from "store";
+  const days = Number($ownerData.terms)
 </script>
 
 <style>
@@ -21,7 +23,6 @@
     margin-bottom: 30px;
   }
 </style>
-
 <table class="invoice-meta">
   <tr>
     <th>INVOICE No.</th>
@@ -30,7 +31,7 @@
   <tr>
     <td>Date:</td>
     <td>
-      {$ownerData.issue_city}, {format($ownerData.issue_date, 'D.M.YYYY')}
+      {$ownerData.issue_city}, {format(new Date($ownerData.issue_date), 'd.M.yyyy')}
     </td>
   </tr>
   <tr>
@@ -40,7 +41,7 @@
   <tr>
     <td>Due date:</td>
     <td>
-      {format(addDays($ownerData.issue_date, $ownerData.terms), 'D.M.YYYY')}
+      {format(addDays(new Date($ownerData.issue_date), days), 'd.M.yyyy')}
     </td>
   </tr>
   <tr>

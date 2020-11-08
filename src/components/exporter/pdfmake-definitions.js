@@ -7,7 +7,7 @@ const generateItemList = ({
   totalWithVAT_base_currency,
   totalWithVAT_foreign_currency,
   invoiceItems,
-  ownerData
+  ownerData,
 }) => {
   let list = [];
 
@@ -16,8 +16,13 @@ const generateItemList = ({
     { text: "Description", style: "tableHeader", bold: true },
     { text: "Units", style: "tableHeader", bold: true },
     { text: "VAT", style: "tableHeader", alignment: "right", bold: true },
-    { text: "Price per unit", style: "tableHeader", alignment: "right", bold: true },
-    { text: "Total", style: "tableHeader", alignment: "right", bold: true }
+    {
+      text: "Price per unit",
+      style: "tableHeader",
+      alignment: "right",
+      bold: true,
+    },
+    { text: "Total", style: "tableHeader", alignment: "right", bold: true },
   ]);
 
   invoiceItems.map((item, index) => {
@@ -26,38 +31,40 @@ const generateItemList = ({
       invoice_row_units,
       invoice_row_unit_format,
       invoice_row_vat,
-      invoice_row_unit_price
+      invoice_row_unit_price,
     } = item;
     list.push([
       { text: index + 1, border: [false, true, false, true] },
       {
         text: invoice_row_description,
-        border: [false, true, false, true]
+        border: [false, true, false, true],
       },
       {
         text: `${invoice_row_units} ${invoice_row_unit_format}`,
         alignment: "right",
         border: [false, true, false, true],
-        noWrap: true
+        noWrap: true,
       },
       {
         text: `${invoice_row_vat}%`,
         alignment: "right",
         border: [false, true, false, true],
-        noWrap: true
+        noWrap: true,
       },
       {
         text: formatter(ownerData.base_currency).format(invoice_row_unit_price),
         alignment: "right",
         border: [false, true, false, true],
-        noWrap: true
+        noWrap: true,
       },
       {
-        text: formatter(ownerData.base_currency).format(invoice_row_units * invoice_row_unit_price),
+        text: formatter(ownerData.base_currency).format(
+          invoice_row_units * invoice_row_unit_price
+        ),
         alignment: "right",
         border: [false, true, false, true],
-        noWrap: true
-      }
+        noWrap: true,
+      },
     ]);
   });
 
@@ -67,7 +74,10 @@ const generateItemList = ({
     "",
     "",
     "",
-    { text: formatter(ownerData.base_currency).format(total), alignment: "right" }
+    {
+      text: formatter(ownerData.base_currency).format(total),
+      alignment: "right",
+    },
   ]);
   list.push([
     { colSpan: 5, text: "VAT", bold: true, alignment: "right" },
@@ -75,18 +85,28 @@ const generateItemList = ({
     "",
     "",
     "",
-    { text: formatter(ownerData.base_currency).format(VAT), alignment: "right" }
+    {
+      text: formatter(ownerData.base_currency).format(VAT),
+      alignment: "right",
+    },
   ]);
   list.push([
-    { colSpan: 5, text: `Total in ${ownerData.base_currency}`, bold: true, alignment: "right" },
+    {
+      colSpan: 5,
+      text: `Total in ${ownerData.base_currency}`,
+      bold: true,
+      alignment: "right",
+    },
     "",
     "",
     "",
     "",
     {
-      text: formatter(ownerData.base_currency).format(totalWithVAT_base_currency),
-      alignment: "right"
-    }
+      text: formatter(ownerData.base_currency).format(
+        totalWithVAT_base_currency
+      ),
+      alignment: "right",
+    },
   ]);
   if (ownerData.use_conversion) {
     list.push([
@@ -94,16 +114,18 @@ const generateItemList = ({
         colSpan: 5,
         text: `Total in ${ownerData.foreign_currency}`,
         bold: true,
-        alignment: "right"
+        alignment: "right",
       },
       "",
       "",
       "",
       "",
       {
-        text: formatter(ownerData.foreign_currency).format(totalWithVAT_foreign_currency),
-        alignment: "right"
-      }
+        text: formatter(ownerData.foreign_currency).format(
+          totalWithVAT_foreign_currency
+        ),
+        alignment: "right",
+      },
     ]);
   }
 
@@ -118,7 +140,7 @@ const generateInvoice = ({
   invoiceItems,
   clientData,
   ownerData,
-  rates
+  rates,
 }) => {
   const invoice = [];
 
@@ -131,12 +153,12 @@ const generateInvoice = ({
           ${ownerData.company_address}
           ${ownerData.company_postal_number} ${ownerData.company_city}
           Tax reg. no.: ${ownerData.company_tax_registration_number}
-          Business reg. no.: ${ownerData.company_business_registration_number}`
+          Business reg. no.: ${ownerData.company_business_registration_number}`,
         ],
         fontSize: 11,
-        margin: [0, 0, 0, 15]
-      }
-    ]
+        margin: [0, 0, 0, 15],
+      },
+    ],
   });
 
   invoice.push({
@@ -146,11 +168,11 @@ const generateInvoice = ({
           `${clientData.client_company_name}
           ${clientData.client_company_address}
           ${clientData.client_company_city}, ${clientData.client_company_zip}
-          ${clientData.client_company_country}`
+          ${clientData.client_company_country}`,
         ],
         fontSize: 11,
         italics: true,
-        margin: [0, 15, 0, 0]
+        margin: [0, 15, 0, 0],
       },
       {
         table: {
@@ -159,41 +181,55 @@ const generateInvoice = ({
           body: [
             [
               { text: "INVOICE No.", style: "metaCell", bold: true },
-              { text: ownerData.invoice_number, style: "metaCell", bold: true }
+              { text: ownerData.invoice_number, style: "metaCell", bold: true },
             ],
             [
               { text: "Date:", style: "metaCell", bold: true },
               {
-                text: `${ownerData.issue_city}, ${format(ownerData.issue_date, "D.M.YYYY")}`,
+                text: `${ownerData.issue_city}, ${format(
+                  new Date(ownerData.issue_date),
+                  "d.M.yyyy"
+                )}`,
                 style: "metaCell",
-                bold: true
-              }
+                bold: true,
+              },
             ],
             [
               { text: "Terms:", style: "metaCell", bold: true },
-              { text: `${ownerData.terms} days`, style: "metaCell", bold: true }
+              {
+                text: `${ownerData.terms} days`,
+                style: "metaCell",
+                bold: true,
+              },
             ],
             [
               { text: "Due date:", style: "metaCell", bold: true },
               {
-                text: format(addDays(ownerData.issue_date, ownerData.terms), "D.M.YYYY"),
+                text: format(
+                  addDays(new Date(ownerData.issue_date), ownerData.terms),
+                  "d.M.yyyy"
+                ),
                 style: "metaCell",
-                bold: true
-              }
+                bold: true,
+              },
             ],
             [
               { text: "Bank account:", style: "metaCell", bold: true },
-              { text: ownerData.bank_account_number, style: "metaCell", bold: true }
-            ]
-          ]
+              {
+                text: ownerData.bank_account_number,
+                style: "metaCell",
+                bold: true,
+              },
+            ],
+          ],
         },
         layout: {
-          defaultBorder: false
+          defaultBorder: false,
         },
-        margin: [0, 0, 0, 30]
-      }
+        margin: [0, 0, 0, 30],
+      },
     ],
-    margin: [0, 0, 0, 30]
+    margin: [0, 0, 0, 30],
   });
 
   invoice.push({
@@ -206,50 +242,50 @@ const generateInvoice = ({
         totalWithVAT_base_currency,
         totalWithVAT_foreign_currency,
         invoiceItems,
-        ownerData
-      })
+        ownerData,
+      }),
     },
     layout: {
-      defaultBorder: false
-    }
+      defaultBorder: false,
+    },
   });
 
   if (ownerData.use_conversion) {
     invoice.push({
       text: `Exchange rate for the USD / EUR on the day ${format(
-        ownerData.issue_date,
-        "D.M.YYYY"
+        new Date(ownerData.issue_date),
+        "d.M.yyyy"
       )}: ${rates[ownerData.foreign_currency].toFixed(4)}`,
 
-      margin: [0, 30, 0, 5]
+      margin: [0, 30, 0, 5],
     });
 
     invoice.push({
       text: [
         {
-          text: "Source: "
+          text: "Source: ",
         },
         {
           text: `https://api.exchangeratesapi.io/${format(
-            ownerData.issue_date,
-            "YYYY-MM-DD"
+            new Date(ownerData.issue_date),
+            "yyyy-MM-dd"
           )}?base=USD`,
           link: `https://api.exchangeratesapi.io/${format(
-            ownerData.issue_date,
-            "YYYY-MM-DD"
-          )}?base=USD`
-        }
+            new Date(ownerData.issue_date),
+            "yyyy-MM-dd"
+          )}?base=USD`,
+        },
       ],
 
       italics: true,
-      fontSize: 9
+      fontSize: 9,
     });
   }
 
   if (ownerData.is_vat_free) {
     invoice.push({
       text: "VAT exempt under article 287 of VAT Directive",
-      margin: [0, 20, 0, 30]
+      margin: [0, 20, 0, 30],
     });
   }
 
@@ -260,13 +296,13 @@ const generateInvoice = ({
       {
         text: [
           {
-            text: ["Invoice issued by:\n", ownerData.issuer]
-          }
+            text: ["Invoice issued by:\n", ownerData.issuer],
+          },
         ],
         alignment: "center",
-        margin: [0, 30, 0, 0]
-      }
-    ]
+        margin: [0, 30, 0, 0],
+      },
+    ],
   });
 
   invoice.push({
@@ -277,9 +313,9 @@ const generateInvoice = ({
         image: ownerData.issuer_signature,
         width: 80,
         alignment: "center",
-        margin: [10, 0, 40, 0]
-      }
-    ]
+        margin: [10, 0, 40, 0],
+      },
+    ],
   });
 
   invoice.push({
@@ -291,9 +327,9 @@ const generateInvoice = ({
         alignment: "center",
         italics: true,
         fontSize: 9,
-        margin: [0, 10, 0, 0]
-      }
-    ]
+        margin: [0, 10, 0, 0],
+      },
+    ],
   });
 
   return invoice;
@@ -307,7 +343,7 @@ export const pdfMakeInvoiceDefinition = ({
   invoiceItems,
   clientData,
   ownerData,
-  rates
+  rates,
 }) => {
   return {
     content: generateInvoice({
@@ -318,13 +354,13 @@ export const pdfMakeInvoiceDefinition = ({
       invoiceItems,
       clientData,
       ownerData,
-      rates
+      rates,
     }),
     styles: {
       metaCell: {
         fontSize: 11,
-        fillColor: "#f2f2f2"
-      }
-    }
+        fillColor: "#f2f2f2",
+      },
+    },
   };
 };

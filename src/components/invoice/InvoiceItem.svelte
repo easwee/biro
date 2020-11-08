@@ -3,8 +3,6 @@
   import { ownerData, properties } from "store";
   import { formatter } from "utils";
   export let index,
-    id,
-    invoice_row_client_id,
     invoice_row_description,
     invoice_row_units,
     invoice_row_unit_format,

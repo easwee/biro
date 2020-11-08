@@ -29,8 +29,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-100">
       <div class="field">
-        <label>Description:</label>
+        <label for={`description_past_${index}`}>Description:</label>
         <input
+          id={`description_past_${index}`}
           type="text"
           bind:value={item.invoice_row_description}
           on:keyup={() => handleInputChange(index, item)}
@@ -42,8 +43,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Units:</label>
+        <label for={`units_past_${index}`}>Units:</label>
         <input
+          id={`units_past_${index}`}
           type="number"
           bind:value={item.invoice_row_units}
           min="1"
@@ -54,8 +56,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Units format:</label>
+        <label for={`unitsFormat_past_${index}`}>Units format:</label>
         <input
+          id={`unitsFormat_past_${index}`}
           type="text"
           bind:value={item.invoice_row_unit_format}
           on:keyup={() => handleInputChange(index, item)}
@@ -65,8 +68,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>Unit price:</label>
+        <label for={`unitPrice_past_${index}`}>Unit price:</label>
         <input
+          id={`unitPrice_past_${index}`}
           disabled
           type="text"
           bind:value={item.invoice_row_unit_price}
@@ -77,8 +81,9 @@
     </div>
     <div class="g-r-c g-r-c-25">
       <div class="field">
-        <label>VAT %:</label>
+        <label for={`vat_past_${index}`}>VAT %:</label>
         <input
+          id={`vat_past_${index}`}
           type="text"
           bind:value={item.invoice_row_vat}
           on:keyup={() => handleInputChange(index, item)}
@@ -88,8 +93,9 @@
     </div>
   </div>
   <div class="field">
-    <label>Total in {$ownerData.base_currency}:</label>
+    <label for={`total_past_${index}`}>Total in {$ownerData.base_currency}:</label>
     <input
+      id={`total_past_${index}`}
       type="number"
       min="1"
       bind:value={item.invoice_past_total}

@@ -60,8 +60,9 @@
 <form>
   <h3>Invoice template setup</h3>
   <div class="field">
-    <label>Company name</label>
+    <label for="companyName">Company name</label>
     <input
+      id="companyName"
       type="text"
       bind:value={$ownerData.company_name}
       on:keyup={handleInputChange}
@@ -69,8 +70,9 @@
       placeholder="Company name" />
   </div>
   <div class="field">
-    <label>Company address</label>
+    <label for="companyAddress">Company address</label>
     <input
+      id="companyAddress"
       type="text"
       bind:value={$ownerData.company_address}
       on:keyup={handleInputChange}
@@ -80,8 +82,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-30">
       <div class="field">
-        <label>Postal num.</label>
+        <label for="postalNum">Postal num.</label>
         <input
+          id="postalNum"
           type="text"
           bind:value={$ownerData.company_postal_number}
           on:keyup={handleInputChange}
@@ -91,8 +94,9 @@
     </div>
     <div class="g-r-c g-r-c-70">
       <div class="field">
-        <label>Company city</label>
+        <label for="companyCity">Company city</label>
         <input
+          id="companyCity"
           type="text"
           bind:value={$ownerData.company_city}
           on:keyup={handleInputChange}
@@ -104,8 +108,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Tax registration no.</label>
+        <label for="taxRegistrationNo">Tax registration no.</label>
         <input
+          id="taxRegistrationNo"
           type="text"
           bind:value={$ownerData.company_tax_registration_number}
           on:keyup={handleInputChange}
@@ -115,8 +120,9 @@
     </div>
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Business registration no.</label>
+        <label for="businessRegistrationNo">Business registration no.</label>
         <input
+          id="businessRegistrationNo"
           type="text"
           bind:value={$ownerData.company_business_registration_number}
           on:keyup={handleInputChange}
@@ -128,8 +134,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Terms</label>
+        <label for="terms">Terms</label>
         <input
+          id="terms"
           type="text"
           bind:value={$ownerData.terms}
           on:keyup={handleInputChange}
@@ -142,13 +149,14 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Base currency</label>
+        <label for="baseCurrency">Base currency</label>
         <select
+          id="baseCurrency"
           bind:value={$ownerData.base_currency}
-          on:change={async () => {
+          on:blur={async () => {
             handleInputChange();
             if ($ownerData.use_conversion) {
-              const response = await fetchRates(format($ownerData.issue_date, 'YYYY-MM-DD'), $ownerData.base_currency);
+              const response = await fetchRates(format($ownerData.issue_date, 'yyyy-MM-dd'), $ownerData.base_currency);
               rates.set(response.data.rates);
             }
           }}>
@@ -160,10 +168,11 @@
     </div>
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Conversion currency</label>
+        <label for="conversionCurrency">Conversion currency</label>
         <select
+          id="conversionCurrency"
           bind:value={$ownerData.foreign_currency}
-          on:change={async () => {
+          on:blur={async () => {
             handleInputChange();
           }}>
           {#each Object.keys(LOCALES) as currency, index}
@@ -176,8 +185,9 @@
   <div class="g-r">
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>Bank account number</label>
+        <label for="bankAccountNumber">Bank account number</label>
         <input
+          id="bankAccountNumber"
           type="text"
           bind:value={$ownerData.bank_account_number}
           on:keyup={handleInputChange}
@@ -187,8 +197,9 @@
     </div>
     <div class="g-r-c g-r-c-50">
       <div class="field">
-        <label>PDF file name prefix</label>
+        <label for="pdfFileNamePrefix">PDF file name prefix</label>
         <input
+          id="pdfFileNamePrefix"
           type="text"
           bind:value={$ownerData.pdf_file_name_prefix}
           on:keyup={handleInputChange}
@@ -198,8 +209,9 @@
     </div>
   </div>
   <div class="field">
-    <label>Invoice issue city</label>
+    <label for="invoiceIssueCity">Invoice issue city</label>
     <input
+      id="invoiceIssueCity"
       type="text"
       bind:value={$ownerData.issue_city}
       on:keyup={handleInputChange}
@@ -207,8 +219,9 @@
       placeholder="Issue city" />
   </div>
   <div class="field">
-    <label>Invoice issuer</label>
+    <label for="invoiceIssuer">Invoice issuer</label>
     <input
+      id="invoiceIssuer"
       type="text"
       bind:value={$ownerData.issuer}
       on:keyup={handleInputChange}
@@ -216,13 +229,13 @@
       placeholder="Issuer" />
   </div>
   <div class="field">
-    <label>Invoice issuer signature:</label>
+    <label for="invoiceIssuerSignature">Invoice issuer signature:</label>
     <img
       id="signature"
       src={$ownerData.issuer_signature}
       alt="Empty signature" />
 
-    <input type="file" on:change={handleUploadChange} />
+    <input id="invoiceIssuerSignature" type="file" on:change={handleUploadChange} />
     {#if $ownerData.issuer_signature !== ''}
       <span on:click={handleRemoveSignatureClick} class="button remove">
         Remove signature
@@ -238,7 +251,7 @@
         on:change={async () => {
           handleInputChange();
           if ($ownerData.use_conversion) {
-            const response = await fetchRates(format($ownerData.issue_date, 'YYYY-MM-DD'), $ownerData.base_currency);
+            const response = await fetchRates(format($ownerData.issue_date, 'yyyy-MM-dd'), $ownerData.base_currency);
             rates.set(response.data.rates);
           }
         }} />
