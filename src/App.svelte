@@ -24,7 +24,7 @@
         }
         if ($ownerData.use_conversion) {
           const response = await fetchRates(
-            format($ownerData.issue_date, "yyyy-MM-dd"),
+            $ownerData.issue_date,
             $ownerData.base_currency
           );
           rates.set(response.data.rates);

@@ -9,6 +9,9 @@
     float: right;
     text-align: center;
   }
+  .signature img {
+    max-width: 80px;
+  }
   .rate {
     margin-bottom: 0;
   }
@@ -20,14 +23,14 @@
 {#if Object.entries($rates).length > 0 && $ownerData.use_conversion}
   <p class="rate">
     Exchange rate for the {$ownerData.base_currency} / {$ownerData.foreign_currency}
-    on the day {format($ownerData.issue_date, 'D.M.yyyy')}:
+    on the day {format(new Date($ownerData.issue_date), 'd.M.yyyy')}:
     <strong>{$rates[$ownerData.foreign_currency].toFixed(4)}</strong>
     <br />
     <small>
       Source:
       <a
-        href="https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'yyyy-MM-dd')}?base={$ownerData.base_currency}">
-        https://api.exchangeratesapi.io/{format($ownerData.issue_date, 'yyyy-MM-dd')}?base={$ownerData.base_currency}
+        href="https://api.exchangeratesapi.io/{$ownerData.issue_date}?base={$ownerData.base_currency}">
+        https://api.exchangeratesapi.io/{$ownerData.issue_date}?base={$ownerData.base_currency}
       </a>
     </small>
   </p>

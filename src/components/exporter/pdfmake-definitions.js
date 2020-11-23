@@ -305,18 +305,20 @@ const generateInvoice = ({
     ],
   });
 
-  invoice.push({
-    columns: [
-      { text: "" },
-      { text: "" },
-      {
-        image: ownerData.issuer_signature,
-        width: 80,
-        alignment: "center",
-        margin: [10, 0, 40, 0],
-      },
-    ],
-  });
+  if (ownerData.issuer_signature !== "") {
+    invoice.push({
+      columns: [
+        { text: "" },
+        { text: "" },
+        {
+          image: ownerData.issuer_signature,
+          width: 80,
+          alignment: "center",
+          margin: [10, 0, 40, 0],
+        },
+      ],
+    });
+  }
 
   invoice.push({
     columns: [

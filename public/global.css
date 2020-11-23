@@ -169,6 +169,10 @@ form {
   background: #f56565;
 }
 
+#signature {
+  max-width: 100%;
+}
+
 /* Simple grid system */
 
 .g-r {
