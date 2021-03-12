@@ -16,7 +16,7 @@
   "dependencies": {
     "date-fns": "^2.16.1",
     "html2canvas": "1.0.0-rc.1",
-    "jspdf": "^2.1.1",
+    "jspdf": "^2.3.1",
     "pdfmake": "^0.1.65",
     "sirv-cli": "^1.0.8",
     "svelte-tabs": "^1.1.0"
