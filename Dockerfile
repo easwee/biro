@@ -1,15 +1,19 @@
-FROM node:12-alpine AS builder
+FROM node:16-alpine AS builder
 
 WORKDIR /app
 
+ARG CURRENCY_EXCHANGE_API_KEY=""
+ENV CURRENCY_EXCHANGE_API_KEY=${CURRENCY_EXCHANGE_API_KEY}
+
 COPY package.json ./
+COPY package-lock.json ./
 
 RUN npm install
 
 COPY . ./
 
-RUN npm run build
+RUN npm run build 
 
-FROM nginx:alpine
+EXPOSE 8080
 
-COPY --from=builder /app/public /usr/share/nginx/html/
+CMD ["npm","run", "start"]

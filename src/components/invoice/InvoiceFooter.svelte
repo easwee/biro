@@ -1,7 +1,6 @@
 <script>
   import { format } from "date-fns";
   import { rates, ownerData } from "store";
-  import { formatter } from "utils";
 </script>
 
 <style>
@@ -29,8 +28,8 @@
     <small>
       Source:
       <a
-        href="https://api.exchangeratesapi.io/{$ownerData.issue_date}?base={$ownerData.base_currency}">
-        https://api.exchangeratesapi.io/{$ownerData.issue_date}?base={$ownerData.base_currency}
+        href="https://freecurrencyapi.net">
+        https://freecurrencyapi.net
       </a>
     </small>
   </p>

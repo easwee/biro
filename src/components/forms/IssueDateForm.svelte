@@ -1,7 +1,5 @@
 <script>
-  import { onMount } from "svelte";
   import { fetchRates } from "api";
-  import { format } from "date-fns";
   import { rates, ownerData } from "store";
   import { idbRead, idbUpdate } from "utils";
 
@@ -20,12 +18,9 @@
               $ownerData.issue_date,
               $ownerData.base_currency
             );
-            console.log(response);
-            console.log("=====");
-            console.log(response.data.rates);
-            console.log("=====");
-            console.log(rates, rates.set)
-            rates.set(response.data.rates);
+            const data = response.data.data;
+
+            rates.set(data[$ownerData.issue_date]);
           }
         });
     }, 500);

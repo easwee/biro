@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { format, addDays } from "date-fns";
   import { fetchRates } from "api";
   import { BIRO_SCHEME } from "constants";
   import { rates, ownerData, clientData } from "store";
@@ -27,7 +26,9 @@
             $ownerData.issue_date,
             $ownerData.base_currency
           );
-          rates.set(response.data.rates);
+          const data = response.data.data;
+
+          rates.set(data[$ownerData.issue_date]);
         }
       }).catch(error => {
         console.error(error);

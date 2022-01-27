@@ -1,6 +1,11 @@
 export const fetchRates = async (date, currency) => {
   const response = await fetch(
-    `https://api.exchangeratesapi.io/${date}?base=${currency}`,
+    // fetch just one day
+    `https://freecurrencyapi.net/api/v2/historical?${
+      CURRENCY_EXCHANGE_API_KEY !== ""
+        ? `apikey=${CURRENCY_EXCHANGE_API_KEY}`
+        : ""
+    }&base_currency=${currency}&date_from=${date}&date_to=${date}`,
     {
       method: "GET",
     }

@@ -1,10 +1,7 @@
 <script>
-  import { onMount } from "svelte";
-  import { BIRO_SCHEME } from "constants";
   import { ownerData, rates } from "store";
   import { idbRead, idbUpdate } from "utils";
   import { fetchRates } from "api";
-  import { format } from "date-fns";
   import { LOCALES } from "constants";
 
   let typingTimeout = null;
@@ -157,7 +154,9 @@
             handleInputChange();
             if ($ownerData.use_conversion) {
               const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-              rates.set(response.data.rates);
+              const data = response.data.data;
+
+              rates.set(data[$ownerData.issue_date]);              
             }
           }}>
           {#each Object.keys(LOCALES) as currency, index}
@@ -252,7 +251,9 @@
           handleInputChange();
           if ($ownerData.use_conversion) {
             const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-            rates.set(response.data.rates);
+            const data = response.data.data;
+
+            rates.set(data[$ownerData.issue_date]);            
           }
         }} />
       Use conversion
