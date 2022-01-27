@@ -27,11 +27,10 @@
             $ownerData.issue_date,
             $ownerData.base_currency
           );
-          console.log(response);
-          console.log("=====");
-          console.log(rates, rates.set);
           rates.set(response.data.rates);
         }
+      }).catch(error => {
+        console.error(error);
       });
 
     idbCreate("biro_db", BIRO_SCHEME)
