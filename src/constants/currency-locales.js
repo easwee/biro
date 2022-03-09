@@ -31,5 +31,5 @@ export const LOCALES = {
   AUD: "en-AU",
   ILS: "he-IL",
   KRW: "ko-KR",
-  PLN: "pl"
+  PLN: "pl",
 };

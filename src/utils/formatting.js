@@ -5,10 +5,10 @@ export const formatter = (currency, fractionsLimit = 2) => {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
-    maximumFractionDigits: fractionsLimit
+    maximumFractionDigits: fractionsLimit,
   });
 };
 
-export const getLocaleFromCurrency = currency => {
+export const getLocaleFromCurrency = (currency) => {
   return LOCALES[currency];
 };
