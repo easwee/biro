@@ -1,22 +1,33 @@
+const LATEST_DB_VERSION = 2;
+
 export const idbCreate = (dbName, scheme, createCallback) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onupgradeneeded = function (event) {
       let db = event.target.result;
 
-      scheme.map((table) => {
-        const objectStore = db.createObjectStore(table.name, {
-          keyPath: table.keyPath,
-          autoIncrement: table.autoIncrement,
-        });
+      if (event.oldVersion < 1) {
+        scheme.map((table) => {
+          const objectStore = db.createObjectStore(table.name, {
+            keyPath: table.keyPath,
+            autoIncrement: table.autoIncrement,
+          });
 
-        table.fields.forEach((field) => {
-          objectStore.createIndex(field.name, field.name, {
-            unique: field.unique,
+          table.fields.forEach((field) => {
+            objectStore.createIndex(field.name, field.name, {
+              unique: field.unique,
+            });
           });
         });
-      });
+      }
+      if (event.oldVersion < 2) {
+        const clients = open.transaction.objectStore("clients");
+
+        if (!clients.indexNames.contains("client_company_tax_id")) {
+          clients.createIndex("client_company_tax_id", "client_company_tax_id");
+        }
+      }
     };
 
     open.onsuccess = function (event) {
@@ -32,7 +43,7 @@ export const idbCreate = (dbName, scheme, createCallback) => {
 
 export const idbAdd = (dbName, table, data) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;
@@ -57,7 +68,7 @@ export const idbAdd = (dbName, table, data) => {
 
 export const idbRemove = (dbName, table, index) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;
@@ -83,7 +94,7 @@ export const idbRemove = (dbName, table, index) => {
 
 export const idbRemoveAll = (dbName, table) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;
@@ -109,7 +120,7 @@ export const idbRemoveAll = (dbName, table) => {
 
 export const idbRead = (dbName, table, rowId) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;
@@ -132,7 +143,7 @@ export const idbRead = (dbName, table, rowId) => {
 
 export const idbReadAll = (dbName, table) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;
@@ -154,7 +165,7 @@ export const idbReadAll = (dbName, table) => {
 
 export const idbUpdate = (dbName, table, rowId, newData) => {
   return new Promise((resolve, reject) => {
-    const open = window.indexedDB.open(dbName, 1);
+    const open = window.indexedDB.open(dbName, LATEST_DB_VERSION);
 
     open.onsuccess = function (event) {
       const db = event.target.result;

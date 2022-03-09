@@ -20,4 +20,6 @@
   {$clientData.client_company_zip} {$clientData.client_company_city}
   <br />
   {$clientData.client_company_country}
+  <br />
+  {$clientData.client_company_tax_id}
 </address>

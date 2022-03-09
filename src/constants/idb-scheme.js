@@ -115,6 +115,10 @@ export const BIRO_SCHEME = [
         name: "client_company_country",
         unique: true,
       },
+      {
+        name: "client_company_tax_id",
+        unique: true,
+      },
     ],
   },
   {

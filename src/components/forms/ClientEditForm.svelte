@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from "svelte";
-  import { BIRO_SCHEME } from "constants";
   import { clientData } from "store";
   import { idbRead, idbUpdate } from "utils";
 
@@ -73,5 +71,13 @@
       on:keyup={handleInputChange}
       on:change={handleInputChange}
       placeholder="Client company country" />
+  </div>
+  <div class="field">
+    <input
+      type="text"
+      bind:value={$clientData.client_company_tax_id}
+      on:keyup={handleInputChange}
+      on:change={handleInputChange}
+      placeholder="Client company tax ID" />
   </div>
 </form>

@@ -168,7 +168,8 @@ const generateInvoice = ({
           `${clientData.client_company_name}
           ${clientData.client_company_address}
           ${clientData.client_company_city}, ${clientData.client_company_zip}
-          ${clientData.client_company_country}`,
+          ${clientData.client_company_country}
+          ${clientData.client_company_tax_id}`,
         ],
         fontSize: 11,
         italics: true,

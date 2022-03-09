@@ -38,6 +38,7 @@ export const clientData = writable({
   client_company_city: "City",
   client_company_zip: "Postal code",
   client_company_country: "Country",
+  client_company_tax_id: "Tax ID",
 });
 
 export const invoiceItems = writable([
