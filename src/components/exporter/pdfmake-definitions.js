@@ -285,7 +285,7 @@ const generateInvoice = ({
 
   if (ownerData.is_vat_free) {
     invoice.push({
-      text: "Reverse Charge-VAT exempt under Articel 44 Directive 2006/112/ES.",
+      text: "Reverse Charge-VAT exempt under Article 44 Directive 2006/112/ES.",
       margin: [0, 20, 0, 30],
     });
   }

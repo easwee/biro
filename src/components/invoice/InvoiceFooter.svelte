@@ -35,7 +35,7 @@
   </p>
 {/if}
 {#if $ownerData.is_vat_free}
-  <p>Reverse Charge-VAT exempt under Articel 44 Directive 2006/112/ES.</p>
+  <p>Reverse Charge-VAT exempt under Article 44 Directive 2006/112/ES.</p>
 {/if}
 <p class="signature">
   Invoice issued by:
