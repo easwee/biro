@@ -141,6 +141,7 @@ const generateInvoice = ({
   clientData,
   ownerData,
   rates,
+  manualConversion,
 }) => {
   const invoice = [];
 
@@ -251,7 +252,18 @@ const generateInvoice = ({
     },
   });
 
-  if (ownerData.use_conversion) {
+  if (manualConversion.enabled) {
+    invoice.push({
+      text: `Exchange rate for ${manualConversion.baseCurrency} / ${manualConversion.conversionCurrency} on the day ${format(
+        new Date(ownerData.issue_date),
+        "d.M.yyyy"
+      )}: ${manualConversion.rate}`,
+
+      margin: [0, 30, 0, 5],
+    });
+  }
+
+  if (ownerData.use_conversion && !manualConversion.enabled) {
     invoice.push({
       text: `Exchange rate for the USD / EUR on the day ${format(
         new Date(ownerData.issue_date),
@@ -347,6 +359,7 @@ export const pdfMakeInvoiceDefinition = ({
   clientData,
   ownerData,
   rates,
+  manualConversion,
 }) => {
   return {
     content: generateInvoice({
@@ -358,6 +371,7 @@ export const pdfMakeInvoiceDefinition = ({
       clientData,
       ownerData,
       rates,
+      manualConversion,
     }),
     styles: {
       metaCell: {
