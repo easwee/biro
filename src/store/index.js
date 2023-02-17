@@ -90,3 +90,10 @@ export const shownPropertiesCount = derived(
   ($properties) =>
     Object.values($properties).filter((property) => property.show).length
 );
+
+export const manualConversion = writable({
+  enabled: false,
+  baseCurrency: "EUR",
+  conversionCurrency: "USD",
+  rate: 1,
+});
