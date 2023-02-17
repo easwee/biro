@@ -28,7 +28,7 @@
           );
           const data = response.data.data;
 
-          rates.set(data[$ownerData.issue_date]);
+          rates.set(data);
         }
       }).catch(error => {
         console.error(error);

@@ -1,13 +1,13 @@
 export const fetchRates = async (date, currency) => {
   const response = await fetch(
     // fetch just one day
-    `https://freecurrencyapi.net/api/v2/historical?${
-      CURRENCY_EXCHANGE_API_KEY !== ""
+    `https://api.freecurrencyapi.com/v1/latest?${
+      CURRENCY_EXCHANGE_API_KEY !== ''
         ? `apikey=${CURRENCY_EXCHANGE_API_KEY}`
-        : ""
-    }&base_currency=${currency}&date_from=${date}&date_to=${date}`,
+        : ''
+    }&base_currency=${currency}`,
     {
-      method: "GET",
+      method: 'GET',
     }
   );
 

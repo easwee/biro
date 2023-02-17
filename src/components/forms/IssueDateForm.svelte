@@ -20,7 +20,7 @@
             );
             const data = response.data.data;
 
-            rates.set(data[$ownerData.issue_date]);
+            rates.set(data);
           }
         });
     }, 500);

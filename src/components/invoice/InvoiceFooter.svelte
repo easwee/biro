@@ -22,7 +22,7 @@
 {#if Object.entries($rates).length > 0 && $ownerData.use_conversion}
   <p class="rate">
     Exchange rate for the {$ownerData.base_currency} / {$ownerData.foreign_currency}
-    on the day {format(new Date($ownerData.issue_date), 'd.M.yyyy')}:
+    on the day {format(new Date(), 'd.M.yyyy')}:
     <strong>{$rates[$ownerData.foreign_currency].toFixed(4)}</strong>
     <br />
     <small>

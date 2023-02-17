@@ -253,7 +253,7 @@
             const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
             const data = response.data.data;
 
-            rates.set(data[$ownerData.issue_date]);            
+            rates.set(data);            
           }
         }} />
       Use conversion
