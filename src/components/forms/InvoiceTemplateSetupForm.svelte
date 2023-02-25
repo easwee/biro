@@ -153,10 +153,17 @@
           on:blur={async () => {
             handleInputChange();
             if ($ownerData.use_conversion) {
-              const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-              const data = response.data.data;
+              try{
+                const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
+                const data = response.data.data;
 
-              rates.set(data[$ownerData.issue_date]);              
+                rates.set(data[$ownerData.issue_date]);              
+              } catch (error) {
+                ownerData.set({
+                  ...$ownerData,
+                  use_conversion: false
+                });
+              }
             }
           }}>
           {#each Object.keys(LOCALES) as currency, index}
@@ -250,10 +257,17 @@
         on:change={async () => {
           handleInputChange();
           if ($ownerData.use_conversion) {
-            const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-            const data = response.data.data;
+            try {
+              const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
+              const data = response.data.data;
 
-            rates.set(data[$ownerData.issue_date]);            
+              rates.set(data[$ownerData.issue_date]);
+            } catch (error) {
+              ownerData.set({
+                ...$ownerData,
+                use_conversion: false
+              });
+            }
           }
         }} />
       Use conversion

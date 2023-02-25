@@ -22,13 +22,20 @@
           idbAdd("biro_db", "owner", $ownerData);
         }
         if ($ownerData.use_conversion) {
-          const response = await fetchRates(
-            $ownerData.issue_date,
-            $ownerData.base_currency
-          );
-          const data = response.data.data;
+          try {
+            const response = await fetchRates(
+              $ownerData.issue_date,
+              $ownerData.base_currency
+            );
+            const data = response.data.data;
 
-          rates.set(data[$ownerData.issue_date]);
+            rates.set(data[$ownerData.issue_date]);
+          } catch (error) {
+            ownerData.set({
+              ...$ownerData,
+              use_conversion: false
+            });
+          }
         }
       }).catch(error => {
         console.error(error);
