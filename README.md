@@ -8,7 +8,7 @@ PDF invoice generator app based on Svelte.
 - setup company template with signature upload
 - state is always saved in browser indexed DB
 - GDPR compliant: no data is sent anywhere
-- currency conversion for international invoice (data from https://freecurrencyapi.net/)
+  DEPRECATED API ~~- currency conversion for international invoice (data from https://freecurrencyapi.net/)~~
 
 ### Install and develop
 

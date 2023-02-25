@@ -1,6 +1,6 @@
 <script>
   import { format } from "date-fns";
-  import { rates, ownerData } from "store";
+  import { rates, ownerData, manualConversion } from "store";
 </script>
 
 <style>
@@ -19,7 +19,7 @@
   }
 </style>
 
-{#if Object.entries($rates).length > 0 && $ownerData.use_conversion}
+{#if Object.entries($rates).length > 0 && $ownerData.use_conversion && !$manualConversion.enabled}
   <p class="rate">
     Exchange rate for the {$ownerData.base_currency} / {$ownerData.foreign_currency}
     on the day {format(new Date($ownerData.issue_date), 'd.M.yyyy')}:
@@ -32,6 +32,14 @@
         https://freecurrencyapi.net
       </a>
     </small>
+  </p>
+{/if}
+
+{#if $manualConversion.enabled}
+  <p class="rate">
+    Exchange rate for {$manualConversion.baseCurrency} / {$manualConversion.conversionCurrency}
+    on the day {format(new Date($ownerData.issue_date), 'd.M.yyyy')}:
+    <strong>{$manualConversion.rate}</strong>
   </p>
 {/if}
 {#if $ownerData.is_vat_free}

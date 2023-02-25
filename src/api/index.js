@@ -1,24 +1,32 @@
-export const fetchRates = async (date, currency) => {
+export const fetchRates = async (date, baseCurrency, currencies) => {
   const response = await fetch(
-    // fetch just one day
-    `https://freecurrencyapi.net/api/v2/historical?${
+    `https://api.currencyapi.com/v3/historical?${
       CURRENCY_EXCHANGE_API_KEY !== ""
         ? `apikey=${CURRENCY_EXCHANGE_API_KEY}`
         : ""
-    }&base_currency=${currency}&date_from=${date}&date_to=${date}`,
+    }&baseCurrency=${baseCurrency}&currencies=${currencies}&date=${date}`,
     {
       method: "GET",
     }
   );
-
-  if (response.status === 200) {
+  const data = await response.json();
+  debugger;
+  if (response.ok) {
     return {
-      data: await response.json(),
-      status: response.status,
-    };
-  } else {
-    return {
+      data: data,
       status: response.status,
     };
   }
+
+  const responseError = {
+    type: "Error",
+    message: result.message || "Something went wrong",
+    data: result.data || "",
+    code: result.code || "",
+  };
+
+  const error = new Error();
+  error.info = responseError;
+
+  return error;
 };

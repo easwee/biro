@@ -1,7 +1,7 @@
 <script>
   import pdfMake from "pdfmake/build/pdfmake";
   import { format } from "date-fns";
-  import { invoiceItems, rates, clientData, ownerData } from "store";
+  import { invoiceItems, rates, clientData, ownerData, manualConversion } from "store";
   import { pdfMakeFont } from "constants";
   import { pdfMakeInvoiceDefinition } from "./pdfmake-definitions";
   import { calculateTotalPrice, calculateTotalVAT } from "utils";
@@ -24,7 +24,8 @@
           invoiceItems: $invoiceItems,
           rates: $rates,
           clientData: $clientData,
-          ownerData: $ownerData
+          ownerData: $ownerData,
+          manualConversion: $manualConversion,
         })
       )
       .download(

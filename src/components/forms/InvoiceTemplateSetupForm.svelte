@@ -1,5 +1,5 @@
 <script>
-  import { ownerData, rates } from "store";
+  import { ownerData, rates, manualConversion } from "store";
   import { idbRead, idbUpdate } from "utils";
   import { fetchRates } from "api";
   import { LOCALES } from "constants";
@@ -51,6 +51,12 @@
 
   .button.remove {
     margin-top: 5px;
+  }
+
+  .manual-conversion {
+    width: 100%;
+    display: flex;
+    gap: 8px;
   }
 </style>
 
@@ -152,12 +158,19 @@
           bind:value={$ownerData.base_currency}
           on:blur={async () => {
             handleInputChange();
-            if ($ownerData.use_conversion) {
-              const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-              const data = response.data.data;
+            // if ($ownerData.use_conversion & $ownerData.foreign_currency) {
+            //   try{
+            //     const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency, $ownerData.foreign_currency);
+            //     const data = response.data.data;
 
-              rates.set(data[$ownerData.issue_date]);              
-            }
+            //     rates.set(data[$ownerData.issue_date]);              
+            //   } catch (error) {
+            //     ownerData.set({
+            //       ...$ownerData,
+            //       use_conversion: false
+            //     });
+            //   }
+            // }
           }}>
           {#each Object.keys(LOCALES) as currency, index}
             <option value={currency}>{currency}</option>
@@ -242,23 +255,30 @@
     {/if}
   </div>
 
-  <div class="field">
+  <!-- <div class="field">
     <label>
       <input
         type="checkbox"
         bind:checked={$ownerData.use_conversion}
         on:change={async () => {
           handleInputChange();
-          if ($ownerData.use_conversion) {
-            const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency);
-            const data = response.data.data;
+          // if ($ownerData.use_conversion &&  $ownerData.base_currency && $ownerData.foreign_currency) {
+          //   try {
+          //     const response = await fetchRates($ownerData.issue_date, $ownerData.base_currency, $ownerData.foreign_currency);
+          //     const data = response.data.data;
 
-            rates.set(data[$ownerData.issue_date]);            
-          }
+          //     rates.set(data[$ownerData.issue_date]);
+          //   } catch (error) {
+          //     ownerData.set({
+          //       ...$ownerData,
+          //       use_conversion: false
+          //     });
+          //   }
+          // }
         }} />
       Use conversion
     </label>
-  </div>
+  </div> -->
 
   <div class="field">
     <label>
@@ -269,4 +289,57 @@
       I am VAT free
     </label>
   </div>
+
+  <div class="field">
+    <label>
+      <input
+        type="checkbox"
+        bind:checked={$manualConversion.enabled}
+      />
+      Use manual conversion
+    </label>
+  </div>
+
+  {#if $manualConversion.enabled}
+    <div class="manual-conversion">
+      <div class="g-r-c g-r-c-25">
+        <div class="field">
+          <label for="manualBaseCurrency">Base currency</label>
+          <select
+            id="manualBaseCurrency"
+            bind:value={$manualConversion.baseCurrency}
+            on:blur={async () => {
+              handleInputChange();
+            }}>
+            {#each Object.keys(LOCALES) as currency, index}
+              <option value={currency}>{currency}</option>
+            {/each}
+          </select>
+        </div>
+      </div>
+      <div class="g-r-c g-r-c-25">
+        <div class="field">
+          <label for="manualConversionCurrency">Conversion currency</label>
+          <select
+            id="manualConversionCurrency"
+            bind:value={$manualConversion.conversionCurrency}
+            on:blur={async () => {
+              handleInputChange();
+            }}>
+            {#each Object.keys(LOCALES) as currency, index}
+              <option value={currency}>{currency}</option>
+            {/each}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="manualConversionValue">Rate:</label>
+        <input
+          id="manualConversionValue"
+          type="text"
+          bind:value={$manualConversion.rate}
+          placeholder="Conversion rate" />
+      </div>
+    </div>
+  {/if}
 </form>
