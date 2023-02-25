@@ -13,22 +13,23 @@
         .then(() => idbRead("biro_db", "owner", 1))
         .then(async result => {
           ownerData.set(result);
-          if ($ownerData.use_conversion) {
-            try {
-              const response = await fetchRates(
-                $ownerData.issue_date,
-                $ownerData.base_currency
-              );
-              const data = response.data.data;
+          // if ($ownerData.use_conversion &&  $ownerData.base_currency &&  $ownerData.foreign_currency) {
+          //   try {
+          //     const response = await fetchRates(
+          //       $ownerData.issue_date,
+          //       $ownerData.base_currency,
+          //       $ownerData.foreign_currency
+          //     );
+          //     const data = response.data.data;
 
-              rates.set(data[$ownerData.issue_date]);
-            } catch (error) {
-              ownerData.set({
-                ...$ownerData,
-                use_conversion: false
-              });
-            }
-          }
+          //     rates.set(data[$ownerData.issue_date]);
+          //   } catch (error) {
+          //     ownerData.set({
+          //       ...$ownerData,
+          //       use_conversion: false
+          //     });
+          //   }
+          // }
         });
     }, 500);
   }

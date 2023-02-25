@@ -1,11 +1,10 @@
-export const fetchRates = async (date, currency) => {
+export const fetchRates = async (date, baseCurrency, currencies) => {
   const response = await fetch(
-    // fetch just one day
-    `https://freecurrencyapi.net/api/v2/historical?${
+    `https://api.currencyapi.com/v3/historical?${
       CURRENCY_EXCHANGE_API_KEY !== ""
         ? `apikey=${CURRENCY_EXCHANGE_API_KEY}`
         : ""
-    }&base_currency=${currency}&date_from=${date}&date_to=${date}`,
+    }&baseCurrency=${baseCurrency}&currencies=${currencies}&date=${date}`,
     {
       method: "GET",
     }
